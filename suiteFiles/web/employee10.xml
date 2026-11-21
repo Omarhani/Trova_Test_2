@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Employee 10">
+    <parameter name="employee_user_name" value="tc.add.emp+{run:692}@t2saas.sa"/>
+    <parameter name="employee_last_name" value="Addcase"/>
+
+    <test name="Log in programmatically">
+        <parameter name="signedInAs" value="Account Manager"/>
+        <classes><class name="ts:tests/api/signIn/logIn.spec.ts"><methods><include name="logInProgrammatically"/></methods></class></classes>
+    </test>
+
+    <test name="Case 692 - Add a new employee">
+        <parameter name="signedInAs" value="Account Manager"/>
+        <parameter name="employee_first_name" value="Trova"/>
+        <parameter name="employee_job_number" value="TCADD{run:692}"/>
+        <parameter name="employee_department" value="first department in the list"/>
+        <parameter name="employee_job_title" value="QA"/>
+        <groups><run><include name="Web"/></run></groups>
+        <classes><class name="ts:tests/web/employee/EmployeeTests.spec.ts"><methods><include name="testAddANewEmployee"/></methods></class></classes>
+    </test>
+
+    <test name="Case 693 - Edit an employee's data">
+        <parameter name="signedInAs" value="Account Manager"/>
+        <parameter name="new_first_name" value="Trovaa"/>
+        <parameter name="new_job_title" value="Senior QA"/>
+        <groups><run><include name="Web"/></run></groups>
+        <classes><class name="ts:tests/web/employee/EmployeeTests.spec.ts"><methods><include name="testEditAnEmployeesData"/></methods></class></classes>
+    </test>
+
+    <test name="Case 694 - Delete an employee">
+        <parameter name="signedInAs" value="Account Manager"/>
+        <groups><run><include name="Web"/></run></groups>
+        <classes><class name="ts:tests/web/employee/EmployeeTests.spec.ts"><methods><include name="testDeleteAnEmployee"/></methods></class></classes>
+    </test>
+</suite>
