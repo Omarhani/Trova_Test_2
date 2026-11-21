@@ -1,3 +1,5 @@
+import { testTimeout } from './testTimeout';
+
 /**
  * why a TS case did not pass, in one of four kinds. "failed" = the app's result was wrong
  * (FAILED, never tried again); "setup" = the network, the phone session, the phone server or the test program let the
@@ -74,7 +76,10 @@ export function kindOf(error: string): { kind: Kind; reason: string } {
   const said = named ? named[2].trim() : text;
   if (/^Not tested - needs /.test(said)) return { kind: 'data', reason: said };
   const first = said.split('\n')[0];
-  if (first.includes('✗')) return { kind: 'failed', reason: text }; // a check saw a wrong value: never a set-up problem
+  // a check saw a wrong value: never a set-up problem; a proof run: its own words, never "Error:" in front
+  if (first.includes('✗')) return { kind: 'failed', reason: named?.[1] === 'Error' ? said : text };
+  const ranOut = testTimeout(first); // a proof run: never "Test timeout of 300000ms"
+  if (ranOut) return ranOut;
   const load = PAGE_LOAD.exec(first); // the app's page did not load in time - the test could not finish, never the tool's words
   if (load) return { kind: 'slow', reason: `The app's page did not open within ${Math.round(Number(load[1]) / 1000)} s - not the app's answer` };
   return setUpSaid(text) ? { kind: 'setup', reason: plainSetUp(text, said) } : { kind: 'failed', reason: text };

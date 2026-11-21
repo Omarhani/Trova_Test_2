@@ -36,7 +36,7 @@ export function apiProven(login: string, d: ProvenDeps = DEPS): boolean {
 }
 
 /**
- * Writer session #355 / Prod rule (Omar 2026-10-25, API FIRST): the login has a quick sign-in to try before the screen -
+ * API FIRST: the login has a quick sign-in to try before the screen -
  * a proven one, or any recipe Trova has (a prefilled one too). Its shared sign-in refused = none.
  */
 export function quickKnown(login: string, d: ProvenDeps = DEPS): boolean {

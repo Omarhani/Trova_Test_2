@@ -44,7 +44,7 @@ async function runSteps(page: Page, url: string, login: string, recipe: JsonObje
   const steps = (Array.isArray(recipe.steps) ? recipe.steps : []) as Step[];
   let healed = false;
   await page.goto(start, { waitUntil: 'domcontentloaded', timeout: 30_000 });
-  screenWayTold(); // run #210: the row says it signed in on the screen
+  screenWayTold(); // the row says it signed in on the screen
   signInStepShown(page, 'open', { e: `the sign-in page as ${login}` });
   for (let i = 0; i < steps.length; i++) {
     if (stop?.aborted) throw new Error('The sign-in was stopped');
@@ -79,7 +79,7 @@ async function finish(page: Page, url: string, recipe: JsonObject, done: string,
   let saidSince = 0;
   for (const until = Date.now() + 20_000; Date.now() < until && !stop?.aborted; await page.waitForTimeout(400)) {
     if ((await signedInNow(page, done, start)) === null) return { healed: healed ? recipe : undefined };
-    if (await code.tryOnce(page)) { healed = true; saidSince = 0; continue; } // run #210: the code the steps never named
+    if (await code.tryOnce(page)) { healed = true; saidSince = 0; continue; } // the code the steps never named
     const says = await pageSays(page);
     saidSince = says ? saidSince || Date.now() : 0;
     if (saidSince && Date.now() - saidSince >= 1200) break; // the app's answer stays on its sign-in page

@@ -5,6 +5,8 @@ import { currentStep, nextStep } from '../report/stepNumbers';
 import { markStep } from './stepMark';
 import { stepPictures } from './stepPictures';
 import { settle } from './covers';
+import { countWhenLoaded } from './loadedCount';
+import { followRequests } from './netBusy';
 import { readSwitchFacts, switchIsOn } from './switchState';
 import { withoutClose } from './uiText';
 import { locate } from './anyOf';
@@ -23,7 +25,9 @@ export const ACTION_FLOOR_MS = 5_000;
  */
 export class WebActions {
 
-  constructor(protected readonly page: Page) {}
+  constructor(protected readonly page: Page) {
+    followRequests(page); // session #358: a list is counted only once its answer came
+  }
 
   protected async click(selector: string, seconds: number, element = selector): Promise<void> {
     this.say('click', element, selector);
@@ -99,15 +103,12 @@ export class WebActions {
     return this.all(selector).first().waitFor({ state: 'hidden', timeout: seconds * 1000 }).then(() => true, () => false);
   }
 
-  /** the number of matches once it is expected (waits up to seconds); the last count read otherwise */
+  /**
+   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Session #358: read only
+   * once the list finished loading, the expected count seen twice (countWhenLoaded); -1 = it never finished loading
+   */
   protected async countBecomes(selector: string, expected: number, seconds: number): Promise<number> {
-    const until = Date.now() + seconds * 1000;
-    let count = await this.all(selector).count();
-    while (count !== expected && Date.now() < until) {
-      await this.page.waitForTimeout(250);
-      count = await this.all(selector).count();
-    }
-    return count;
+    return countWhenLoaded(this.page, () => this.all(selector).count(), expected, seconds);
   }
 
   /** the field's value once it shows expected (waits up to seconds); what it holds otherwise */

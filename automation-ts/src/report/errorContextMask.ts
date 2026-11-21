@@ -8,7 +8,7 @@ const BOX = /^(\s*)- textbox\b(.*)$/;
 
 /**
  * The page snapshot Playwright writes next to a failed test (error-context.md) with every secret as ***: a secret box's
- * typed text (found by its name or hint) and every secret value of the run's logins. Session #355: run #206's snapshot
+ * typed text (found by its name or hint) and every secret value of the run's logins. A failed sign-in's snapshot
  * held the typed password in plain text on the client's computer. The text stays otherwise as it was.
  */
 export function maskSnapshot(text: string, secrets: string[]): string {

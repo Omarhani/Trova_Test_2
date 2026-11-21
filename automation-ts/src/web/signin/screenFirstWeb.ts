@@ -5,6 +5,16 @@ import { joinSharedBrowser, sharedTab } from '../sharedBrowser';
 import { openSignedInOn } from '../signedInPage';
 import { quickKnown, screenKnown } from './signInWays';
 import { keptState } from './keptSignIn';
+import { openShown } from './signInOpenShown';
+import { checkTrue } from '../../report/checks';
+import { currentStep } from '../../report/stepNumbers';
+import { stepPictures } from '../stepPictures';
+
+/** the picture of the page now, as a step picture of the running test (at most 5 s) */
+async function pictureNow(tab: import('@playwright/test').Page): Promise<void> {
+  stepPictures.shoot(tab, currentStep());
+  await Promise.race([stepPictures.done(tab), new Promise((r) => setTimeout(r, 5000))]);
+}
 
 /**
  * The run's real screen-first sign-in - the run's one browser opened signed in on the sign-in screen (the
@@ -23,7 +33,13 @@ export const SCREEN_FIRST: ScreenFirstDeps = {
   saved: (login) => runSignInBook.saved(login),
   openOnScreen: async (login) => {
     const { browser, own } = await joinSharedBrowser();
-    await openSignedInOn(await sharedTab(browser), login);
+    const tab = await sharedTab(browser);
+    // one sign-in line (the sign-in test's own) and the picture of the app after the sign-in
+    await openShown(login, (proved) => openSignedInOn(tab, login, proved), {
+      onScreen: () => runSignInBook.saved(login)?.onScreen === true,
+      check: (text) => checkTrue(text, true),
+      picture: () => pictureNow(tab),
+    });
     if (own) await browser.close(); // the state is saved for the run; a browser of its own is not left open
   },
   recipe: (login) => {

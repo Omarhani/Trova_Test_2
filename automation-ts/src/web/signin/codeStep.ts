@@ -19,7 +19,7 @@ const showTyping: Shown = async (page, field) => {
 };
 
 /**
- * Writer session #357, check run #210: the saved screen steps ended on the app's "enter the code" dialog (the AI had
+ * The saved screen steps ended on the app's "enter the code" dialog (the AI had
  * typed the code with another tool, so its steps never named it) and the run waited 20 s, then failed. In a writer's
  * own run, when the app asks for its code and the steps have no code step, the login's fixed code from Test Data is
  * typed into the code box (one-digit boxes take it digit by digit) and the dialog's button pressed - once. Both are

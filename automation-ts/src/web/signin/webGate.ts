@@ -17,16 +17,17 @@ import { keptEnded, keptState, recipeProven, screenRecipe } from './keptSignIn';
 import { pageSays } from './signInPage';
 import { saysTooSoon, usesCode } from './codeWait';
 import { checkTrue } from '../../report/checks';
+import { openedLine } from './signInOpenShown';
 
 /** the run's sign-in gate on the run's one tab, in the suite's mode (hybrid: the app's API; ui: the sign-in page) */
-export function webGate(page: Page, web: string): SignInGate {
+export function webGate(page: Page, web: string, proved: (login: string) => void = (login) => checkTrue(openedLine(login), true)): SignInGate {
   return new SignInGate({
     mode: runMode(),
     book: runSignInBook,
     held: heldLogin,
     hold: holdLogin,
     // session #355: a new one-time code only once the app allows it (waited in plain words), never in a loop
-    // runs #1278 / #1283: a refused quick sign-in shows its step; its code window is waited inside the quick sign-in (review 988)
+    // a refused quick sign-in shows its step; its code window is waited inside the quick sign-in
     byApi: (login, fresh) => apiSignInShown(page, login, () => apiSignInto(page, web, login, fresh)),
     // review 988: only the page's words saying "wait for a new code" count, and only a sign-in with a code step is a code request
     byScreen: (login) => codeWindow.run(login, () => screenSignInto(page, web, login), () => saysTooSoon(() => pageSays(page)),
@@ -48,6 +49,6 @@ export function webGate(page: Page, web: string): SignInGate {
     renewDue: (saved) => renewDue(saved),
     now: () => Date.now(),
     say: (line) => console.log(line),
-    proved: (login) => checkTrue(`Opened the app signed in as ${login}`, true), // the tick only once seen
+    proved, // the tick only once seen (the sign-in test gives its own)
   });
 }

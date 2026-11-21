@@ -1,16 +1,17 @@
 import type { SuiteBlock } from './suitePlan';
+import { roundParams } from './roundValues';
 
 /**
  * A proof run goes through the suite's whole chain once per try - the case that makes a record, the cases that use
  * it, the case that deletes it - then again, so every try starts clean and leaves nothing behind. The sign-in block
  * runs in the first try only (the run keeps its sign-in). Playwright's own repeat would run each block several times
- * before the next one and break the chain.
+ * before the next one and break the chain. A proof run: each round makes its own values (roundValues).
  */
 export function chainTries(blocks: SuiteBlock[], tries: number): SuiteBlock[] {
   const n = Number.isInteger(tries) && tries >= 2 && tries <= 5 ? tries : 1;
   const again = blocks.filter((b) => !signInOnly(b));
   const out = [...blocks];
-  for (let k = 2; k <= n; k++) out.push(...again);
+  for (let k = 2; k <= n; k++) out.push(...again.map((b) => ({ ...b, params: roundParams(b.params, k) })));
   return out;
 }
 

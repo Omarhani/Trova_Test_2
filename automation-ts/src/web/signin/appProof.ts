@@ -59,7 +59,7 @@ export async function proveSignedIn(page: Page, web: string, limits: { firstMs?:
     let held = refusedPage(page.url()) ? false : await hold.holds();
     if (!calls.statuses.length) {
       await calls.first(limits.firstMs ?? 10_000);
-      // proof run #1287: the first answer came after the watch - the app may go to its sign-in page only then
+      // the first answer came after the watch - the app may go to its sign-in page only then
       if (held && calls.statuses.length) held = await watchHold(page, HOLD).holds();
     }
     return proofVerdict({ url: page.url(), held, statuses: [...calls.statuses] });

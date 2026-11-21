@@ -5,7 +5,7 @@ import { signInStepShown } from './signInStepShown';
 type Say = (type: string, fields: Record<string, unknown>) => void;
 
 /**
- * Runs #1278 / #1283 (Test 8094): a refused quick sign-in left every test with "No steps were recorded". The quick
+ * A refused quick sign-in left every test with "No steps were recorded". The quick
  * sign-in is a run-page step ("Log in programmatically as <login>"), and where it stopped shows with the app's words
  * and the browser's picture of that moment. go answers null = signed in, else why not.
  */

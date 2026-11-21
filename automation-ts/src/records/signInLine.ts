@@ -18,7 +18,8 @@ export function signInLine(login: string, way: SignInWay, extra = ''): string {
 
 /** session #355: the run's sign-in by what really ran - "Log in programmatically as Ali" / "Sign in on the screen as Ali" */
 export function signInDoneLine(login: string, onScreen: boolean): string {
-  return onScreen ? `Sign in on the screen as ${login.trim()}` : `Log in programmatically as ${login.trim()}`;
+  // one plain line for a sign-in in the background
+  return onScreen ? `Sign in on the screen as ${login.trim()}` : `Signed in as ${login.trim()} in the background`;
 }
 
 type Say = (type: string, fields: Record<string, unknown>) => void;
@@ -28,7 +29,7 @@ export function signInStep(login: string, way: SignInWay, extra = '', say: Say =
   say('step', { n: nextStep(), a: 'Sign in', e: signInWhat(login, way, extra) });
 }
 
-/** writer #357 (check run #210): a sign-in on the screen tells the run its way - the row is named by what ran */
+/** a sign-in on the screen tells the run its way - the row is named by what ran */
 export function screenWayTold(say: Say = emit): void {
   say('way', { way: 'screen' });
 }

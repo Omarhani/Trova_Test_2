@@ -23,10 +23,10 @@ function signInAgainInCase(): boolean {
  * before any step counts (SignInGate). The page is then watched: a step that finds the app signed out gets one fresh
  * sign-in and is tried once more (MidRunSignIn, hybrid only). Never the sign-in page in hybrid mode.
  */
-export async function openSignedInOn(page: Page, login: string): Promise<void> {
+export async function openSignedInOn(page: Page, login: string, proved?: (login: string) => void): Promise<void> {
   const web = testData.webUrl();
   if (!web) throw new Error(`No web address for the ${testData.env()} environment: add it in Trova > Test Data > Environments`);
-  const gate = webGate(page, web);
+  const gate = webGate(page, web, proved);
   await gate.open(login);
   const recipe = screenRecipe(login);
   const start = recipe ? String(recipe.url ?? '') : undefined;

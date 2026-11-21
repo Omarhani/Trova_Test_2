@@ -30,7 +30,7 @@ export function plainTime(ms: number, rough = false): string {
 }
 
 /**
- * Writer session #355 (runs #206 / #207), for ANY app: an app that sends a one-time code allows a new one only after a
+ * For ANY app: an app that sends a one-time code allows a new one only after a
  * while. A new sign-in waits only what is left of the login's wait since the last code request (any run); the app
  * still inside its window (it says so in any language, or its code step just waits) is waited out ONCE - the time the
  * app names, else the login's wait - and the sign-in made once more. An empty wait learns what the app said. A wrong

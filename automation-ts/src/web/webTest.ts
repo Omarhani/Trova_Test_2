@@ -7,6 +7,7 @@ import { runSignInBook } from '../signin/runSignInBook';
 import { SkipLogin } from '../signin/skipLogin';
 import { keepTestEnd } from './lastScreen';
 import { openKeepingEnd } from './openKeepingEnd';
+import { openWhileAnswering } from './openWhileAnswering';
 import { joinSharedBrowser, sharedTab } from './sharedBrowser';
 import { openSignedInOn } from './signedInPage';
 import { watchFrozen } from './frozenPage';
@@ -36,7 +37,9 @@ export const webTest = trovaTest.extend<{ page: Page; refusedLogin: void }, { br
   }, { scope: 'worker' }],
   page: async ({ tab }, use, testInfo) => {
     const keepScreen = (): Promise<void> => keepTestEnd(tab, (name, a) => testInfo.attach(name, a), true);
-    await openKeepingEnd(() => openSignedInOn(tab, runLogin(param('signedInAs', ''))), keepScreen).catch((e: unknown) => {
+    // a proof run: a browser that stops answering while the page opens ends the case in 60 s, never its 5 minutes
+    const open = (): Promise<void> => openWhileAnswering(tab, () => openSignedInOn(tab, runLogin(param('signedInAs', ''))));
+    await openKeepingEnd(open, keepScreen).catch((e: unknown) => {
       if (e instanceof SkipLogin) blockedSkip(testInfo, 'signin', e.message);
       throw e;
     });

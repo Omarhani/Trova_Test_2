@@ -1,5 +1,5 @@
 /**
- * Writer session #355 (Omar 2026-11-21), for ANY app: what an app's answer means about its one-time codes - "wait
+ * For ANY app: what an app's answer means about its one-time codes - "wait
  * before a new code / the code is still valid" (then the time it names), or a hard no (a wrong code, a locked account,
  * a wrong password) that no wait can fix. A small hint list in several languages, kept only for speed; it never holds
  * one app's exact words.
