@@ -2,12 +2,27 @@ import { asObject, asText, byName, Json, runData, section } from '../run/runData
 import { SignInResult } from '../api/client/recipe/recipeSignIn';
 import { recipeFor } from '../signin/signIns';
 import { withFreshToken } from './freshToken';
+import { keptCookies } from './signin/keptSignIn';
 
 /** What the browser gets before the app's first page: names to values per place. */
 export interface BrowserState {
   localStorage: Record<string, string>;
   sessionStorage: Record<string, string>;
   cookies: Record<string, string>;
+  /** bug 130: the kept cookies whole - their own domain, path and flags (their value: cookies[name] when it is there) */
+  cookieList?: KeptCookie[];
+}
+
+/** a cookie as Trova keeps it: every part the app set, never only its name and value */
+export interface KeptCookie {
+  name: string;
+  value: string;
+  domain?: string;
+  path?: string;
+  expires?: number;
+  httpOnly?: boolean;
+  secure?: boolean;
+  sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
 type Kept = { localStorage?: Json; sessionStorage?: Json; cookies?: Json } | undefined;
@@ -23,6 +38,8 @@ export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[
     sessionStorage: texts(kept?.sessionStorage),
     cookies: cookieTexts(kept?.cookies),
   };
+  const whole = keptCookies(kept?.cookies);
+  if (whole.length) state.cookieList = whole; // bug 130: each kept cookie whole, not only its name and value
   Object.assign(state.localStorage, api.browser.localStorage);
   Object.assign(state.sessionStorage, api.browser.sessionStorage);
   Object.assign(state.cookies, api.browser.cookies);
@@ -66,7 +83,7 @@ export function statesFor(login: string, api: SignInResult, pageSettings: Json[]
   return composeStates(api, kept, [...recipeBrowser, ...pageSettings], Array.isArray(storage) ? storage : []);
 }
 
-function placeOf(place: string): keyof BrowserState {
+function placeOf(place: string): 'localStorage' | 'sessionStorage' | 'cookies' {
   return place === 'sessionStorage' ? 'sessionStorage' : place === 'cookies' ? 'cookies' : 'localStorage';
 }
 

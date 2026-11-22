@@ -7,6 +7,7 @@ import { SignInGate } from '../../signin/signInGate';
 import { apiSignInto } from './apiSignInto';
 import { apiSignInShown } from './apiSignInShown';
 import { proveSignedIn } from './appProof';
+import { provedAndLooked } from './pageLook';
 import { putState } from './browserPut';
 import { heldLogin, holdLogin } from './heldLogin';
 import { captureSaved, putSaved } from './savedState';
@@ -45,7 +46,7 @@ export function webGate(page: Page, web: string, proved: (login: string) => void
     putBrowser: (saved) => putState(page, saved.browser, saved.origin || new URL(web).origin),
     capture: () => captureSaved(page, web),
     put: (saved) => putSaved(page, saved),
-    prove: () => proveSignedIn(page, web),
+    prove: () => provedAndLooked(page, () => proveSignedIn(page, web)), // bug 130: an unstyled page is said, never silent
     renewDue: (saved) => renewDue(saved),
     now: () => Date.now(),
     say: (line) => console.log(line),
