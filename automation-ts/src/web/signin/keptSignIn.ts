@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { asObject, asText, byName, Json, JsonObject, projectRoot, section } from '../../run/runDataFile';
 import { testData } from '../../run/testData';
-import { BrowserState } from '../browserState';
+import { BrowserState, KeptCookie } from '../browserState';
 import { PageSettings } from './pageSettingsCapture';
 import { ClockState } from './signInClock';
 
@@ -24,19 +24,33 @@ export function keptState(login: string): { state: BrowserState; clock: ClockSta
   const s =asObject(asObject(byName(section('signIn'), login)).session);
   if (!s.origin) return undefined;
   const texts = (v: Json | undefined): Record<string, string> => Object.fromEntries(Object.entries(asObject(v)).map(([k, x]) => [k, asText(x)]));
-  const cookies = (Array.isArray(s.cookies) ? s.cookies : []).map(asObject).filter((c) => c.name)
-    .map((c) => ({ name: asText(c.name), value: asText(c.value), expires: typeof c.expires === 'number' ? c.expires : undefined }));
+  const cookies = keptCookies(s.cookies);
   const state: BrowserState = { localStorage: texts(s.localStorage), sessionStorage: texts(s.sessionStorage),
-    cookies: Object.fromEntries(cookies.map((c) => [c.name, c.value])) };
+    cookies: Object.fromEntries(cookies.map((c) => [c.name, c.value])), cookieList: cookies }; // bug 130: each cookie whole
   const signIn = (Array.isArray(s.signIn) ? s.signIn : []).map(asObject).map((t) => ({ place: asText(t.place), key: asText(t.key) }));
   return { state, clock: { ...state, cookies, signIn } };
 }
 
-/** the state the run's browser holds for a login, in the shape Trova keeps it */
+/** bug 130: kept cookies with every part Trova kept (domain, path, end time, flags) */
+export function keptCookies(v: Json | undefined): KeptCookie[] {
+  const same = (x: Json | undefined): KeptCookie['sameSite'] => {
+    const t = asText(x).toLowerCase();
+    return t === 'strict' ? 'Strict' : t === 'none' ? 'None' : t === 'lax' ? 'Lax' : undefined;
+  };
+  return (Array.isArray(v) ? v : []).map(asObject).filter((c) => c.name).map((c) => ({
+    name: asText(c.name), value: asText(c.value),
+    ...(c.domain ? { domain: asText(c.domain) } : {}), ...(c.path ? { path: asText(c.path) } : {}),
+    ...(typeof c.expires === 'number' ? { expires: c.expires } : {}),
+    ...(typeof c.httpOnly === 'boolean' ? { httpOnly: c.httpOnly } : {}), ...(typeof c.secure === 'boolean' ? { secure: c.secure } : {}),
+    ...(same(c.sameSite) ? { sameSite: same(c.sameSite) } : {}) }));
+}
+
+/** the state the run's browser holds for a login, in the shape Trova keeps it - each cookie whole (bug 130) */
 export function keptShape(state: BrowserState, url: string): JsonObject {
   const origin = new URL(url).origin;
+  const whole = new Map((state.cookieList ?? []).map((c) => [c.name, c]));
   return { origin, at: url, localStorage: state.localStorage, sessionStorage: state.sessionStorage,
-    cookies: Object.entries(state.cookies).map(([name, value]) => ({ name, value, path: '/' })) };
+    cookies: Object.entries(state.cookies).map(([name, value]) => ({ path: '/', ...(whole.get(name) ?? {}), name, value }) as JsonObject) };
 }
 
 /** a sign-in that opened the app: the next runs start from it */
