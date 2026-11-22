@@ -1,4 +1,4 @@
-import { caseRecords } from '../../base/BaseTest';
+import { caseRecords, runRecords } from '../../base/BaseTest';
 import { NewEmployee, PendingRequestsPage } from '../../../src/web/pages/PendingRequestsPage';
 
 /** Expected results of the cases, as the app shows them */
@@ -8,6 +8,9 @@ export const DELETE_QUESTION = 'هل أنت متأكد من حذف الطلب ؟
 
 /** The employee the Add test makes and hands to the Edit and Delete tests of its chain */
 export const EMPLOYEE = 'employee';
+
+/** The run's records kind the Add test keeps its employee's user name under, for the clean-up */
+export const EMPLOYEE_RECORDS = 'employee';
 
 /** What the app showed after a Save on the drawer */
 export interface SaveSeen {
@@ -27,7 +30,10 @@ export async function addEmployee(requests: PendingRequestsPage, employee: NewEm
   await requests.clickSave();
   const toast = await requests.toastAfterSave(expectedToast);
   const drawerClosed = await requests.drawerClosed();
-  if (drawerClosed) handTo.forEach((test) => caseRecords.made(test, EMPLOYEE, employee.userName));
+  if (drawerClosed) {
+    runRecords.keep(EMPLOYEE_RECORDS, employee.userName);
+    handTo.forEach((test) => caseRecords.made(test, EMPLOYEE, employee.userName));
+  }
   return { toast, drawerClosed };
 }
 
@@ -62,5 +68,7 @@ export async function deleteEmployee(requests: PendingRequestsPage, userName: st
   const confirmMessage = await requests.confirmMessageText();
   await requests.clickOk();
   await requests.searchFor(userName);
-  return { confirmMessage, rowsAfter: await requests.rowCountBecomes(userName, expectedRows) };
+  const rowsAfter = await requests.rowCountBecomes(userName, expectedRows);
+  if (rowsAfter === 0) runRecords.forget(EMPLOYEE_RECORDS, userName);
+  return { confirmMessage, rowsAfter };
 }
