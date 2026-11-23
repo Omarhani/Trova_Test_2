@@ -15,7 +15,7 @@ const absolute = (x: string): boolean => x.startsWith('/') || x.startsWith('(/')
 
 /**
  * One locator for an app that comes in more than one design (old and new layout, mobile and desktop menu, a language
- * that moves things): the first option that matches on the page now - the TS twin of utils.AnyOf. Order the likeliest
+ * that moves things): the first option that matches on the page now. Order the likeliest
  * first. XPath options become one XPath (works everywhere a selector does); with another kind in it the page objects'
  * actions find it through locate().
  */

@@ -9,7 +9,7 @@ const COVERED = /intercepts pointer events/i;
 type Done = (el: ElementHandle, last: boolean, covered: boolean) => Promise<void>;
 
 /**
- * One sign-in step's element, found again right before it acts - the TS twin of utils.SignInAct (online
+ * One sign-in step's element, found again right before it acts (online
  * the sign-in form redraws after the account code). A redrawn, covered or not-ready element is found again a
  * few times; the last try of a covered button presses it by script. Never logs a value.
  */

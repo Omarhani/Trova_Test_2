@@ -13,10 +13,10 @@ export function recordsHanded(): number {
 }
 const ALL = '*';
 
-/** "Case 12 - Rejecting with a reason" -> "Rejecting with a reason"; undefined when nothing is left */
+/** "TC-28 - Rejecting with a reason" (or an older "Case 12 - ...") -> "Rejecting with a reason"; undefined when nothing is left */
 export function titleOf(block: string | undefined): string | undefined {
   if (block === undefined) return undefined;
-  const t = block.replace(/^\s*case\s+[\d,\s]+\s*[-–:]\s*/i, '').trim();
+  const t = block.replace(/^\s*(?:case\s+[\d,\s]+|TC-\d+(?:\s*,\s*TC-\d+)*)\s*[-–:]\s*/i, '').trim();
   return t === '' ? undefined : t;
 }
 
@@ -37,8 +37,8 @@ function key(forTest: string, record: string): string {
 }
 
 /**
- * The ONE hand-over of a record from a set-up block (or an earlier case) to the test that uses it - the TS twin of
- * utils.CaseRecords. Kept in the run's records file (blocks may run in other workers); the run's feed shows only
+ * The ONE hand-over of a record from a set-up block (or an earlier case) to the test that uses it.
+ * Kept in the run's records file (blocks may run in other workers); the run's feed shows only
  * "Pre-condition - <record> made", never the value.
  */
 export class CaseRecords {
