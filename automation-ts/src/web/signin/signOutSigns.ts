@@ -1,5 +1,5 @@
 /**
- * The app's own calls that say the sign-in ran out - the TS twin of utils.SignOutSigns: HTTP 401, or 401 /
+ * The app's own calls that say the sign-in ran out: HTTP 401, or 401 /
  * 403 with a message about an expired or invalid token / session. Only the time is kept; of a refused call (4xx) only
  * its short message, to say why a sign-in on the screen did not get through (Java NetworkRecorder.lastRefusal).
  */

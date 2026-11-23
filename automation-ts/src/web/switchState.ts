@@ -17,7 +17,7 @@ function filled(v: string | null): string | null {
 }
 
 /**
- * Is the switch on? - the TS twin of utils.Switches.isOn: aria-checked / aria-pressed first, a native input's checked,
+ * Is the switch on? aria-checked / aria-pressed first, a native input's checked,
  * an inner input, else an "on / checked / active" class word.
  */
 export function switchIsOn(f: SwitchFacts): boolean {

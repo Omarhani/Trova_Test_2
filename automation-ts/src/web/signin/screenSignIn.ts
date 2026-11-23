@@ -19,7 +19,7 @@ export interface ScreenSignInResult {
 
 /**
  * One sign-in on the screen with the login's saved steps (learned by the AI agent: {url, steps: [{fill, field} |
- * {click} | {wait}], done}), the values from Test Data → Credentials - the TS twin of utils.ScreenSignIn. Each step
+ * {click} | {wait}], done}), the values from Test Data → Credentials. Each step
  * finds its element again right before it acts; a box or button that is gone is found again by its kind (the code box
  * in the open dialog, the dialog's confirm button). Throws in plain words with the app's own reason. Never logs a value.
  */
@@ -45,7 +45,7 @@ async function runSteps(page: Page, url: string, login: string, recipe: JsonObje
   const steps = (Array.isArray(recipe.steps) ? recipe.steps : []) as Step[];
   let healed = false;
   const codeSaved = steps.some((s) => s.fill !== undefined && family(s.field) === 'otp');
-  const way = new CodeWay(codeSaved, wayWanted(fields)); // bug 81: the app may ask how to send its code first
+  const way = new CodeWay(codeSaved, wayWanted(fields)); // the app may ask how to send its code first
   await page.goto(start, { waitUntil: 'domcontentloaded', timeout: 30_000 });
   screenWayTold(); // the row says it signed in on the screen
   signInStepShown(page, 'open', { e: `the sign-in page as ${login}` });
@@ -68,10 +68,10 @@ async function runSteps(page: Page, url: string, login: string, recipe: JsonObje
     const now = (step.fill ?? step.click)!;
     el ??= await findNow(page, now, 2000);
     if (step.click !== undefined) { await clickStep(page, now, el); signInStepShown(page, 'click', { e: plain(now) }); continue; }
-    if (family(step.field) === 'otp') await keepCodesHidden(page, el); // review 993: a saved code step - covered before typing (pictures, video)
+    if (family(step.field) === 'otp') await keepCodesHidden(page, el); // a saved code step - covered before typing (pictures, video)
     await typeStep(page, now, el, valueOf(fields, login, step.field ?? ''));
     signInStepShown(page, 'type', typedWords(step.field ?? ''));
-    if (family(step.field) === 'otp' && i < steps.length - 1 && await inAfterCode(page, done, start, now)) break; // bug 81
+    if (family(step.field) === 'otp' && i < steps.length - 1 && await inAfterCode(page, done, start, now)) break; // the app signed in by itself after the code
     if (fix === 'submit') await pressDialogButton(page);
   }
   return finish(page, url, recipe, done, start, healed, started, stop, new CodeStep(steps, fields, login), way);
@@ -83,7 +83,7 @@ async function finish(page: Page, url: string, recipe: JsonObject, done: string,
   let saidSince = 0;
   for (const until = Date.now() + 20_000; Date.now() < until && !stop?.aborted; await page.waitForTimeout(400)) {
     if ((await signedInNow(page, done, start)) === null) return { healed: healed ? recipe : undefined };
-    if (await way.send(page)) { saidSince = 0; continue; } // bug 81: the way to get the code, before the code box
+    if (await way.send(page)) { saidSince = 0; continue; } // the way to get the code, before the code box
     if (await code.tryOnce(page)) { healed = true; saidSince = 0; continue; } // the code the steps never named
     const says = await pageSays(page);
     saidSince = says ? saidSince || Date.now() : 0;
@@ -96,7 +96,7 @@ async function finish(page: Page, url: string, recipe: JsonObject, done: string,
 }
 
 /**
- * Bug 81: a step's element; a code box that is not there while the app asks how to send the code - the first way is
+ * a step's element; a code box that is not there while the app asks how to send the code - the first way is
  * picked and sent, then the code box is looked for again
  */
 async function boxOrWay(page: Page, step: Step, selector: string, way: CodeWay): Promise<ElementHandle | null> {
@@ -110,8 +110,8 @@ async function boxOrWay(page: Page, step: Step, selector: string, way: CodeWay):
 }
 
 /**
- * bug 81: the app signs in by itself once the code is typed - looked for ~3 s before the next saved step; the code's own
- * box must be gone too (review 1012: with no done sign a plain code box would look signed in)
+ * the app signs in by itself once the code is typed - looked for ~3 s before the next saved step; the code's own
+ * box must be gone too (with no done sign a plain code box would look signed in)
  */
 async function inAfterCode(page: Page, done: string, start: string, box: string): Promise<boolean> {
   for (const until = Date.now() + 3000; Date.now() < until; await page.waitForTimeout(300)) {

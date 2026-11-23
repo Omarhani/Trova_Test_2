@@ -2,8 +2,8 @@ import { randomUUID } from 'node:crypto';
 import { Json, JsonObject } from './json';
 
 /**
- * The pieces of a sign-in recipe (Test Data -> Programmatically) - nothing here knows the app; the TS twin of
- * utils.ApiSignInRecipe. Placeholders: {{login:Field|Other name>transform}}, {{keep:name.path}}, {{new:id}}.
+ * The pieces of a sign-in recipe (Test Data -> Programmatically) - nothing here knows the app.
+ * Placeholders: {{login:Field|Other name>transform}}, {{keep:name.path}}, {{new:id}}.
  * A whole-string placeholder keeps the JSON shape of its value.
  */
 const PLACE = /\{\{(login|keep|new):([^}>]+)(?:>([^}]+))?}}/;

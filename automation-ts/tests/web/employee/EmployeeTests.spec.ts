@@ -18,6 +18,7 @@ test('testAddANewEmployee', async ({ page }) => {
   const seen = await addEmployee(requests, employee, ADDED_TOAST, ['testEditAnEmployeesData', 'testDeleteAnEmployee']);
   checkTrue('The Add employee drawer closes after Save', seen.drawerClosed);
   checkEquals('The success message after Save', seen.toast, ADDED_TOAST);
+  checkEquals('Rows for the new user name in the Incomplete tab', seen.rowsFound, 1);
 });
 
 test('testEditAnEmployeesData', async ({ page }) => {
@@ -28,6 +29,8 @@ test('testEditAnEmployeesData', async ({ page }) => {
   const seen = await editEmployee(requests, userName, newFirstName, newJobTitle, EDITED_TOAST);
   checkEquals('The success message after Save', seen.toast, EDITED_TOAST);
   checkTrue('The Edit employee drawer closes after Save', seen.drawerClosed);
+  checkEquals('The saved First name', seen.firstNameSaved, newFirstName);
+  checkEquals('The saved Job title', seen.jobTitleSaved, newJobTitle);
 });
 
 test('testDeleteAnEmployee', async ({ page }) => {

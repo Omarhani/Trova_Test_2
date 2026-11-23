@@ -2,7 +2,7 @@ import { CDPSession, Page } from '@playwright/test';
 import { withCodesHidden } from './signin/codeCover';
 
 /**
- * The browser's step pictures at 720p (Java's size, utils.BrowserGifRecorder: 1920 x 1080 becomes 1280 x 720) and JPEG 80 -
+ * The browser's step pictures at 720p (Java's size: 1920 x 1080 becomes 1280 x 720) and JPEG 80 -
  * sharp at 720p, never smaller (JPEG 60 looked blurry); 180 KB a full-window JPEG 75 was too costly.
  */
 export const WEB_PICTURE = { width: 1280, quality: 80 } as const;
@@ -20,7 +20,7 @@ function devToolsOf(page: Page): Promise<CDPSession | undefined> {
 
 /** the window's picture, no wider than WEB_PICTURE.width (Chrome / Edge scale it while taking it; others as they are) */
 export async function webShot(page: Page, timeout = 5000): Promise<Buffer> {
-  return withCodesHidden(page, () => shoot(page, timeout)); // review 993: no code digit on any picture
+  return withCodesHidden(page, () => shoot(page, timeout)); // no code digit on any picture
 }
 
 async function shoot(page: Page, timeout: number): Promise<Buffer> {

@@ -6,7 +6,7 @@ export const LONG_POLL_MS = 10_000;
 const open = new WeakMap<Page, Map<Request, number>>();
 
 /**
- * Session #358: the page's own calls (xhr / fetch) are followed from the first page object on - a search sent by pressing
+ * the page's own calls (xhr / fetch) are followed from the first page object on - a search sent by pressing
  * Enter is still on its way while the list shows no rows. Once per page; never fails.
  */
 export function followRequests(page: Page): void {

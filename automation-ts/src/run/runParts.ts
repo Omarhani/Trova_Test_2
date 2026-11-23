@@ -11,7 +11,7 @@ export interface RunParts {
   warmPhone: () => Promise<void>;
   /** the run's kept phone session closed */
   endPhone: () => Promise<void>;
-  /** item 10: the run's phone cases stop at once with this reason (the API cases and clean-up still run) */
+  /** the run's phone cases stop at once with this reason (the API cases and clean-up still run) */
   stopPhoneCases: (why: string) => void;
   say: (line: string) => void;
 }
@@ -30,7 +30,7 @@ async function allOf(steps: Array<() => unknown>): Promise<void> {
 }
 
 /**
- * Item 10: the phone server is a set-up part -
+ * the phone server is a set-up part -
  * tried once more when it does not start; still down = the reason for the phone cases, never the whole run's failure.
  */
 async function phoneServer(p: RunParts): Promise<{ stop?: () => void; down?: string }> {
@@ -51,7 +51,7 @@ function words(e: unknown): string {
 }
 
 /**
- * Review R1-21: a run never leaves its browser or phone server running. A set-up step that breaks (the phone server,
+ * A run never leaves its browser or phone server running. A set-up step that breaks (the phone server,
  * the before-run check) closes what was already started, then fails the run. At the run's end the phone session, the
  * phone server and the browser are closed FIRST, then the run's files go - a file error never leaves them running.
  */
