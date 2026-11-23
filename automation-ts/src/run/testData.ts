@@ -16,7 +16,7 @@ export interface EmailInbox {
 }
 
 /**
- * The run's environment data from Trova (Test Data -> Environments) - the TS twin of utils.TestData: addresses, API
+ * The run's environment data from Trova (Test Data -> Environments): addresses, API
  * headers, the phone app. Trova is the only source; no data file in the code.
  */
 export class TestData {

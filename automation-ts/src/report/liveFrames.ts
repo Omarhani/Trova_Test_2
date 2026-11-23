@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { emit } from './liveEvents';
 
-/** at most one picture this often (utils.LiveFeed.FRAME_GAP_MS) */
+/** at most one picture this often */
 const FRAME_GAP_MS = 600;
 const FRAME = /^frame-(\d{6})\.(jpg|png)$/;
 

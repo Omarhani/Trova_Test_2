@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import { testData } from '../run/testData';
 import { retryOnce } from './browserSlow';
 
-/** how long a page open waits for the whole page, then for the page itself (utils.PageOpen) */
+/** how long a page open waits for the whole page, then for the page itself */
 export interface OpenWaits {
   firstMs: number;
   fullMs: number;
@@ -80,7 +80,7 @@ export async function openPage(page: Page, url: string, waits: OpenWaits = OPEN_
   if (end !== 'loaded') throw end;
 }
 
-/** opens the app's page; a hung load is stopped and loaded once more (base.BrowserStart.openWithOneRetry) */
+/** opens the app's page; a hung load is stopped and loaded once more */
 export async function openWithOneRetry(page: Page, url: string, waits: OpenWaits = OPEN_WAITS,
                                        say: (line: string) => void = console.log): Promise<void> {
   if (!url.trim()) throw new Error(`No web address for the ${testData.env()} environment: add it in Trova > Test Data > Environments`);

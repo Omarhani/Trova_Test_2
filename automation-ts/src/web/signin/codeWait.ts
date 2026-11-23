@@ -57,12 +57,12 @@ export function namedWaitMs(said: string | undefined): number | undefined {
 /** a code step in a sign-in (recipe calls or screen steps): a verify / OTP / one-time / 2FA call or field - an account code is none */
 const ASKS_CODE = /verif|otp|one[\s_-]?time|\b2fa\b|\bmfa\b|totp|sms[\s_-]?code|رمز التحقق/i;
 
-/** review 988: only a sign-in that really asks a code is a code request (a kept sign-in, user name + password are not) */
+/** only a sign-in that really asks a code is a code request (a kept sign-in, user name + password are not) */
 export function usesCode(signIn: unknown): boolean {
   return signIn !== undefined && signIn !== null && ASKS_CODE.test(JSON.stringify(signIn));
 }
 
-/** review 988: the page's own words say "wait for a new code" (a wrong code with the code box open is no wait) */
+/** the page's own words say "wait for a new code" (a wrong code with the code box open is no wait) */
 export async function saysTooSoon(words: () => Promise<string>): Promise<boolean> {
   try {
     return codeTooSoon(await words());

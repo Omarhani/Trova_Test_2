@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { SavedSignIn } from './savedSignIn';
 
-/** apiRefused (review 980): the app refused the quick sign-in this run - kept when a screen sign-in is saved, so no worker runs it again */
+/** apiRefused: the app refused the quick sign-in this run - kept when a screen sign-in is saved, so no worker runs it again */
 type Entry = { saved?: SavedSignIn; refused?: string; apiRefused?: string };
 
 /** the run's sign-in folder: <automation-ts>/target/run-sign-ins-<run> (git-ignored), 'local' outside a Trova run */

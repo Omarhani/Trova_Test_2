@@ -3,6 +3,7 @@ import { recipeFor, signIn } from '../../signin/signIns';
 import { sharedSignIn } from '../../signin/sharedSignIn';
 import { BrowserState, statesFor } from '../browserState';
 import { proveSignedIn } from './appProof';
+import { provedAndLooked } from './pageLook';
 import { putState } from './browserPut';
 import { keepState, keptState } from './keptSignIn';
 import { pageSettingsFor } from './pageSettingsOnce';
@@ -29,7 +30,7 @@ async function tryStates(page: Page, web: string, login: string, states: Browser
   let why: string | null = 'nothing could be put into the browser';
   for (const state of states) {
     await putState(page, state, origin);
-    why = await proveSignedIn(page, web);
+    why = await provedAndLooked(page, () => proveSignedIn(page, web)); // an unstyled page is said, never silent
     if (!why) {
       keepState(login, state, web);
       return null;

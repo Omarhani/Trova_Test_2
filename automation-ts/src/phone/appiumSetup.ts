@@ -26,7 +26,7 @@ function start(place: AppiumPlace, args: string[]): () => void {
   };
 }
 
-/** item 10: the server gets this long to answer on /status (looked at every 250 ms) */
+/** the server gets this long to answer on /status (looked at every 250 ms) */
 export const APPIUM_START_MS = 120_000;
 
 /**
