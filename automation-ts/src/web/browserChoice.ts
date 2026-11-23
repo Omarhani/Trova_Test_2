@@ -13,7 +13,7 @@ const KNOWN: Record<string, BrowserChoice> = {
 };
 
 /**
- * The browser a suite asked for, as base.BrowserStart opens it: Chrome, Edge, Firefox and Safari (WebKit) visible,
+ * The browser a suite asked for, as the Java suites open it: Chrome, Edge, Firefox and Safari (WebKit) visible,
  * their "headless..." names hidden; an unfilled ${...} is Chrome, nothing picked is hidden Chrome.
  */
 export function browserChoice(picked: string): BrowserChoice {

@@ -1,8 +1,8 @@
 import { Page } from '@playwright/test';
 
 /**
- * The page code a sign-in reads with - the same code as the AI agent's tools (trova-browser.js FIND_SRC,
- * trova-login-field.js, trova-login-signed.js) and the Java helpers (utils.ScreenSignIn.FIND, SignInPage), so a run and
+ * The page code a sign-in reads with - the same page code Trova's AI uses
+ * and the Java helpers, so a run and
  * an AI session read a sign-in page alike. Each is a function body that takes its values as arguments[0..]. Never
  * reads or returns a typed value.
  */
@@ -27,7 +27,7 @@ for (var i = 0; i < parts.length; i++) { var one = parts[i];
   try { var e = document.querySelector(one); if (e) return e; } catch (x) {} }
 return null;`;
 
-/** the shared page helpers (trova-login-field.js HELPERS) */
+/** the shared page helpers */
 const HELPERS = String.raw`var DIALOG = '[role=dialog], [role=alertdialog], dialog[open], .modal.show, .modal.in, .mat-dialog-container, .mat-mdc-dialog-container, .cdk-overlay-pane, .swal2-popup, .ant-modal, .p-dialog, .el-dialog';
 var OTP = /otp|one-time-code|one.?time|verif|code|pin|رمز|تحقق/i;
 var seen = function (e) { var r = e.getBoundingClientRect(); var s = getComputedStyle(e); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && !e.disabled; };
@@ -89,7 +89,7 @@ for (var i = 0; i < tries.length; i++) { if (!tries[i]) continue; try { if (docu
 return null;`;
 
 /**
- * review 993: the code boxes' digits - only the boxes a run typed a code into ([data-trova-code]) and the one-digit boxes
+ * the code boxes' digits - only the boxes a run typed a code into ([data-trova-code]) and the one-digit boxes
  * beside them, never a box by the words around it ("Product code" stays). arguments[0] 'keep' covers them for good (the
  * live screen, and so the video, never draws the code), 'hide' covers them again for a picture, 'show' does nothing more.
  */

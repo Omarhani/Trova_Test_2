@@ -21,9 +21,9 @@ async function pictureNow(tab: import('@playwright/test').Page): Promise<void> {
  * sign-in gate saves its whole state for the run), the token then read from that saved state.
  */
 export const SCREEN_FIRST: ScreenFirstDeps = {
-  apiProven: (login) => quickKnown(login), // Prod rule: API FIRST - any recipe before the screen
+  apiProven: (login) => quickKnown(login), // sign-in calls first: any recipe before the screen
   screenKnown: (login) => screenKnown(login),
-  kept: (login) => { // session #355: the sign-in Trova kept (the writer's own) goes first
+  kept: (login) => { // the sign-in Trova kept (the writer's own) goes first
     try {
       return keptState(login) !== undefined;
     } catch {
