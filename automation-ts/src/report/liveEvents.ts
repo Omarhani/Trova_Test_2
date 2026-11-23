@@ -1,6 +1,6 @@
 /**
  * The live feed Trova's runner reads from a run's console - one "@@live {json}" line per event (run, test, end, step,
- * check), exactly as the Java helpers (utils.LiveFeed) print them, so the Runs tab shows a TS run the same way.
+ * check), exactly as the Java helpers print them, so the Runs tab shows a TS run the same way.
  */
 export type LiveEvent = Record<string, unknown> & { t: string };
 
