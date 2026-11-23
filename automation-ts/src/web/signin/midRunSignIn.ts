@@ -13,7 +13,7 @@ export interface MidRunDeps {
 const SIGN_IN_ADDRESS = /[/#](log-?in|sign-?in|signin|auth|sso)([/?#].*)?$/i;
 
 /**
- * The test side of the step guard for a test opened signed in - the TS twin of utils.MidRunSignIn: after a
+ * The test side of the step guard for a test opened signed in: after a
  * failed step the app counts as signed out only when one of its calls just answered 401 / 403 about its sign-in, or the
  * only a quiet refresh, never the
  * screen) and goes back to the page the step was on.

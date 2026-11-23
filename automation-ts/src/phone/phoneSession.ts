@@ -11,7 +11,7 @@ function udid(): string | undefined {
 }
 
 /**
- * A phone session on the environment's app, set up as the Java mobile tests set it up (base.PhoneOptions): app data
+ * A phone session on the environment's app, set up as the Java mobile tests set it up: app data
  * cleared at the start, permissions granted, Appium's keyboard for any text, no idle waits (the home screen animates);
  * its screen streamed to filmPort for the run's film (phoneFilmPlayer). keepAppData: the app keeps its data - and the
  * run's one sign-in in it - for a case that reuses that sign-in instead of signing in again.

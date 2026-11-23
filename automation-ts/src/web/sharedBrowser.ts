@@ -27,7 +27,7 @@ export function viewport(): { width: number; height: number } {
 /**
  * The run's ONE browser, as the Java suites keep one for the whole suite (a browser, sign-in and first
  * page per block cost +3..7 s a block): started once before the first block with its DevTools address, which goes to
- * the run screen as the live Browser view ("cdp", like utils.LiveFeed.browser). Gives back how to close it after the run.
+ * the run screen as the live Browser view ("cdp", as the Java suites send it). Gives back how to close it after the run.
  */
 export async function startSharedBrowser(): Promise<() => Promise<void>> {
   forgetHeld();

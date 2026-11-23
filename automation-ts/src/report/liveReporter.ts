@@ -44,7 +44,7 @@ export default class LiveReporter implements Reporter {
   onTestEnd(test: TestCase, result: TestResult): void {
     const skip = test.annotations.find((a) => a.type === 'skip')?.description
       ?? result.annotations.find((a) => a.type === 'skip')?.description;
-    maskErrorContexts(result.attachments); // session #355: no typed password left in the page snapshot on this computer
+    maskErrorContexts(result.attachments); // no typed password left in the page snapshot on this computer
     const out = this.tries.ends(test.id, {
       status: result.status, errors: result.errors.map((e) => e.message ?? e.value ?? ''), skipReason: skip,
       annotations: [...test.annotations, ...result.annotations], retry: result.retry, retries: test.retries,

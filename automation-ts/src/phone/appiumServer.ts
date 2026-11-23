@@ -44,7 +44,7 @@ export function appiumMain(env: NodeJS.ProcessEnv, nodePath: string, exists: (fi
 export const PHONE_DRIVER = 'uiautomator2';
 
 /**
- * the same server the Java phone suites start (base.AppiumServer), with only the driver the run uses - item 10, Test
+ * the same server the Java phone suites start, with only the driver the run uses:
  * Appium 3 loaded every installed driver (flutter-integration alone took 35 s on a busy PC)
  */
 export function appiumArgs(port: number): string[] {

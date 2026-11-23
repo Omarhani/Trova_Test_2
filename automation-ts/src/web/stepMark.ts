@@ -4,7 +4,7 @@ import { Locator, Page } from '@playwright/test';
 const POINTED = new Set(['click', 'double-click', 'right-click', 'hold', 'hover', 'drag', 'switch-on', 'switch-off']);
 
 /**
- * page code: Java's numbered step box (utils.MethodHandlesWebSteps.STEP_BOX_SCRIPT, same look) and, for a mouse step, a
+ * page code: the Java suites' numbered step box (same look) and, for a mouse step, a
  * round mark at the click point. An overlay only: fixed, on top, clicks pass through (pointer-events: none), the number
  * and the word are CSS content - the app's own elements, layout and texts are never touched.
  */

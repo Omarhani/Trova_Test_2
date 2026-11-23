@@ -16,9 +16,9 @@ const DEPS: ProvenDeps = {
 };
 
 /**
- * C15 (writer /ai/347): the login's sign-in call is known and proven on this environment - Trova's shared sign-in
+ * The login's sign-in call is known and proven on this environment - Trova's shared sign-in
  * worked, or the login has its sign-in recipe and Trova's own sign-in was not refused. Else the run signs in on the
- * screen once and keeps the full browser state (Prod's kept sign-in). Review 980: a recipe Trova only prefilled from a
+ * screen once and keeps the full browser state (the kept sign-in). A recipe Trova only prefilled from a
  * seed is not proven.
  */
 export function apiProven(login: string, d: ProvenDeps = DEPS): boolean {

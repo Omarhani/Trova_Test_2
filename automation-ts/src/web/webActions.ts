@@ -20,13 +20,13 @@ import { fieldMessageShows } from './fieldMessages';
 export const ACTION_FLOOR_MS = 5_000;
 
 /**
- * The page actions every web page object stands on - wait for the element, act, say the step in Trova's live feed -
- * the TS twin of utils.MethodHandlesWeb. A wait fails in plain words (what did not happen within N s).
+ * The page actions every web page object stands on - wait for the element, act, say the step in Trova's live feed.
+ * A wait fails in plain words (what did not happen within N s).
  */
 export class WebActions {
 
   constructor(protected readonly page: Page) {
-    followRequests(page); // session #358: a list is counted only once its answer came
+    followRequests(page); // a list is counted only once its answer came
   }
 
   protected async click(selector: string, seconds: number, element = selector): Promise<void> {
@@ -104,7 +104,7 @@ export class WebActions {
   }
 
   /**
-   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Session #358: read only
+   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Read only
    * once the list finished loading, the expected count seen twice (countWhenLoaded); -1 = it never finished loading
    */
   protected async countBecomes(selector: string, expected: number, seconds: number): Promise<number> {
@@ -225,7 +225,7 @@ export class WebActions {
     return this.at(selector).inputValue().catch(() => '');
   }
 
-  /** sets a switch on or off: reads it first, clicks only when it differs, then waits for the new state (utils.Switches) */
+  /** sets a switch on or off: reads it first, clicks only when it differs, then waits for the new state */
   protected async setSwitch(selector: string, on: boolean, seconds: number, name: string): Promise<void> {
     if (!(await this.isShownWithin(selector, Math.max(seconds, 20)))) {
       throw new Error(`The ${name} switch was not on the screen within ${Math.max(seconds, 20)} s - the page did not finish loading`);
