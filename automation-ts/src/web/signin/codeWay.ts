@@ -2,9 +2,9 @@ import { Page } from '@playwright/test';
 import { onPage, STATE } from './signInScripts';
 
 /**
- * Bug 81: after the password the app asks how to send its one-time code - e-mail or text message, then its send
- * button - before any code box shows. The same words and page code as the AI tools (agent-tools trova-login-code-way.ts,
- * PR 1005 / 1007), so a run and an AI session treat that dialog alike. Any app, any language. Reads no value.
+ * after the password the app asks how to send its one-time code - e-mail or text message, then its send
+ * button - before any code box shows. The same words and page code as the AI tools (agent-tools trova-login-code-way.ts),
+ * so a run and an AI session treat that dialog alike. Any app, any language. Reads no value.
  */
 
 /** words of a dialog button that is not the send button: cancel, close, back, resend, "try another way" */
@@ -12,7 +12,7 @@ const NO_WORDS = 'إلغاء|الغاء|اغلاق|إغلاق|cancel|close|back|
 
 /**
  * page code: the open code-way dialog - a way picked unless one is (arguments[1] = the way Test Data names, else e-mail,
- * else the first), its send button pressed; "sent" or null. Review 1012: only radios (or 2+ check boxes) are ways, and a
+ * else the first), its send button pressed; "sent" or null. Only radios (or 2+ check boxes) are ways, and a
  * cookie / consent / terms / privacy / newsletter dialog is never touched (no consent is ever given).
  */
 export const CHOOSE = String.raw`return (async function () {
@@ -62,7 +62,7 @@ export class CodeWay {
     return this.sent;
   }
 
-  /** review 1012: with no saved code step, only a page with no code box and no password box may be the way dialog */
+  /** with no saved code step, only a page with no code box and no password box may be the way dialog */
   private async mayAsk(page: Page): Promise<boolean> {
     if (this.codeSaved) return true;
     const s = await onPage<{ pw?: boolean; mid?: boolean }>(page, STATE);
@@ -70,7 +70,7 @@ export class CodeWay {
   }
 }
 
-/** review 1012: the way the login's Test Data names ("Code way": e-mail / sms ...), "" when it names none */
+/** the way the login's Test Data names ("Code way": e-mail / sms ...), "" when it names none */
 export function wayWanted(fields: Record<string, string>): string {
   const hit = Object.entries(fields).find(([k, v]) => /(way|method|channel|طريقة|وسيلة)/i.test(k) && v?.trim());
   return hit ? hit[1].trim() : '';

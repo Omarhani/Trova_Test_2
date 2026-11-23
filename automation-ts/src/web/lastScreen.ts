@@ -21,7 +21,7 @@ export async function keepTestEnd(page: Page, attach: Attach, failed: boolean, l
     await attach(FACTS, { body: line, contentType: 'text/plain' });
   }
   if (standIn) return;
-  const shot = await withCodesHidden(page, () => page.screenshot({ fullPage: false, timeout: limitMs })).catch(() => undefined); // review 993
+  const shot = await withCodesHidden(page, () => page.screenshot({ fullPage: false, timeout: limitMs })).catch(() => undefined); // no code digit on the picture
   if (shot) await attach(LAST_SCREEN, { body: shot, contentType: 'image/png' });
 }
 

@@ -20,7 +20,7 @@ const ARABIC: [RegExp, string][] = [
   [CODE_TOO_SOON_AR, 'a new one-time code cannot be sent before the last one runs out'],
 ];
 
-/** the app will not send a new one-time code yet - session #355: understood in several languages (codeWait) */
+/** the app will not send a new one-time code yet - understood in several languages (codeWait) */
 export { codeTooSoon } from './codeWait';
 
 /**

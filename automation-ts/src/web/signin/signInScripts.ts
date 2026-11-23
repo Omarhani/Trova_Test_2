@@ -89,7 +89,7 @@ for (var i = 0; i < tries.length; i++) { if (!tries[i]) continue; try { if (docu
 return null;`;
 
 /**
- * review 993: the code boxes' digits - only the boxes a run typed a code into ([data-trova-code]) and the one-digit boxes
+ * the code boxes' digits - only the boxes a run typed a code into ([data-trova-code]) and the one-digit boxes
  * beside them, never a box by the words around it ("Product code" stays). arguments[0] 'keep' covers them for good (the
  * live screen, and so the video, never draws the code), 'hide' covers them again for a picture, 'show' does nothing more.
  */

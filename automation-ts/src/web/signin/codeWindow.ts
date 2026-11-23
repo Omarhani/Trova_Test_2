@@ -18,7 +18,7 @@ export interface CodeWindowDeps {
 const FALLBACK_MS = 2 * 60_000;
 /** a little past the window, so the app's own clock has surely let it go */
 const MARGIN_MS = 5_000;
-/** review 988: a time the app names over this is no code window - the sign-in fails with the app's words */
+/** a time the app names over this is no code window - the sign-in fails with the app's words */
 const NAMED_CAP_MS = 15 * 60_000;
 
 /** exact: "2 minutes" / "90 seconds"; rough (a wait under way): whole minutes from a minute up - "2 minutes" */
@@ -40,7 +40,7 @@ export class CodeWindow {
   constructor(private readonly d: CodeWindowDeps) {}
 
   /**
-   * tooSoon: the page's words show the app still inside its window. asksCode (review 988): the sign-in really asks a
+   * tooSoon: the page's words show the app still inside its window. asksCode: the sign-in really asks a
    * code - only then is it waited for and recorded as a code request (a kept sign-in, user name + password are not).
    */
   async run<T>(login: string, signIn: () => Promise<T>, tooSoon: (e: unknown) => Promise<boolean>, asksCode = true): Promise<T> {
@@ -64,7 +64,7 @@ export class CodeWindow {
   /** the time the app named (over 15 minutes = fails with the app's words), else the login's wait, else 2 minutes */
   private windowAfter(login: string, said: string, soon: boolean, set: number | undefined, e: unknown): number {
     const named = namedWaitMs(said);
-    if (named !== undefined && named > NAMED_CAP_MS) throw e; // review 988: never hours - the app's own words
+    if (named !== undefined && named > NAMED_CAP_MS) throw e; // never hours - the app's own words
     const window = named ?? set ?? FALLBACK_MS;
     if (soon && set === undefined) {
       this.d.learn(login, window);
@@ -76,7 +76,7 @@ export class CodeWindow {
   /** waits the rest of the window since at (nothing when it has passed) */
   private async waitOut(at: number | undefined, window: number): Promise<void> {
     if (at === undefined) return;
-    // review 988: a request "in the future" (a clock that is off) never waits longer than the window
+    // a request "in the future" (a clock that is off) never waits longer than the window
     const left = Math.min(at + window + MARGIN_MS - this.d.now(), window + MARGIN_MS);
     if (left <= MARGIN_MS) return;
     this.d.say(`Waiting ${plainTime(Math.min(left, window), true)} - the app allows a new sign-in code only then`);

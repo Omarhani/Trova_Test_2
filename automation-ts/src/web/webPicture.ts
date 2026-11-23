@@ -20,7 +20,7 @@ function devToolsOf(page: Page): Promise<CDPSession | undefined> {
 
 /** the window's picture, no wider than WEB_PICTURE.width (Chrome / Edge scale it while taking it; others as they are) */
 export async function webShot(page: Page, timeout = 5000): Promise<Buffer> {
-  return withCodesHidden(page, () => shoot(page, timeout)); // review 993: no code digit on any picture
+  return withCodesHidden(page, () => shoot(page, timeout)); // no code digit on any picture
 }
 
 async function shoot(page: Page, timeout: number): Promise<Buffer> {
