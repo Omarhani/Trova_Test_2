@@ -30,6 +30,7 @@ export class PendingRequestsPage extends BasePage {
   // the list's first option is its own search box - the first real department comes after it
   private readonly firstDepartmentOption = By.xpath("(//mat-option[@role='option' and not(contains(@class,'contains-mat-select-search'))])[1]");
   private readonly saveButton = By.xpath(`//mat-dialog-container//button[${textIs(PendingRequestsTexts.save)}]`);
+  private readonly closeDrawerButton = By.xpath("//mat-dialog-container//button[.//i[contains(@class,'ri-close-line')]]");
   private readonly toastMessage = By.cssSelector('#toast-container .toast-message, mat-snack-bar-container, [role="alert"]');
   private readonly confirmMessage = By.xpath("//*[@role='dialog']//h2[@id='swal2-title']");
   private readonly okButton = By.xpath(`//*[@role='dialog']//button[${textIs(PendingRequestsTexts.ok)}]`);
@@ -102,6 +103,22 @@ export class PendingRequestsPage extends BasePage {
   /** true once the Add / Edit employee drawer has closed */
   async drawerClosed(): Promise<boolean> {
     return this.isGoneWithin(this.drawer, 15);
+  }
+
+  /** the First name the open Edit drawer shows, once it reads expected (what it holds otherwise) */
+  async firstNameShown(expected: string): Promise<string> {
+    return this.valueBecomes(this.firstNameInput, expected, 10);
+  }
+
+  /** the Job title the open Edit drawer shows, once it reads expected (what it holds otherwise) */
+  async jobTitleShown(expected: string): Promise<string> {
+    return this.valueBecomes(this.jobTitleInput, expected, 10);
+  }
+
+  /** closes the Add / Edit drawer with its close mark and waits until it is gone */
+  async closeDrawer(): Promise<void> {
+    await this.click(this.closeDrawerButton, 10, 'Close drawer button');
+    if (!(await this.isGoneWithin(this.drawer, 10))) throw new Error('The employee drawer did not close within 10 s');
   }
 
   async openIncompleteTab(): Promise<void> {
