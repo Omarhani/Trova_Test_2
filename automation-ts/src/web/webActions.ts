@@ -26,7 +26,7 @@ export const ACTION_FLOOR_MS = 5_000;
 export class WebActions {
 
   constructor(protected readonly page: Page) {
-    followRequests(page); // session #358: a list is counted only once its answer came
+    followRequests(page); // a list is counted only once its answer came
   }
 
   protected async click(selector: string, seconds: number, element = selector): Promise<void> {
@@ -104,7 +104,7 @@ export class WebActions {
   }
 
   /**
-   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Session #358: read only
+   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Read only
    * once the list finished loading, the expected count seen twice (countWhenLoaded); -1 = it never finished loading
    */
   protected async countBecomes(selector: string, expected: number, seconds: number): Promise<number> {

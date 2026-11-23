@@ -19,7 +19,7 @@ export function family(field: string | undefined): 'password' | 'otp' | 'other' 
   const f = field ?? '';
   if (/(pass|pwd|كلمة)/is.test(f)) return 'password';
   if (/(account|company|client|org|tenant|حساب|منشأة|شركة)/is.test(f)) return 'other';
-  if (/(way|method|channel|طريقة|وسيلة)/is.test(f)) return 'other'; // review 1012: "Code way" names how, not the code
+  if (/(way|method|channel|طريقة|وسيلة)/is.test(f)) return 'other'; // "Code way" names how, not the code
   if (/(otp|one.?time|code|verif|pin|sms|رمز|تحقق)/is.test(f)) return 'otp';
   return 'other';
 }
