@@ -3,8 +3,8 @@ import { doneOrMessage } from './browserMessages';
 import { WebActions } from './webActions';
 
 /**
- * Double click, right click, click and hold, hover, drag and drop, scroll inside a modal and submit - the TS twin of
- * utils.MethodHandlesWebClicks. Each waits for its element (plain words when it does not show), scrolls it into view,
+ * Double click, right click, click and hold, hover, drag and drop, scroll inside a modal and submit.
+ * Each waits for its element (plain words when it does not show), scrolls it into view,
  * acts, and says the step with the action it did. Playwright finds the element fresh on every try (no stale retries).
  */
 export class WebClicks extends WebActions {

@@ -8,7 +8,6 @@ export interface PhoneSignInBook {
 }
 
 /**
- * Item 9:
  * ONE sign-in on the phone per login and run. The first failure ends its case with its reason and is booked; every
  * later case of that login is BLOCKED at once, with no new wait. A set-up problem (the phone session lost, the network)
  * is not booked - the case gets its one more try and signs in again.

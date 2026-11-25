@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-/** loading layers of the common UI kits - only while shown (utils.Covers.KNOWN) */
+/** loading layers of the common UI kits - only while shown */
 export const COVERS = [
   '.ngx-spinner-overlay', 'ngx-spinner .overlay', '.loading-overlay', '.loader-overlay', '.page-loader', '.blockUI.blockOverlay',
   '.k-loading-mask', '.ant-spin-spinning', '.el-loading-mask', '.v-overlay--active .v-progress-circular', 'mat-progress-spinner',
@@ -8,7 +8,7 @@ export const COVERS = [
 ].join(', ');
 
 /**
- * The page has settled the way the Java helpers wait for it (utils.PageReady.await): its document is loaded and no
+ * The page has settled: its document is loaded and no
  * loading layer covers it - never "no network for 500 ms", which an app that keeps asking its server never reaches
  *. At most `ms`; never fails.
  */
@@ -23,7 +23,7 @@ export async function settle(page: Page, ms: number): Promise<void> {
 
 /**
  * a loading layer covers the page now - one that can be seen:, the movements page keeps its
- * .ngx-spinner-overlay in the page at opacity 0 when idle (Java's invisibility check counts that as gone; Playwright's
+ * .ngx-spinner-overlay in the page at opacity 0 when idle (that counts as gone here; Playwright's
  * isVisible does not look at opacity, so the page looked covered forever)
  */
 export async function coveredNow(page: Page): Promise<boolean> {

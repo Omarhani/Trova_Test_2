@@ -18,16 +18,16 @@ import { forgetHeld } from './signin/heldLogin';
 /** where the run's one browser listens (set by the run's set-up, read by every block) */
 export const SHARED = 'TROVA_BROWSER_CDP';
 
-/** the window size of the run (TROVA_WINDOW_SIZE "1920x1080"), the Java default otherwise */
+/** the window size of the run (TROVA_WINDOW_SIZE "1920x1080"), 1920 x 1080 otherwise */
 export function viewport(): { width: number; height: number } {
   const m = /^(\d{3,4})x(\d{3,4})$/.exec(process.env.TROVA_WINDOW_SIZE ?? '');
   return m ? { width: Number(m[1]), height: Number(m[2]) } : { width: 1920, height: 1080 };
 }
 
 /**
- * The run's ONE browser, as the Java suites keep one for the whole suite (a browser, sign-in and first
+ * The run's ONE browser for the whole suite (a browser, sign-in and first
  * page per block cost +3..7 s a block): started once before the first block with its DevTools address, which goes to
- * the run screen as the live Browser view ("cdp", like utils.LiveFeed.browser). Gives back how to close it after the run.
+ * the run screen as the live Browser view ("cdp"). Gives back how to close it after the run.
  */
 export async function startSharedBrowser(): Promise<() => Promise<void>> {
   forgetHeld();

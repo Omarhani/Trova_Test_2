@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 /**
- * The records a run made, per kind, so its clean-up deletes exactly those - the TS twin of utils.RunIds. Kept in a
+ * The records a run made, per kind, so its clean-up deletes exactly those. Kept in a
  * file of the run (blocks may run in different worker processes), never values of a login.
  */
 export class RunRecords {

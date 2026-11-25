@@ -8,8 +8,8 @@ import { HttpSend } from './recipe/http';
 type Say = (type: string, fields: Record<string, unknown>) => void;
 
 /**
- * A call of the test's own API client (set-up, clean-up, a sign-in by API) shown in the run's Network like the Java API
- * client's (utils.ApiReport via LiveFeed.apiCall) - web, phone or hybrid: address and bodies masked, the headers (a
+ * A call of the test's own API client (set-up, clean-up, a sign-in by API) shown in the run's Network like the page's own
+ * calls - web, phone or hybrid: address and bodies masked, the headers (a
  * token among them) never shown; a call that does something is a step too, with the main values it sent (apiStep, a
  * secret as ***; a record by its plain name, never its id). The answer or the error reaches the test unchanged.
  */

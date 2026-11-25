@@ -2,7 +2,7 @@
 export type PhoneCommand = (command: string, args: Record<string, unknown>) => Promise<unknown>;
 
 /**
- * The app as a new block's session starts it (base.PhoneOptions, noReset off): closed, its data cleared, every
+ * The app as a new block's session starts it (noReset off): closed, its data cleared, every
  * permission granted again (autoGrantPermissions), opened - on the run's kept session instead of a new one.
  */
 export async function freshApp(call: PhoneCommand, appId: string): Promise<void> {
@@ -12,7 +12,7 @@ export async function freshApp(call: PhoneCommand, appId: string): Promise<void>
   await call('mobile: activateApp', { appId });
 }
 
-/** a kept-data block: the app closed and opened again with its data (Java BaseTests.goHome) */
+/** a kept-data block: the app closed and opened again with its data */
 export async function reopenApp(call: PhoneCommand, appId: string): Promise<void> {
   await call('mobile: terminateApp', { appId });
   await call('mobile: activateApp', { appId });

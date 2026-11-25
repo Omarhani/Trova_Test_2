@@ -6,7 +6,7 @@ import { setUpSaid } from '../report/failureKind';
 export type QuickWait = <T>(login: string, recipe: unknown, attempt: () => Promise<T>) => Promise<T>;
 
 /**
- * Review of PR 988: every quick sign-in (the suite's "Log in programmatically", the API tests, a web case) waits the
+ * every quick sign-in (the suite's "Log in programmatically", the API tests, a web case) waits the
  * app's code window ONCE - only a recipe with a code step is a code request. Still refused after that = a refusal.
  */
 export function quickSignInWait(window: Pick<CodeWindow, 'run'>): QuickWait {
