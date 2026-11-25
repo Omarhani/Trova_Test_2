@@ -18,12 +18,12 @@ export interface ProofSeen {
  */
 export function proofVerdict(seen: ProofSeen): string | null {
   const no = seen.statuses.find((s) => s === 401 || s === 403);
-  if (no) return `its calls answered ${no}`;
+  if (no) return 'the app refused the saved sign-in'; // plain words, never a call or a status number
   if (!seen.held || refusedPage(seen.url)) return 'it went to its sign-in page';
   if (!seen.statuses.length) return 'it made no call of its own, so Trova could not see it signed in';
   const first = seen.statuses[0];
   if (first === 0) return 'its first call got no answer';
-  return first >= 200 && first < 300 ? null : `its first call answered ${first}`;
+  return first >= 200 && first < 300 ? null : 'the app answered with an error when it opened';
 }
 
 /** the app's own calls (never a map or monitoring call), their statuses in the order they answered */
@@ -52,7 +52,7 @@ export async function proveSignedIn(page: Page, web: string, limits: { firstMs?:
   const calls = watchStatuses(page);
   const hold = watchHold(page, HOLD);
   try {
-    // a hung load is stopped and opened once more, as Java's goHomeWeb (openWithOneRetry) does
+    // a hung load is stopped and opened once more
     const openMs = limits.openMs ?? 30_000;
     await retryOnce(() => page.goto(web, { waitUntil: 'domcontentloaded', timeout: openMs }), console.log, () => stop(page));
     await settle(page, 15_000);

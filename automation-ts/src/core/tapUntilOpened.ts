@@ -6,7 +6,7 @@ export interface TapAndLook {
 }
 
 /**
- * Taps and, when nothing opened within seconds, taps again (tries in all) - the Java tapAgainIfNothingChanged, in place of
+ * Taps and, when nothing opened within seconds, taps again (tries in all) - in place of
  * a fixed wait for a screen that loads in steps (a tap during its placeholders opens nothing). True once it opened.
  */
 export async function tapUntilOpened(io: TapAndLook, tries = 3, seconds = 3): Promise<boolean> {

@@ -13,7 +13,7 @@ async function listening(port: number): Promise<boolean> {
   }
 }
 
-/** Appium with its own log (target/appium.log, as the Java phone suites keep it); stopping kills it */
+/** Appium with its own log (target/appium.log); stopping kills it */
 function start(place: AppiumPlace, args: string[]): () => void {
   const target = path.resolve(__dirname, '..', '..', 'target');
   fs.mkdirSync(target, { recursive: true });
@@ -26,12 +26,12 @@ function start(place: AppiumPlace, args: string[]): () => void {
   };
 }
 
-/** item 10: the server gets this long to answer on /status (looked at every 250 ms) */
+/** the server gets this long to answer on /status (looked at every 250 ms) */
 export const APPIUM_START_MS = 120_000;
 
 /**
  * Playwright's global set-up of a suite with phone tests: the phone server is there before the first block and the one
- * this run started is stopped after the last (the Java phone suites do the same in BaseTests).
+ * this run started is stopped after the last.
  */
 export default async function appiumSetup(): Promise<(() => void) | undefined> {
   const url = new URL(process.env.TROVA_APPIUM_URL ?? 'http://127.0.0.1:4723');

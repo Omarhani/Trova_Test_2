@@ -7,8 +7,8 @@ export type { Json, JsonObject };
 
 /**
  * The run's data file Trova's runner writes just before a run and deletes right after it (git-ignored): the
- * environment's logins, its test data, sign-in recipes, shared sign-ins and known calls - the same file the Java
- * helpers read (TROVA_DATA_FILE, else data/credentials.json in the project). Never print a value read here.
+ * environment's logins, its test data, sign-in recipes, shared sign-ins and known calls - read from
+ * TROVA_DATA_FILE (else data/credentials.json in the project). Never print a value read here.
  */
 
 /** the name an older runner gives the run's file - still read, so a project works with every runner */

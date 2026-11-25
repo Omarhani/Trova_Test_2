@@ -27,8 +27,8 @@ function isTimeout(e: unknown): boolean {
 }
 
 /**
- * A step that finds the app signed out in the middle of a test signs in again and is tried once more - the TS twin of
- * utils.SignedOutStep + StuckStep. Only a step that failed is checked, only once: a
+ * A step that finds the app signed out in the middle of a test signs in again and is tried once more.
+ * Only a step that failed is checked, only once: a
  * second sign-out in the same case stops it in plain words. A step stuck on something else asks AI help (when the
  * run has it) and runs once more. Without a watcher a step fails as it always did.
  */

@@ -10,7 +10,7 @@ const LIMIT_MS = 60_000;
 
 /**
  * Node's fetch gave up CONNECTING after 10 s
- * ("did not answer (TypeError)", UND_ERR_CONNECT_TIMEOUT) where Java's client waits; this client has no separate connect
+ * ("did not answer (TypeError)", UND_ERR_CONNECT_TIMEOUT); this client has no separate connect
  * limit. A call that cannot reach the server says why (ECONNREFUSED, ETIMEDOUT ... = a set-up problem); one with no
  * answer in 60 s is a slow answer. Names its path, never its body.
  */
