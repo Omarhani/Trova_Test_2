@@ -30,6 +30,7 @@ export class PendingRequestsPage extends BasePage {
   // the list's first option is its own search box - the first real department comes after it
   private readonly firstDepartmentOption = By.xpath("(//mat-option[@role='option' and not(contains(@class,'contains-mat-select-search'))])[1]");
   private readonly saveButton = By.xpath(`//mat-dialog-container//button[${textIs(PendingRequestsTexts.save)}]`);
+  private readonly closeDrawerButton = By.xpath("//mat-dialog-container//button[i[contains(@class,'ri-close-line')]]");
   private readonly toastMessage = By.cssSelector('#toast-container .toast-message, mat-snack-bar-container, [role="alert"]');
   private readonly confirmMessage = By.xpath("//*[@role='dialog']//h2[@id='swal2-title']");
   private readonly okButton = By.xpath(`//*[@role='dialog']//button[${textIs(PendingRequestsTexts.ok)}]`);
@@ -42,6 +43,11 @@ export class PendingRequestsPage extends BasePage {
     return By.xpath(`//table//tbody//tr[td[normalize-space()=${xpathLiteral(userName)}]]`);
   }
 
+  /** the row of this user name whose name cell reads fullName */
+  private rowNamed(userName: string, fullName: string): string {
+    return By.xpath(`//table//tbody//tr[td[normalize-space()=${xpathLiteral(userName)}]][td[normalize-space()=${xpathLiteral(fullName)}]]`);
+  }
+
   private editButtonOf(userName: string): string {
     return By.xpath(`//tr[td[normalize-space()=${xpathLiteral(userName)}]]//button[app-icon[@iconname='edit']]`);
   }
@@ -51,10 +57,11 @@ export class PendingRequestsPage extends BasePage {
   }
 
   // --- Page actions ---
-  /** the page is open: its heading shows */
+  /** the page is open: it settled, then its heading shows (it can take more than 20 s on Test after a slow sign-in) */
   async waitShown(): Promise<void> {
-    if (!(await this.isShownWithin(this.pageHeading, 20))) {
-      throw new Error('The Registration Requests page did not open within 20 s');
+    await this.settled(20);
+    if (!(await this.isShownWithin(this.pageHeading, 45))) {
+      throw new Error('The Registration Requests page did not open within 45 s');
     }
   }
 
@@ -119,6 +126,22 @@ export class PendingRequestsPage extends BasePage {
   /** the rows showing this user name once their count is expected (waits up to 15 s) */
   async rowCountBecomes(userName: string, expected: number): Promise<number> {
     return this.countBecomes(this.rowOf(userName), expected, 15);
+  }
+
+  /** the rows of this user name showing the name fullName, once their count is expected (waits up to 15 s) */
+  async namedRowCountBecomes(userName: string, fullName: string, expected: number): Promise<number> {
+    return this.countBecomes(this.rowNamed(userName, fullName), expected, 15);
+  }
+
+  /** the job title on the open Edit employee drawer, once it reads expected (what it holds otherwise) */
+  async jobTitleBecomes(expected: string): Promise<string> {
+    return this.valueBecomes(this.jobTitleInput, expected, 10);
+  }
+
+  /** closes the drawer without saving and waits until it is gone */
+  async closeDrawer(): Promise<void> {
+    await this.click(this.closeDrawerButton, 10, 'Close drawer button');
+    if (!(await this.isGoneWithin(this.drawer, 10))) throw new Error('The employee drawer did not close within 10 s');
   }
 
   async openEditEmployee(userName: string): Promise<void> {

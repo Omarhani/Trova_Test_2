@@ -15,7 +15,7 @@ export interface SaveSeen {
   drawerClosed: boolean;
 }
 
-/** Steps 2-9 of "Add a new employee" on the open page; the saved employee is handed to the tests in handTo right after the save */
+/** Steps 2-9 of "Add a new employee" on the open page; the employee is handed to the tests in handTo right after Save is pressed */
 export async function addEmployee(requests: PendingRequestsPage, employee: NewEmployee, expectedToast: string, handTo: string[]): Promise<SaveSeen> {
   await requests.openAddEmployee();
   await requests.typeFirstName(employee.firstName);
@@ -25,16 +25,21 @@ export async function addEmployee(requests: PendingRequestsPage, employee: NewEm
   await requests.selectDepartment(employee.department);
   await requests.typeJobTitle(employee.jobTitle);
   await requests.clickSave();
+  handTo.forEach((test) => caseRecords.made(test, EMPLOYEE, employee.userName));
   const toast = await requests.toastAfterSave(expectedToast);
-  const drawerClosed = await requests.drawerClosed();
-  if (drawerClosed) handTo.forEach((test) => caseRecords.made(test, EMPLOYEE, employee.userName));
-  return { toast, drawerClosed };
+  return { toast, drawerClosed: await requests.drawerClosed() };
 }
 
 /** Steps 2-3 of Edit / Delete: the Incomplete tab, then search the user name (Enter) */
 async function findInIncomplete(requests: PendingRequestsPage, userName: string): Promise<void> {
   await requests.openIncompleteTab();
   await requests.searchFor(userName);
+}
+
+/** The proof the Add saved: the rows of the new user name in the Incomplete tab (waits for 1) */
+export async function addedEmployeeRows(requests: PendingRequestsPage, userName: string): Promise<number> {
+  await findInIncomplete(requests, userName);
+  return requests.rowCountBecomes(userName, 1);
 }
 
 /** Steps 2-7 of "Edit an employee's data" on the open page */
@@ -47,6 +52,22 @@ export async function editEmployee(requests: PendingRequestsPage, userName: stri
   await requests.clickSave();
   const toast = await requests.toastAfterSave(expectedToast);
   return { toast, drawerClosed: await requests.drawerClosed() };
+}
+
+/** What the app keeps after an edit */
+export interface EditSaved {
+  rowsWithNewName: number;
+  jobTitle: string;
+}
+
+/** The proof the Edit saved: search again, the row shows the new name, the edit form shows the new job title (then closed) */
+export async function savedEdit(requests: PendingRequestsPage, userName: string, newFullName: string, newJobTitle: string): Promise<EditSaved> {
+  await requests.searchFor(userName);
+  const rowsWithNewName = await requests.namedRowCountBecomes(userName, newFullName, 1);
+  await requests.openEditEmployee(userName);
+  const jobTitle = await requests.jobTitleBecomes(newJobTitle);
+  await requests.closeDrawer();
+  return { rowsWithNewName, jobTitle };
 }
 
 /** What the app showed while deleting */
