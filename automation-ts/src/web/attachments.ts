@@ -3,8 +3,8 @@ import * as path from 'node:path';
 import { projectRoot } from '../run/runDataFile';
 
 /**
- * The files uploaded in Trova (Test Data > Attachments) - an Excel to import, a picture or a PDF to upload, a JSON body -
- * by the name they have there; the TS twin of utils.Attachments. The runner brings data/attachments up to date before
+ * The files uploaded in the platform (Test Data > Attachments) - an Excel to import, a picture or a PDF to upload, a JSON body -
+ * by the name they have there. The runner brings data/attachments up to date before
  * every run; TROVA_ATTACHMENTS_DIR points elsewhere.
  */
 export function attachmentsDir(env: Record<string, string | undefined> = process.env): string {

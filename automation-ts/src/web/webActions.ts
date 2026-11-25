@@ -20,13 +20,13 @@ import { fieldMessageShows } from './fieldMessages';
 export const ACTION_FLOOR_MS = 5_000;
 
 /**
- * The page actions every web page object stands on - wait for the element, act, say the step in Trova's live feed -
- * the TS twin of utils.MethodHandlesWeb. A wait fails in plain words (what did not happen within N s).
+ * The page actions every web page object stands on - wait for the element, act, say the step in the platform's live feed.
+ * A wait fails in plain words (what did not happen within N s).
  */
 export class WebActions {
 
   constructor(protected readonly page: Page) {
-    followRequests(page); // session #358: a list is counted only once its answer came
+    followRequests(page); // a list is counted only once its answer came
   }
 
   protected async click(selector: string, seconds: number, element = selector): Promise<void> {
@@ -54,7 +54,7 @@ export class WebActions {
     this.picture();
   }
 
-  /** a read-only box a picker fills (date / time): its value set by script with input + change, as the picker does (Java insertTimeMovement) */
+  /** a read-only box a picker fills (date / time): its value set by script with input + change, as the picker does */
   protected async putValue(selector: string, seconds: number, value: string, element = selector): Promise<void> {
     this.say('type', element, selector, typedValue(element, selector, value));
     const found = this.at(selector);
@@ -71,7 +71,7 @@ export class WebActions {
     this.picture();
   }
 
-  /** a click the page's script makes on the element's button (one a layer still fading out would catch - Java JS click) */
+  /** a click the page's script makes on the element's button (one a layer still fading out would catch) */
   protected async clickByScript(selector: string, seconds: number, element = selector): Promise<void> {
     this.say('click', element, selector);
     const found = this.at(selector);
@@ -104,7 +104,7 @@ export class WebActions {
   }
 
   /**
-   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Session #358: read only
+   * the number of matches once it is expected (waits up to seconds); the last count read otherwise. Read only
    * once the list finished loading, the expected count seen twice (countWhenLoaded); -1 = it never finished loading
    */
   protected async countBecomes(selector: string, expected: number, seconds: number): Promise<number> {
@@ -225,7 +225,7 @@ export class WebActions {
     return this.at(selector).inputValue().catch(() => '');
   }
 
-  /** sets a switch on or off: reads it first, clicks only when it differs, then waits for the new state (utils.Switches) */
+  /** sets a switch on or off: reads it first, clicks only when it differs, then waits for the new state */
   protected async setSwitch(selector: string, on: boolean, seconds: number, name: string): Promise<void> {
     if (!(await this.isShownWithin(selector, Math.max(seconds, 20)))) {
       throw new Error(`The ${name} switch was not on the screen within ${Math.max(seconds, 20)} s - the page did not finish loading`);
@@ -255,7 +255,7 @@ export class WebActions {
     this.picture();
   }
 
-  /** the page has settled as Java waits for it: loaded, no loading layer (max seconds) - never a fixed sleep */
+  /** the page has settled: loaded, no loading layer (max seconds) - never a fixed sleep */
   protected async settled(seconds: number): Promise<void> {
     await settle(this.page, seconds * 1000);
   }
@@ -275,7 +275,7 @@ export class WebActions {
     });
   }
 
-  /** one wait or action through the run's step guard: a mid-test sign-out signs in again and runs it once more; stuck = AI help */
+  /** one wait or action through the run's step guard: a mid-test sign-out signs in again and runs it once more; stuck = step help */
   protected guarded<T>(step: () => Promise<T>): Promise<T> {
     return stepGuard.once(this.page, step);
   }
@@ -290,9 +290,9 @@ export class WebActions {
   }
 
   /**
-   * the step's element marked for its picture once it shows (Java's numbered box, a click mark for a mouse step), after
+   * the step's element marked for its picture once it shows (a numbered box, a click mark for a mouse step), after
    * the picture before it is taken (1 s at most); gives back the time left of the step's own wait, never under
-   * ACTION_FLOOR_MS - as Java, the action is not cut once its wait found the element
+   * ACTION_FLOOR_MS - the action is not cut once its wait found the element
    */
   protected async marked(found: Locator, action: string, seconds: number): Promise<number> {
     if (!stepPictures.on()) return seconds * 1000;

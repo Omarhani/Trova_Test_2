@@ -37,7 +37,7 @@ const SCREENS_ONLY = "This suite runs in full screen mode: its sign-in and clean
   + ' (the suite parameter "mode" is "ui" - set it to "hybrid" for sign-in and clean-up by API)';
 
 /**
- * The run's ONE API sign-in per login and side: Trova's shared one first, else the login's recipe once. A refusal is
+ * The run's ONE API sign-in per login and side: the platform's shared one first, else the login's recipe once. A refusal is
  * never tried again in the run (repeated refusals can lock the account): the web side's refusal skips every later case
  * of the login (SkipLogin) - only the clean-up goes on, with the sign-in the run holds. Full screen mode never signs in by API. Never prints a value.
  */
@@ -46,7 +46,7 @@ export async function signIn(login: string, side: Side, again = false): Promise<
   const key = signInKey(login, side);
   const before = side === 'web' ? runSignInBook.refused(login) : undefined;
   if (before) return cleanUpSignIn(login, before, { role: cleanUpRole, held: () => heldSignIn(key, login, side), say: console.log });
-  const apiNo = side === 'web' ? runSignInBook.apiRefused(login) : undefined; // review 980: refused in any worker - the screen sign-in's token
+  const apiNo = side === 'web' ? runSignInBook.apiRefused(login) : undefined; // refused in any worker - the screen sign-in's token
   if (apiNo) return screenSignInToken(apiNo, runSignInBook.saved(login), recipeOrNone(login));
   if (side === 'web' && screenFirstDeps) { // no proven quick sign-in = once on the screen, its token for the app's calls
     const viaScreen = await screenFirst(login, screenFirstDeps);
@@ -67,7 +67,7 @@ export async function signIn(login: string, side: Side, again = false): Promise<
       done.delete(key); // a network break, not a refusal: the second try signs in again
       throw new SetUpProblem(said);
     }
-    // review 988: the app's code window was already waited out once inside the sign-in - refused for the run (PR 980)
+    // the app's code window was already waited out once inside the sign-in - refused for the run
     const why = callsChanged(said) ?? said;
     refused.set(key, why);
     if (side === 'web') runSignInBook.refuse(login, why); // every later case of this login is skipped with this reason
@@ -75,7 +75,7 @@ export async function signIn(login: string, side: Side, again = false): Promise<
   }
 }
 
-/** session #355: the run's sign-in of the login was made on the sign-in screen (else by quick calls or a kept one) */
+/** the run's sign-in of the login was made on the sign-in screen (else by quick calls or a kept one) */
 export function signedInOnScreen(login: string): boolean {
   return runSignInBook.saved(login)?.onScreen === true;
 }
@@ -105,7 +105,7 @@ export function recipeFor(login: string, side: Side): JsonObject {
 
 /**
  * The sign-in the tester saved in a real browser (web side; it ended = the plain reason, never a new one), the run's
- * sign-in an earlier block made (Java: one sign-in per run), Trova's shared one, else the login's recipe - kept for
+ * sign-in an earlier block made (one sign-in per run), the platform's shared one, else the login's recipe - kept for
  * the run's later blocks. again: the sign-in ran out in the middle of the run - a new one by the recipe, never one
  * that ran out.
  */
@@ -117,7 +117,7 @@ async function fresh(key: string, login: string, side: Side, again: boolean): Pr
   const base = side === 'phone' ? testData.mobileApiUrl() : testData.apiUrl();
   const recipe = recipeFor(login, side);
   const result = await quickWait(login, recipe, () => runRecipe(recipe, credentials.of(login), base, reportedSend(send), () => testData.apiHeadersForOneCall())
-    .catch((e: unknown) => plainly(() => { throw e; }))); // review 988: the app's code window waited out once
+    .catch((e: unknown) => plainly(() => { throw e; }))); // the app's code window waited out once
   if (!result.token) throw new Error(`The sign-in as ${login} gave no token`);
   runSignIns.keep(key, result);
   // Network marks these calls "API" (the test's own client); the page's own calls (its GetAccountIdByCode on opening ...) are "Web"
@@ -134,7 +134,7 @@ function recipeOrNone(login: string): JsonObject | undefined {
   }
 }
 
-/** the run's sign-in an earlier block made, else Trova's shared one - no sign-in call; undefined = neither */
+/** the run's sign-in an earlier block made, else the platform's shared one - no sign-in call; undefined = neither */
 function heldSignIn(key: string, login: string, side: Side): SignInResult | undefined {
   const earlier = runSignIns.get(key);
   if (earlier) {
@@ -146,7 +146,7 @@ function heldSignIn(key: string, login: string, side: Side): SignInResult | unde
   return shared;
 }
 
-/** the app's refusal in plain words with its own reason (Java SignInRefusal); any other error as it is */
+/** the app's refusal in plain words with its own reason; any other error as it is */
 function plainly<T>(run: () => T): T {
   try {
     return run();

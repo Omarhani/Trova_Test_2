@@ -3,7 +3,7 @@ import { KnownCall } from './recipe/knownCall';
 
 export * from './recipe/knownCall';
 
-/** the run file's known calls (Trova hands them to the run), read once */
+/** the run file's known calls (the platform hands them to the run), read once */
 let all: KnownCall[] | undefined;
 
 export function knownCalls(): KnownCall[] {

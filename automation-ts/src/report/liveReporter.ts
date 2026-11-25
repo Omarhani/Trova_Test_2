@@ -4,6 +4,7 @@ import { CaseTries, TryDecisions } from './caseTries';
 import { maskErrorContexts } from './errorContextMask';
 import { sayFailureFacts } from './failureFacts';
 import { liveLine, testType } from './liveEvents';
+import { planBlocks } from './runPlan';
 import { trapBlock } from './trapBlock';
 
 /** what the reporter is given: where a second try's decision goes, where its lines go (tests give fakes) */
@@ -13,8 +14,8 @@ export interface LiveReporterOptions {
 }
 
 /**
- * Playwright reporter that speaks Trova's live feed: "run" when the suite starts, "test" / "end" per test with its
- * <test> block (the Playwright project) - the same events the Java runs print. The tests' own lines (steps, checks,
+ * Playwright reporter that speaks the platform's live feed: "run" when the suite starts, "test" / "end" per test with its
+ * <test> block (the Playwright project). The tests' own lines (steps, checks,
  * one row per case - a set-up problem's second try is told on the same
  * row (CaseTries), a wrong result is FAILED at once and never tried again; BLOCKED says why the case could not run.
  */
@@ -30,7 +31,8 @@ export default class LiveReporter implements Reporter {
 
   onBegin(config: FullConfig, suite: Suite): void {
     this.emit('run', { suite: process.env.TROVA_SUITE_NAME ?? 'TS suite', env: process.env.TROVA_ENV ?? '',
-                       browser: process.env.TROVA_BROWSER ?? '', tests: suite.allTests().length, workers: config.workers });
+                       browser: process.env.TROVA_BROWSER ?? '', tests: suite.allTests().length, workers: config.workers,
+                       blocks: planBlocks(suite.allTests()) });
   }
 
   onTestBegin(test: TestCase, result: TestResult): void {
@@ -44,7 +46,7 @@ export default class LiveReporter implements Reporter {
   onTestEnd(test: TestCase, result: TestResult): void {
     const skip = test.annotations.find((a) => a.type === 'skip')?.description
       ?? result.annotations.find((a) => a.type === 'skip')?.description;
-    maskErrorContexts(result.attachments); // session #355: no typed password left in the page snapshot on this computer
+    maskErrorContexts(result.attachments); // no typed password left in the page snapshot on this computer
     const out = this.tries.ends(test.id, {
       status: result.status, errors: result.errors.map((e) => e.message ?? e.value ?? ''), skipReason: skip,
       annotations: [...test.annotations, ...result.annotations], retry: result.retry, retries: test.retries,

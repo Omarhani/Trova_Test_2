@@ -7,7 +7,7 @@ const SECRET_FIELD = /pass(word|code)?|secret|token|\botp\b|otp|code|\bpin\b|ÙƒÙ
 const PASSWORD_BOX = /type\s*=\s*["']?password/i;
 export const MASK = '***';
 
-/** where a secret goes: Trova's own channel (its reference and value), never a step, event, log or picture */
+/** where a secret goes: the platform's own channel (its reference and value), never a step, event, log or picture */
 type Send = (ref: string, value: string) => void;
 
 /** the secret field test: by its name or its password box */
@@ -15,13 +15,13 @@ export function secretField(element: string, selector = ''): boolean {
   return SECRET_FIELD.test(element) || PASSWORD_BOX.test(selector);
 }
 
-/** Trova's runner takes it (TROVA_SECRET_CHANNEL=1) and hands it to Trova sealed; else it is not sent at all */
+/** a platform run takes it (TROVA_SECRET_CHANNEL=1) and hands it to the platform sealed; else it is not sent at all */
 const channel: Send = (ref, value) => {
   if (process.env.TROVA_SECRET_CHANNEL === '1') emit('secret', { ref, v: value });
 };
 
 /**
- * The run's secret values: each one masked as *** with its own reference (Trova keeps the value sealed, shown only on
+ * The run's secret values: each one masked as *** with its own reference (the platform keeps the value sealed, shown only on
  * request to a permitted user), and remembered so no later text (a check, a message) shows it.
  */
 export class SecretValues {

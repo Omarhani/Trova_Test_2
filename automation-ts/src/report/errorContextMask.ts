@@ -33,7 +33,7 @@ export function maskSnapshot(text: string, secrets: string[]): string {
   return out;
 }
 
-/** every secret value of the run's logins (Test Data → Credentials); none outside a Trova run */
+/** every secret value of the run's logins (Test Data → Credentials); none outside a platform run */
 export function loginSecrets(): string[] {
   try {
     const logins = section('logins');

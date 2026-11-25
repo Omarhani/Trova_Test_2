@@ -13,7 +13,7 @@ import { signInStepShown } from './signInStepShown';
 
 /**
  * Full screen mode: the run's ONE sign-in on the app's sign-in page with the login's saved steps, then proved. A robot
- * check that blocks it stops at once with that reason - Trova never gets around it. null = proved, else why not.
+ * check that blocks it stops at once with that reason - the platform never gets around it. null = proved, else why not.
  */
 export async function screenSignInto(page: Page, web: string, login: string): Promise<string | null> {
   const recipe = screenRecipe(login);
@@ -27,7 +27,7 @@ export async function screenSignInto(page: Page, web: string, login: string): Pr
       robotTimeoutWords(appName(web), login), abort); // stops in seconds, not at the 5-min limit
     if (healed) keepRecipe(login, healed);
   } catch (e) {
-    stoppedHere(page, e); // session #355: the run page shows where it stopped, with the browser's picture
+    stoppedHere(page, e); // the run page shows where it stopped, with the browser's picture
     if (e instanceof SignInProblem) throw e;
     await stopOnRobot(page, web, login);
     throw e;

@@ -17,7 +17,7 @@ type Ask = (page: Page, failed: Error, where: StuckAt) => Promise<HelpAnswer | n
 
 const STUCK = /not attached to the DOM|intercepts pointer events|element is not (visible|enabled|editable|stable)|element was detached/i;
 
-/** the failures AI help can get a step past: a time-out, a redrawn element, an element not ready or covered */
+/** the failures step help can get a step past: a time-out, a redrawn element, an element not ready or covered */
 export function stuck(e: unknown): boolean {
   return e instanceof errors.TimeoutError || (e instanceof Error && (e.name === 'TimeoutError' || STUCK.test(e.message)));
 }
@@ -27,9 +27,9 @@ function isTimeout(e: unknown): boolean {
 }
 
 /**
- * A step that finds the app signed out in the middle of a test signs in again and is tried once more - the TS twin of
- * utils.SignedOutStep + StuckStep. Only a step that failed is checked, only once: a
- * second sign-out in the same case stops it in plain words. A step stuck on something else asks AI help (when the
+ * A step that finds the app signed out in the middle of a test signs in again and is tried once more.
+ * Only a step that failed is checked, only once: a
+ * second sign-out in the same case stops it in plain words. A step stuck on something else asks step help (when the
  * run has it) and runs once more. Without a watcher a step fails as it always did.
  */
 export class SignedOutStep {
@@ -52,7 +52,7 @@ export class SignedOutStep {
     this.againAllowed = signInAgain;
   }
 
-  /** one step's wait or action; signed out = sign in again and once more; stuck = AI help and once more */
+  /** one step's wait or action; signed out = sign in again and once more; stuck = step help and once more */
   async once<T>(page: Page, step: () => Promise<T>): Promise<T> {
     const w = this.watcher;
     if (!w || page !== this.watched) return this.act(page, step);
@@ -73,7 +73,7 @@ export class SignedOutStep {
     }
   }
 
-  /** one step's action: stuck = AI help, then the step once more; any other failure as it is */
+  /** one step's action: stuck = step help, then the step once more; any other failure as it is */
   async act<T>(page: Page, step: () => Promise<T>): Promise<T> {
     try {
       return await step();

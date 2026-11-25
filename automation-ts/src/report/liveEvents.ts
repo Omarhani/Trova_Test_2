@@ -1,6 +1,6 @@
 /**
- * The live feed Trova's runner reads from a run's console - one "@@live {json}" line per event (run, test, end, step,
- * check), exactly as the Java helpers (utils.LiveFeed) print them, so the Runs tab shows a TS run the same way.
+ * The live feed the platform reads from a run's console - one "@@live {json}" line per event (run, test, end, step,
+ * check), so the Runs tab shows the run as it goes.
  */
 export type LiveEvent = Record<string, unknown> & { t: string };
 
@@ -17,7 +17,7 @@ export function emit(type: string, fields: Record<string, unknown> = {}): void {
   process.stdout.write(`${liveLine({ t: type, ...fields })}\n`);
 }
 
-/** a test's kind in the words the run screen knows (Java: Web, Mobile, API) - "Mobile" shows the phone as a phone */
+/** a test's kind in the words the run screen knows (Web, Mobile, API) - "Mobile" shows the phone as a phone */
 export function testType(groups: string[]): 'Mobile' | 'Web' | 'API' {
   return groups.includes('Mob') ? 'Mobile' : groups.includes('Web') ? 'Web' : 'API';
 }

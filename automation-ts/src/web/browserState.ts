@@ -2,19 +2,36 @@ import { asObject, asText, byName, Json, runData, section } from '../run/runData
 import { SignInResult } from '../api/client/recipe/recipeSignIn';
 import { recipeFor } from '../signin/signIns';
 import { withFreshToken } from './freshToken';
+import { keptCookies } from './signin/keptSignIn';
 
 /** What the browser gets before the app's first page: names to values per place. */
 export interface BrowserState {
   localStorage: Record<string, string>;
   sessionStorage: Record<string, string>;
   cookies: Record<string, string>;
+  /** the kept cookies whole - their own domain, path and flags (their value: cookies[name] when it is there) */
+  cookieList?: KeptCookie[];
+  /** the app's IndexedDB databases (every store and record), put back before the app opens; an older copy has none */
+  indexedDB?: Json[];
 }
 
-type Kept = { localStorage?: Json; sessionStorage?: Json; cookies?: Json } | undefined;
+/** a cookie as the platform keeps it: every part the app set, never only its name and value */
+export interface KeptCookie {
+  name: string;
+  value: string;
+  domain?: string;
+  path?: string;
+  expires?: number;
+  httpOnly?: boolean;
+  secure?: boolean;
+  sameSite?: 'Strict' | 'Lax' | 'None';
+}
+
+type Kept = { localStorage?: Json; sessionStorage?: Json; cookies?: Json; indexedDB?: Json } | undefined;
 
 /**
- * The browser state of a signed-in run, built the way the Java helpers build it:
- * the kept full state Trova has for the login, the API sign-in's keys over it, the sign-in page's settings (language,
+ * The browser state of a signed-in run, built from:
+ * the kept full state the platform has for the login, the API sign-in's keys over it, the sign-in page's settings (language,
  * theme ...) only where missing, then Test Data -> Browser storage on top. Values are never printed.
  */
 export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[], storage: Json[]): BrowserState {
@@ -23,6 +40,9 @@ export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[
     sessionStorage: texts(kept?.sessionStorage),
     cookies: cookieTexts(kept?.cookies),
   };
+  const whole = keptCookies(kept?.cookies);
+  if (whole.length) state.cookieList = whole; // each kept cookie whole, not only its name and value
+  if (Array.isArray(kept?.indexedDB) && kept.indexedDB.length) state.indexedDB = kept.indexedDB; // the app's own database in the browser
   Object.assign(state.localStorage, api.browser.localStorage);
   Object.assign(state.sessionStorage, api.browser.sessionStorage);
   Object.assign(state.cookies, api.browser.cookies);
@@ -40,14 +60,15 @@ export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[
   return state;
 }
 
-/** the state for login from the run file: Trova's kept sign-in, the login's recipe settings, Test Data storage */
+/** the state for login from the run file: the platform's kept sign-in, the login's recipe settings, Test Data storage */
 /**
- * The tries the Java helpers make: the kept full state with the API keys over
+ * The two tries: the kept full state with the API keys over
  * it, then - when the app still does not open signed in - the API keys alone (a kept state can hold another tenant's
  * or an old session's values). One try when nothing is kept.
  */
 export function composeStates(api: SignInResult, kept: Kept, recipeBrowser: Json[], storage: Json[]): BrowserState[] {
-  const keptAny = kept && [kept.localStorage, kept.sessionStorage, kept.cookies].some((v) => v && Object.keys(asObject(v as Json)).length);
+  const keptAny = kept && ([kept.localStorage, kept.sessionStorage, kept.cookies].some((v) => v && Object.keys(asObject(v as Json)).length)
+    || (Array.isArray(kept.indexedDB) && kept.indexedDB.length > 0));
   const first = composeState(api, kept, recipeBrowser, storage);
   return keptAny ? [first, composeState(api, undefined, recipeBrowser, storage)] : [first];
 }
@@ -66,7 +87,7 @@ export function statesFor(login: string, api: SignInResult, pageSettings: Json[]
   return composeStates(api, kept, [...recipeBrowser, ...pageSettings], Array.isArray(storage) ? storage : []);
 }
 
-function placeOf(place: string): keyof BrowserState {
+function placeOf(place: string): 'localStorage' | 'sessionStorage' | 'cookies' {
   return place === 'sessionStorage' ? 'sessionStorage' : place === 'cookies' ? 'cookies' : 'localStorage';
 }
 

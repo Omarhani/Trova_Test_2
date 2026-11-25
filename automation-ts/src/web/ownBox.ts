@@ -2,7 +2,7 @@ import { Locator } from '@playwright/test';
 
 /**
  * The box shows and is itself enabled and editable: it is typed into even when a list row around it is marked
- * aria-disabled - as Java's sendKeys does. A box that is itself
+ * aria-disabled. A box that is itself
  * disabled or read-only gives false: it is typed into the strict way and fails as that step.
  */
 export async function ownBoxReady(found: Locator, ms: number): Promise<boolean> {

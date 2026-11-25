@@ -5,17 +5,17 @@ import { endOfToken } from '../web/signin/signInClock';
 
 type Kept = Record<string, SignInResult>;
 
-/** the run's sign-ins file (the blocks run in worker processes one after another); '' outside a Trova run: nothing kept */
+/** the run's sign-ins file (the blocks run in worker processes one after another); '' outside a platform run: nothing kept */
 export function runSignInsFile(): string {
   const run = process.env.TROVA_RUN_ID?.trim();
   return run ? path.resolve(__dirname, '..', '..', 'target', `sign-ins-${run.replace(/[^\w-]/g, '_')}.json`) : '';
 }
 
 /**
- * The sign-ins this run made with the app's own sign-in calls, for every later block of the same run - Java signs in
- * once per run ("every test of this run uses this sign-in"); signed in 3 times, once per block's
+ * The sign-ins this run made with the app's own sign-in calls, for every later block of the same run - one sign-in
+ * per run ("every test of this run uses this sign-in"); signed in 3 times, once per block's
  * worker. One that runs out soon is not given again. Kept in the run's target folder only while the run goes on
- * (forgotten at its start and end, like Trova's own run file); never printed.
+ * (forgotten at its start and end, like the platform's own run file); never printed.
  */
 export class RunSignIns {
   constructor(private readonly file: () => string = runSignInsFile, private readonly now: () => number = () => Date.now()) {}

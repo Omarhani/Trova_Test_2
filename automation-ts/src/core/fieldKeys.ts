@@ -12,8 +12,8 @@ const SPARE = 5;
 /**
  * How many delete keys empty the focused box: one for every letter it holds and 5 more, FULL when it is not known.
  * select all + delete took ONE letter off a Flutter box ("sam.lee" ->
- * "sam.le" + the new value) - the box is emptied the way Trova's AI-run tools do it (agent-tools trova-phone-shell
- * clearField), with no 60-key cap so a long box is emptied whole. Part of the shared core.
+ * "sam.le" + the new value) - the box is emptied from both ends,
+ * with no 60-key cap so a long box is emptied whole. Part of the shared core.
  */
 export function clearCount(field: FieldState | undefined): number {
   return !field || field.password || !field.text ? FULL : [...field.text].length + SPARE;

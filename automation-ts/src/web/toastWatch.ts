@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test';
 export const TOAST = '#toast-container .toast-message, #toast-container .toast-title, .toast-message, mat-snack-bar-container, .p-toast-message-text, [role="alert"]';
 
 /**
- * the app's message showed after Log in, but Trova read "no message" - a toast can come and go
+ * the app's message showed after Log in, but the platform read "no message" - a toast can come and go
  * between two looks. The watch starts BEFORE the action: every message the page shows from then on is kept in the page,
  * and the reader gives the first one (waiting up to seconds), "" when none showed. A new page (navigation) starts empty.
  */

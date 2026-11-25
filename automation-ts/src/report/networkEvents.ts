@@ -1,9 +1,9 @@
 import { onStandIn } from '../web/signin/standIn';
 
 /**
- * The run screen's Network and Problems rows, the same "call" / "open" events and fields the Java helpers send
- * (utils.LiveFeed.network / apiCall), with the same masking: a token, password or verification code never leaves the
- * run - in an address (utils.TestTimeline.maskUrl) or a body (utils.ApiReport.mask). Cookies and auth headers are never
+ * The run screen's Network and Problems rows, as "call" / "open" events,
+ * with the same masking: a token, password or verification code never leaves the
+ * run - in an address or a body. Cookies and auth headers are never
  * sent at all.
  */
 
@@ -24,7 +24,7 @@ export interface CallFacts {
 
 const URL_SECRET = /((?:token|password|verificationcode|[?&]otp|[?&]pin)=)[^&]*/gi;
 const BODY_SECRET = /("(?:[a-z_]*(?:password|token|verificationcode|secret)[a-z_]*|otp[a-z_]*|pin|pincode)"\s*:\s*)("[^"]*"|\d+)/gi;
-/** the page's monitoring, not its work (utils.NetworkRecorder.NOISE) */
+/** the page's monitoring, not its work */
 const NOISE = /^https?:\/\/[^/]*(google|gstatic|doubleclick|clarity\.ms|hotjar|lr-ingest|logrocket|mixpanel|eum\.)[^/]*\/.*/;
 const BODY_OK = 1000;
 const BODY_FAILED = 4000;
@@ -104,6 +104,6 @@ export function wantedCall(resourceType: string, url: string, method: string): b
   if (!/^https?:/i.test(url) || method.toUpperCase() === 'OPTIONS') return false;
   if (!['xhr', 'fetch', 'document'].includes(resourceType)) return false;
   const u = url.toLowerCase();
-  if (onStandIn(url)) return false; // Trova's own sign-in stand-in: never shown to customers
+  if (onStandIn(url)) return false; // the platform's own sign-in stand-in: never shown to customers
   return !u.includes('/assets/') && !u.includes('/intake/v2/rum/') && !NOISE.test(u);
 }

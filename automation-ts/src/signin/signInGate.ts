@@ -24,15 +24,15 @@ export interface GateDeps {
   byApi: (login: string, fresh: boolean) => Promise<string | null>;
   /** full screen mode: the sign-in page with the login's saved steps, proved: null, else why not */
   byScreen: (login: string) => Promise<string | null>;
-  /** C15: the login's sign-in call is known and proven on this environment (none given = as before: by API) */
+  /** the login's sign-in call is known and proven on this environment (none given = as before: by API) */
   apiProven?: (login: string) => boolean;
-  /** C15: the login has saved screen sign-in steps (none given = no screen fallback) */
+  /** the login has saved screen sign-in steps (none given = no screen fallback) */
   screenKnown?: (login: string) => boolean;
-  /** session #355: the sign-in Trova kept (the writer's own, an earlier run's) put in whole: false = none kept */
+  /** the sign-in the platform kept (the writer's own, an earlier run's) put in whole: false = none kept */
   putKept?: (login: string) => Promise<boolean>;
-  /** review 988: the app rejected the kept sign-in - Trova forgets it, so later runs do not try it again */
+  /** the app rejected the kept sign-in - the platform forgets it, so later runs do not try it again */
   dropKept?: (login: string) => void;
-  /** session #356: the login's quick sign-in opened the app signed in - Trova counts its sign-in recipe as proven */
+  /** the login's quick sign-in opened the app signed in - the platform counts its sign-in recipe as proven */
   quickProven?: (login: string) => void;
   /** the sign-in the tester saved from a real browser for this environment and login */
   browser: (login: string) => BrowserLook;
@@ -41,7 +41,7 @@ export interface GateDeps {
   /** the browser's whole state now (Playwright storageState + session storage) */
   capture: () => Promise<Omit<SavedSignIn, 'madeAt' | 'fresh'>>;
   put: (saved: SavedSignIn) => Promise<void>;
-  /** the app opened and proved signed in: null, else why not ("its calls answered 401") */
+  /** the app opened and proved signed in: null, else why not ("the app refused the saved sign-in") */
   prove: () => Promise<string | null>;
   /** "in 4 min" when the saved sign-in runs out soon, else null */
   renewDue: (saved: SavedSignIn) => string | null;
@@ -123,9 +123,9 @@ export class SignInGate {
       this.signInBroke(login, e);
     }
     // hybrid: the run's API sign-in is the saved one every case uses
-    // no saved browser file was used here - it is Trova's own sign-in
+    // no saved browser file was used here - it is the platform's own sign-in
     if (why) this.refuse(login, refusedWords(login, why));
-    if (!this.onScreen) this.d.quickProven?.(login); // session #356: a prefilled recipe counts only once proven
+    if (!this.onScreen) this.d.quickProven?.(login); // a prefilled recipe counts only once proven
     this.d.book.save(login, { ...(await this.d.capture()), madeAt: this.d.now(), fresh, ...(this.onScreen ? { onScreen: true } : {}) });
     this.d.hold(login);
     this.d.proved(login);
@@ -134,7 +134,7 @@ export class SignInGate {
   }
 
   /**
-   * C15 (Prod's kept sign-in): full screen mode, or no proven sign-in call, signs in on the sign-in screen; else by the
+   * The kept sign-in: full screen mode, or no proven sign-in call, signs in on the sign-in screen; else by the
    * app's own calls, and a refusal there gets ONE sign-in on the screen before the login is refused (no step added when
    * the quick sign-in works). A network break or a slow page is no refusal - it goes on as before.
    */
@@ -146,7 +146,7 @@ export class SignInGate {
     try {
       why = await this.d.byApi(login, fresh > 0);
     } catch (e) {
-      // review 988: still "wait for a new code" after the one wait = refused at once; the screen would ask a new code
+      // still "wait for a new code" after the one wait = refused at once; the screen would ask a new code
       if (!screen || !refusedByApp(e) || codeTooSoon(e instanceof Error ? e.message : String(e))) throw e;
       why = e instanceof Error ? e.message : String(e);
     }
@@ -157,7 +157,7 @@ export class SignInGate {
   }
 
   /**
-   * HARD RULE one login per run (session #355): before the run's first sign-in, the sign-in Trova kept is put back
+   * One sign-in per login and run: before the run's first sign-in, the sign-in the platform kept is put back
    * whole and proved - no new sign-in, no new one-time code. false = none kept, or it no longer opens the app.
    */
   private async byKept(login: string): Promise<boolean> {

@@ -4,7 +4,7 @@ import { screenRecipe } from './keptSignIn';
 import { SignInResult } from '../../api/client/recipe/recipeSignIn';
 import { JsonObject } from '../../api/client/recipe/json';
 
-/** what apiProven reads: Trova's shared sign-in of the login (throws = refused), the login's web recipe (throws = none) */
+/** what apiProven reads: the platform's shared sign-in of the login (throws = refused), the login's web recipe (throws = none) */
 export interface ProvenDeps {
   shared: (login: string) => SignInResult | undefined;
   recipe: (login: string) => JsonObject;
@@ -16,16 +16,16 @@ const DEPS: ProvenDeps = {
 };
 
 /**
- * C15 (writer /ai/347): the login's sign-in call is known and proven on this environment - Trova's shared sign-in
- * worked, or the login has its sign-in recipe and Trova's own sign-in was not refused. Else the run signs in on the
- * screen once and keeps the full browser state (Prod's kept sign-in). Review 980: a recipe Trova only prefilled from a
+ * The login's sign-in call is known and proven on this environment - the platform's shared sign-in
+ * worked, or the login has its sign-in recipe and the platform's own sign-in was not refused. Else the run signs in on the
+ * screen once and keeps the full browser state (the kept sign-in). A recipe the platform only prefilled from a
  * seed is not proven.
  */
 export function apiProven(login: string, d: ProvenDeps = DEPS): boolean {
   try {
     if (d.shared(login)) return true;
   } catch {
-    return false; // Trova's own sign-in behind the screens was refused
+    return false; // the platform's own sign-in behind the screens was refused
   }
   try {
     const source = d.recipe(login).source;
@@ -37,7 +37,7 @@ export function apiProven(login: string, d: ProvenDeps = DEPS): boolean {
 
 /**
  * API FIRST: the login has a quick sign-in to try before the screen -
- * a proven one, or any recipe Trova has (a prefilled one too). Its shared sign-in refused = none.
+ * a proven one, or any recipe the platform has (a prefilled one too). Its shared sign-in refused = none.
  */
 export function quickKnown(login: string, d: ProvenDeps = DEPS): boolean {
   if (apiProven(login, d)) return true;

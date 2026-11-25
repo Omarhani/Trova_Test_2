@@ -18,7 +18,7 @@ export interface SavedSignIn {
   fresh: number;
   /** made from the sign-in the tester saved in a real browser: it ends then (epoch ms, 0 = not known), never renewed */
   browser?: { endsAt: number };
-  /** session #355: made by a sign-in on the sign-in screen (the run line says how it really signed in) */
+  /** made by a sign-in on the sign-in screen (the run line says how it really signed in) */
   onScreen?: boolean;
 }
 

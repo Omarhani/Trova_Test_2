@@ -25,8 +25,8 @@ export function needsPhone(plan: SuitePlan): boolean {
 }
 
 /**
- * Appium as the Java phone suites find it: the runner kit's (APPIUM_BINARY_PATH + NODE_BINARY_PATH, given to every run
- * by RunnerKit), else the Appium installed with this node (npm -g: next to node, ../lib, or Windows' %APPDATA%/npm).
+ * Appium as the run finds it: the one given to every run (APPIUM_BINARY_PATH +
+ * NODE_BINARY_PATH), else the Appium installed with this node (npm -g: next to node, ../lib, or Windows' %APPDATA%/npm).
  */
 export function appiumMain(env: NodeJS.ProcessEnv, nodePath: string, exists: (file: string) => boolean): AppiumPlace | undefined {
   const kit = env.APPIUM_BINARY_PATH?.trim();
@@ -44,7 +44,7 @@ export function appiumMain(env: NodeJS.ProcessEnv, nodePath: string, exists: (fi
 export const PHONE_DRIVER = 'uiautomator2';
 
 /**
- * the same server the Java phone suites start (base.AppiumServer), with only the driver the run uses - item 10, Test
+ * one server for the whole suite, with only the driver the run uses:
  * Appium 3 loaded every installed driver (flutter-integration alone took 35 s on a busy PC)
  */
 export function appiumArgs(port: number): string[] {
@@ -54,7 +54,7 @@ export function appiumArgs(port: number): string[] {
 
 /**
  *  ("Unable to connect to 127.0.0.1:4723"): the phone server this run needs. One already listening is
- * used as it is (an AI phone session or another run may own it) and never stopped; else this run starts its own and
+ * used as it is (an assisted phone session or another run may own it) and never stopped; else this run starts its own and
  * gives back how to stop it. Plain words when Appium is missing or does not start.
  */
 export async function ensureAppium(port: number, deps: AppiumDeps): Promise<(() => void) | undefined> {

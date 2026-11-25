@@ -11,7 +11,7 @@ function inWords(ms: number): string {
 
 /**
  * A proof run: a case that ran out of its time in plain words, always FAILED. Its page set-up holds the sign-in and
- * opening the app's page, so an app that never opens must show - only a browser that stopped answering is Trova's own
+ * opening the app's page, so an app that never opens must show - only a browser that stopped answering is the platform's own
  * set-up problem (OPEN_FROZEN). undefined = not a case timeout.
  */
 export function testTimeout(text: string): { kind: Kind; reason: string } | undefined {

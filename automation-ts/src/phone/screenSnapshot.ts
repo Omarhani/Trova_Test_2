@@ -25,7 +25,7 @@ export interface ScreenNode {
 }
 
 /**
- * The phone screen read ONCE (one page tree, about 0.2 s - the AI-run tools' way) and asked in memory: is an element
+ * The phone screen read ONCE (one page tree, about 0.2 s) and asked in memory: is an element
  * there, where is its middle, which boxes are ticked.
  * A locator is read by the resource ids and descriptions it names; a locator this cannot read fails, never guessed.
  */

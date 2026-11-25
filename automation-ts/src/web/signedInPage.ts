@@ -18,8 +18,8 @@ function signInAgainInCase(): boolean {
 }
 
 /**
- * The case's app opened signed in as login in the run's ONE browser, with the run's ONE sign-in of that login (
- * Java utils.SignedInRun): made once on first use and saved, reused by every later case with no sign-in call, proved
+ * The case's app opened signed in as login in the run's ONE browser, with the run's ONE sign-in of that login:
+ * made once on first use and saved, reused by every later case with no sign-in call, proved
  * before any step counts (SignInGate). The page is then watched: a step that finds the app signed out gets one fresh
  * sign-in and is tried once more (MidRunSignIn, hybrid only). Never the sign-in page in hybrid mode.
  */

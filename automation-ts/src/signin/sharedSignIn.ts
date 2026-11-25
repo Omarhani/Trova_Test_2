@@ -2,9 +2,9 @@ import { asObject, asText, byName, section } from '../run/runDataFile';
 import { SignInResult } from '../api/client/recipe/recipeSignIn';
 
 /**
- * The ONE sign-in Trova made for this login and environment, shared with everything running at the same time (an AI
+ * The ONE sign-in the platform made for this login and environment, shared with everything running at the same time (an assistant
  * run, a writer's try, a suite run) - "signInShared" / "signInSharedPhone" in the run file. Using it means no new
- * one-time code is asked of the app. undefined = Trova made none; throws when Trova's own sign-in was refused.
+ * one-time code is asked of the app. undefined = the platform made none; throws when the platform's own sign-in was refused.
  */
 export function sharedSignIn(login: string, phone: boolean): SignInResult | undefined {
   const one = asObject(byName(section(phone ? 'signInSharedPhone' : 'signInShared'), login));

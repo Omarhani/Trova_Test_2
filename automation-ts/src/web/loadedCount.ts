@@ -34,7 +34,7 @@ export async function countWhenLoaded(page: Page, count: () => Promise<number>, 
 
 /**
  * a short call open, or a loading layer while it may still mean loading: the 5 s cap on the layer holds only when no call
- * at all is open (review of PR 994: a search answering after 10 s+ under its spinner never reads as a mid-search 0)
+ * at all is open (a search answering after 10 s+ under its spinner never reads as a mid-search 0)
  */
 async function busy(page: Page, start: number): Promise<boolean> {
   if (requestsInFlight(page) > 0) return true;

@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 
-/** helped = the AI got past it (did = what it did); else why = the plain reason for the failure, or undefined */
+/** helped = the assistant got past it (did = what it did); else why = the plain reason for the failure, or undefined */
 export interface HelpAnswer {
   helped: boolean;
   did: string;

@@ -25,7 +25,7 @@ type Allow = (at: [number, number], s: ScreenSnapshot) => Promise<void>;
 
 /**
  * Android's own permission question (location) covered the app and the step waited for an element
- * under it. A known step, no AI needed: while Android asks, the question is answered "allow" as a person would and the
+ * under it. A known step, no assistant needed: while Android asks, the question is answered "allow" as a person would and the
  * step looks on within its own wait (at most 3 answers). The screen with the element, else undefined.
  */
 export async function lookPastQuestions(lookUntil: LookUntil, allow: Allow,

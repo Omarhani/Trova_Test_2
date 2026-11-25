@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-/** <automation-ts>/target/run-tries-<run>.json (git-ignored), 'local' outside a Trova run */
+/** <automation-ts>/target/run-tries-<run>.json (git-ignored), 'local' outside a platform run */
 export function retryBookFile(env: NodeJS.ProcessEnv = process.env): string {
   const run = (env.TROVA_RUN_ID?.trim() || 'local').replace(/[^\w-]/g, '_');
   return path.resolve(__dirname, '..', '..', 'target', `run-tries-${run}.json`);

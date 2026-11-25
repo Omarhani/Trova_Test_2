@@ -1,7 +1,7 @@
 /**
- * When a sign-in runs out, read from its own values - the TS twin of utils.SignInClock: a token's "exp"
+ * When a sign-in runs out, read from its own values: a token's "exp"
  * (only its middle part is decoded, never printed), a key / field named like expires, expiry, exp, a cookie's end time.
- * Sign-ins can live 3 h or 5 min (banking): Trova refreshes one that runs out within min(2 min, 20% of its life). The
+ * Sign-ins can live 3 h or 5 min (banking): the platform refreshes one that runs out within min(2 min, 20% of its life). The
  * keys that came with the sign-in count (every key when none is tagged); the shortest end wins. Knows no app.
  */
 

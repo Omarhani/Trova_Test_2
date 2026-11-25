@@ -7,11 +7,11 @@ import { withCodesHidden } from './signin/codeCover';
 type Attach = (name: string, attachment: { body: string | Buffer; contentType: string }) => Promise<void>;
 
 /**
- * The end of every web test, as base.BaseTests keeps it: its last screen, passed or failed (it goes with the run's
+ * The end of every web test: its last screen, passed or failed (it goes with the run's
  * report); for a failure the page's address and menu texts first. A browser that cannot give a picture leaves the facts.
  */
 export async function keepTestEnd(page: Page, attach: Attach, failed: boolean, limitMs = 10_000): Promise<void> {
-  const standIn = onStandIn(page.url()); // Trova's own sign-in stand-in: no address, no picture of it
+  const standIn = onStandIn(page.url()); // the platform's own sign-in stand-in: no address, no picture of it
   if (failed) {
     // an app whose own script hung never answered a read - each read of the page has a limit
     const menu = await within(menuTexts(page), limitMs);
@@ -21,7 +21,7 @@ export async function keepTestEnd(page: Page, attach: Attach, failed: boolean, l
     await attach(FACTS, { body: line, contentType: 'text/plain' });
   }
   if (standIn) return;
-  const shot = await withCodesHidden(page, () => page.screenshot({ fullPage: false, timeout: limitMs })).catch(() => undefined); // review 993
+  const shot = await withCodesHidden(page, () => page.screenshot({ fullPage: false, timeout: limitMs })).catch(() => undefined); // no code digit on the picture
   if (shot) await attach(LAST_SCREEN, { body: shot, contentType: 'image/png' });
 }
 

@@ -39,7 +39,7 @@ export function heldOpen(dir: string, rename: (from: string, to: string) => void
 
 const plain = (s: string): string => s.replace(/["']/g, '').replace(/\//g, '\\').toLowerCase();
 
-/** the browsers started with dir as their kept folder - Trova's own (a run's, or one restarted after a reboot) */
+/** the browsers started with dir as their kept folder - the platform's own (a run's, or one restarted after a reboot) */
 export function leftoversOn(dir: string, running: Running[]): number[] {
   const flag = `--disk-cache-dir=${plain(dir)}`;
   return running.filter((r) => {
@@ -77,7 +77,7 @@ const REAL: FreeSteps = {
 };
 
 /**
- * The kept folder can be this run's alone: no program holds it, or the Trova browser left on it (its run ended, or
+ * The kept folder can be this run's alone: no program holds it, or the platform browser left on it (its run ended, or
  * Windows restarted it after a reboot) is closed first. A folder held by anything else is never used (false).
  */
 export function freeForThisRun(dir: string, steps: FreeSteps = REAL): boolean {

@@ -13,7 +13,7 @@ export function robotCheckIn(frames: FrameSeen[]): boolean {
   return frames.some((f) => f.visible && ROBOT.test(f.url) && !/[?&]size=invisible\b/i.test(f.url));
 }
 
-/** the plain reason: Trova never gets around a robot check */
+/** the plain reason: the platform never gets around a robot check */
 export function robotWords(app: string, login: string): string {
   return `${app}'s sign-in page asks for a robot check ("I'm not a robot"), so signing in as ${login} on the screen stopped`
     + ' - Trova never gets around it: run this suite in hybrid mode (sign-in by the app\'s own calls)';

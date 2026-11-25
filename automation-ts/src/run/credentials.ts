@@ -2,8 +2,8 @@ import { asObject, asText, byName, JsonObject, section } from './runDataFile';
 import { loginField } from '../api/client/recipe/recipeValues';
 
 /**
- * The logins saved in Trova (Test Data -> Credentials), by the name the tester gave them - the TS twin of
- * utils.Credentials. Never log or report a value read here.
+ * The logins saved in the platform (Test Data -> Credentials), by the name the tester gave them.
+ * Never log or report a value read here.
  */
 export class Credentials {
   constructor(private readonly read: () => JsonObject = () => section('logins')) {}

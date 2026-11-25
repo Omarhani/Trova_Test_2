@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { emit } from './liveEvents';
 
-/** at most one picture this often (utils.LiveFeed.FRAME_GAP_MS) */
+/** at most one picture this often */
 const FRAME_GAP_MS = 600;
 const FRAME = /^frame-(\d{6})\.(jpg|png)$/;
 
@@ -10,8 +10,8 @@ type Say = (type: string, fields: Record<string, unknown>) => void;
 
 /**
  * The run screen's live Browser (and its step pictures afterwards): each picture goes into the run's picture folder
- * (TROVA_LIVE_DIR, the runner sends every announced one to Trova) as frame-000001.jpg and is announced with the step it
- * shows - the same "frame" event the Java helpers send. A run not started by Trova has no folder and sends nothing.
+ * (TROVA_LIVE_DIR, the runner sends every announced one to the platform) as frame-000001.jpg and is announced with the step it
+ * shows - a "frame" event. A run not started by the platform has no folder and sends nothing.
  * The blocks run one after another in worker processes: a worker numbers on from the pictures already in the folder.
  */
 export class LiveFrames {

@@ -7,7 +7,7 @@ import { keepCodesHidden } from './codeCover';
 type Step = { fill?: string; field?: string; click?: string; wait?: number };
 type Shown = (page: Page, field: string) => Promise<void> | void;
 
-/** review 993: a writer's own run (the runner says so) may finish a sign-in code on the screen; a suite never */
+/** a writer's own run (the runner says so) may finish a sign-in code on the screen; a suite never */
 export function writerTry(): boolean {
   return process.env.TROVA_WRITER_TRY === '1';
 }
@@ -19,12 +19,12 @@ const showTyping: Shown = async (page, field) => {
 };
 
 /**
- * The saved screen steps ended on the app's "enter the code" dialog (the AI had
+ * The saved screen steps ended on the app's "enter the code" dialog (the assistant had
  * typed the code with another tool, so its steps never named it) and the run waited 20 s, then failed. In a writer's
  * own run, when the app asks for its code and the steps have no code step, the login's fixed code from Test Data is
  * typed into the code box (one-digit boxes take it digit by digit) and the dialog's button pressed - once. Both are
- * added to the steps, so the next runs do them by themselves. A suite never does this (review 993): it stops and says
- * to sign in once in an AI session. The step's picture is taken before the code is typed. Never logs a value.
+ * added to the steps, so the next runs do them by themselves. A suite never does this: it stops and says
+ * to sign in once in an assisted session. The step's picture is taken before the code is typed. Never logs a value.
  */
 export class CodeStep {
   private tried = false;
@@ -44,9 +44,9 @@ export class CodeStep {
     const box = await pickBox(page, field);
     const el = box ? await findNow(page, box, 2000) : null;
     if (!box || !el) return false;
-    await keepCodesHidden(page, el); // review 993: covered before typing - the live video never draws the code
+    await keepCodesHidden(page, el); // covered before typing - the live video never draws the code
     await el.click({ timeout: 5000 });
-    await this.shown(page, field); // its picture before the code is in the boxes (review 993)
+    await this.shown(page, field); // its picture before the code is in the boxes
     await page.keyboard.type(this.fields[field], { delay: 60 });
     this.steps.push({ fill: box, field });
     const button = await pressed(page);

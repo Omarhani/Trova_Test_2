@@ -15,8 +15,8 @@ export function isPageSetting(key: string, value: string | null | undefined): bo
 }
 
 /**
- * The page settings the app's sign-in page writes, read ONCE - the TS twin of utils.PageSettingsCapture (
- * a sign-in learned before Trova kept page settings opened the app unstyled): the app opened
+ * The page settings the app's sign-in page writes, read ONCE (
+ * a sign-in learned before the platform kept page settings opened the app unstyled): the app opened
  * signed out with nothing in the browser, what it writes is read, and the browser is cleaned again. No fixed wait: the
  * page is read as soon as it is loaded, and again for at most 2 s while it has written nothing yet.
  */

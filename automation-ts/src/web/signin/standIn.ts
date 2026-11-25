@@ -1,5 +1,5 @@
 /**
- * Trova's own blank stand-in page on the app's origin: a kept sign-in is put into the browser there before the app
+ * The platform's own blank stand-in page on the app's origin: a kept sign-in is put into the browser there before the app
  * opens. It is ours on any app - never shown to customers: no event, picture, step text or report names it.
  */
 export const STAND_IN_PATH = '/trova-sign-in';

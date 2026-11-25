@@ -1,8 +1,8 @@
 import { emit } from './liveEvents';
 
 /**
- * a TS run tells Trova the phone and the browser it
- * really used, so the Runs list and the run page show them ("realme 7", "Chrome") as they do for Java and AI runs.
+ * a TS run tells the platform the phone and the browser it
+ * really used, so the Runs list and the run page show them ("realme 7", "Chrome") as they do for every run.
  */
 
 /** the phone of a session: its serial and model, from Appium's own answer; undefined when it says none */

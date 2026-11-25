@@ -1,7 +1,7 @@
 /**
- * Ticking a box on a phone screen and SEEING it ticked - the rule the AI-run phone tools learned (
- * platform/agent-tools/trova-phone-check-tap.js + trova-phone-server-box.js), as the first part of the one shared
- * TS module (AGENT-TOOLS-TS-PLAN.md, core): a box that is a whole row ticks only at its tick, at the row's start - so its
+ * Ticking a box on a phone screen and SEEING it ticked - the rule learned on real phone screens,
+ * as the first part of the one shared
+ * TS module (core): a box that is a whole row ticks only at its tick, at the row's start - so its
  * start, then its end (right-to-left apps), then its middle; a small box in its middle. After each tap the state is read
  * back a few times; a box that never changes fails honestly. Platform-free: tap, read and wait come from the caller.
  */

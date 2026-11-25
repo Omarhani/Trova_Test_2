@@ -52,7 +52,7 @@ export async function beforeRobotTimeout<T>(work: Promise<T>, watch: RobotWatch,
   }
 }
 
-/** the plain reason: Trova never gets around a robot check */
+/** the plain reason: the platform never gets around a robot check */
 export function robotTimeoutWords(app: string, login: string): string {
   return `${app}'s robot check (reCAPTCHA) timed out on its sign-in page, so signing in as ${login} on the screen stopped`
     + " - Trova never gets around a robot check: use the tester's saved browser sign-in (hybrid mode)";
