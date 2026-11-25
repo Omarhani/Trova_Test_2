@@ -12,8 +12,8 @@ export interface CleanUpSignInDeps {
 
 /**
  * a case's sign-in of the login was stopped earlier in the run. A later case is skipped with that
- * reason; the clean-up still deletes what the run made - by API, with the sign-in the run already holds (Java runs its
- * clean-up after a failed case too). It holds none = skipped with the reason: never a new sign-in call.
+ * reason; the clean-up still deletes what the run made - by API, with the sign-in the run already holds (the
+ * clean-up runs after a failed case too). It holds none = skipped with the reason: never a new sign-in call.
  */
 export function cleanUpSignIn(login: string, stopped: string, d: CleanUpSignInDeps): SignInResult {
   const held = d.role() === 'cleanup' ? heldOrNone(d) : undefined;

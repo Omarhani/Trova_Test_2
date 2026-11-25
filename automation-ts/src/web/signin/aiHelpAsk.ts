@@ -20,7 +20,7 @@ const CODE_BOX = `(() => { const DIALOG = '[role=dialog], [role=alertdialog], di
 const NOT_OURS = /[\\/](node_modules|src[\\/]web[\\/]signin|src[\\/]web[\\/]webActions\.ts|src[\\/]web[\\/]covers\.ts)[\\/:]|^\s*at (async )?(new )?Promise|node:internal/;
 
 /**
- * A stuck web step asks Trova's runner for AI help - the TS twin of utils.AiHelpAsk: the runner's AI
+ * A stuck web step asks Trova's runner for AI help: the runner's AI
  * works in this same browser (the run's DevTools address, its "cdp" line). The ask and its answer file: RunnerHelp
  * (the phone asks the same way, phone/phoneHelpAsk). Only in a Trova run with the run's one browser.
  */

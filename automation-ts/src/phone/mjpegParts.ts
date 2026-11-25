@@ -3,7 +3,7 @@ const LENGTH = /content-length:\s*(\d+)/i;
 
 /**
  * The pictures of the phone's picture stream (UiAutomator2's MJPEG server: parts of a multipart answer, each with its
- * Content-Length): pieces of the stream in, whole JPEGs out - the reader of utils.MobileScreenRecorder.readStream.
+ * Content-Length): pieces of the stream in, whole JPEGs out.
  */
 export class MjpegParts {
   private rest: Buffer = Buffer.alloc(0);

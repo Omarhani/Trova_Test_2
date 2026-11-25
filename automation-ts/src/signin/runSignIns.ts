@@ -12,8 +12,8 @@ export function runSignInsFile(): string {
 }
 
 /**
- * The sign-ins this run made with the app's own sign-in calls, for every later block of the same run - Java signs in
- * once per run ("every test of this run uses this sign-in"); signed in 3 times, once per block's
+ * The sign-ins this run made with the app's own sign-in calls, for every later block of the same run - one sign-in
+ * per run ("every test of this run uses this sign-in"); signed in 3 times, once per block's
  * worker. One that runs out soon is not given again. Kept in the run's target folder only while the run goes on
  * (forgotten at its start and end, like Trova's own run file); never printed.
  */

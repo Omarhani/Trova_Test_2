@@ -1,5 +1,5 @@
 /**
- * A refused sign-in in plain words, with the app's own reason - the TS twin of utils.SignInRefusal:
+ * A refused sign-in in plain words, with the app's own reason:
  * "Shop refused: you don't have permission to sign in". Only a wrong user name / password points to Test Data →
  * Credentials; an app API that refuses without its fixed headers points to Test Data → Environments → API headers.
  */
@@ -20,7 +20,7 @@ const ARABIC: [RegExp, string][] = [
   [CODE_TOO_SOON_AR, 'a new one-time code cannot be sent before the last one runs out'],
 ];
 
-/** the app will not send a new one-time code yet - session #355: understood in several languages (codeWait) */
+/** the app will not send a new one-time code yet - understood in several languages (codeWait) */
 export { codeTooSoon } from './codeWait';
 
 /**

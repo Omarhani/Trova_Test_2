@@ -14,13 +14,13 @@ import { watchFrozen } from './frozenPage';
 import { picturesAfterChecks, stepPictures } from './stepPictures';
 
 /**
- * The web test base: the run's ONE browser and tab for every block (as the Java suites keep one browser per
+ * The web test base: the run's ONE browser and tab for every block (one browser per
  * suite), the block's login opened in it with the run's ONE sign-in of that
  * login (SignInGate: signed in once, then reused and proved, never signed in again by a case), its calls, console and step pictures on the run screen; on a failure the page's address, its menu texts
- * and the last screen of every test, passed or failed, as base.BaseTests keeps it.
+ * and the last screen of every test, passed or failed.
  */
 export const webTest = trovaTest.extend<{ page: Page; refusedLogin: void }, { browser: Browser; tab: Page }>({
-  // the app refused this login's sign-in earlier in the run: skipped at once, before the browser is touched (Java: SKIPPED)
+  // the app refused this login's sign-in earlier in the run: skipped at once, before the browser is touched (SKIPPED)
   refusedLogin: [async ({ trovaCase }, use, testInfo) => {
     void trovaCase; // after the case's own guard
     const no = refusalOf(param('signedInAs', ''));

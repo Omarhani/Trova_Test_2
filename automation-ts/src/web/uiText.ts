@@ -2,7 +2,7 @@
 const GLYPHS = /^[\s×✕✖✗]+|[\s×✕✖✗]+$/g;
 
 /**
- * A message as a person reads it - the TS twin of utils.UiText.withoutClose: "Saved successfully×" /
+ * A message as a person reads it: "Saved successfully×" /
  * "Saved successfully\n✕" become "Saved successfully"; spaces made single, ends trimmed.
  */
 export function withoutClose(text: string): string {

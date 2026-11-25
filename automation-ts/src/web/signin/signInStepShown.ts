@@ -13,7 +13,7 @@ export function typedWords(field: string): { e: string; v?: string } {
 }
 
 /**
- * Writer session #355 (#206 / #207 showed "No steps were recorded" and "No pictures for this test"): every step of a
+ * So a run page never says "No steps were recorded" or "No pictures for this test" for a sign-in: every step of a
  * sign-in on the screen is a step of the run page with its picture, like any web step - "Open" the sign-in page,
  * "Type" each field (a secret as ***), "Click" each button, and where it stopped. Never a typed value.
  */

@@ -5,7 +5,7 @@ import { SavedSignIn } from './savedSignIn';
 import { SignInProblem } from '../report/failureKind';
 
 /**
- * Review 980: the app refused the quick sign-in earlier in the run (any worker) - the API side takes the token of the
+ * the app refused the quick sign-in earlier in the run (any worker) - the API side takes the token of the
  * sign-in made on the screen, its whole browser state as the kept values. None, or no token in it = the refusal in plain
  * words. Never the refused sign-in calls again (repeated refusals can lock the account). Never prints a value.
  */

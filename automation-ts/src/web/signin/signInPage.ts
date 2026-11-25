@@ -2,7 +2,7 @@ import { ElementHandle, Page } from '@playwright/test';
 import { BUTTON, DONE, FIND, onPage, PICK, SAID, script, SHELL, STATE } from './signInScripts';
 
 /**
- * Where a sign-in page stands, read the way the AI agent reads it - the TS twin of utils.SignInPage:
+ * Where a sign-in page stands, read the way the AI agent reads it:
  * signed in = off the sign-in page (no password box, no code box, off a login address) AND the login's done sign shows
  * (a part of the address, a selector, or its words), OR the page has the signed-in shell (side menu / user menu).
  */
@@ -19,7 +19,7 @@ export function family(field: string | undefined): 'password' | 'otp' | 'other' 
   const f = field ?? '';
   if (/(pass|pwd|كلمة)/is.test(f)) return 'password';
   if (/(account|company|client|org|tenant|حساب|منشأة|شركة)/is.test(f)) return 'other';
-  if (/(way|method|channel|طريقة|وسيلة)/is.test(f)) return 'other'; // review 1012: "Code way" names how, not the code
+  if (/(way|method|channel|طريقة|وسيلة)/is.test(f)) return 'other'; // "Code way" names how, not the code
   if (/(otp|one.?time|code|verif|pin|sms|رمز|تحقق)/is.test(f)) return 'otp';
   return 'other';
 }
