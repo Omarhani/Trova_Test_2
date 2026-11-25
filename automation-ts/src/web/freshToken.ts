@@ -8,7 +8,7 @@ const TOKEN_FIELD = /^(access_?token|token|auth_?token|id_?token)$/i;
 /**
  * the app reads its token from the signed-in user it keeps (for example USER.AccessToken, the request
  * interceptor's userData) - a kept copy of that user still held the OLD token, so the app's first call answered 401
- * and it went to its sign-in page (Java puts USER with the new token, the API client login + UtilsTests.loginProgrammatically).
+ * and it went to its sign-in page.
  * Every stored copy of the old token - a value on its own or a token field of a stored object - gets the new one.
  */
 export function withFreshToken(state: BrowserState, token: string): BrowserState {

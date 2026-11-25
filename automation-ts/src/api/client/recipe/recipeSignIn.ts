@@ -10,7 +10,7 @@ export interface SignInResult {
 
 /**
  * "Log in programmatically" by API for any app: the login's recipe (the app's own sign-in calls, learned by Trova)
- * with the login's fields - the TS twin of utils.ApiSignIn.runOn. Never prints a value.
+ * with the login's fields. Never prints a value.
  */
 export async function runRecipe(recipe: JsonObject, fields: Record<string, string>, base: string, http: HttpSend,
                                 headers: () => Record<string, string>): Promise<SignInResult> {

@@ -5,12 +5,12 @@ import { attachmentPath } from './attachments';
 import { browserMessage, watchBrowserMessages } from './browserMessages';
 import { WebClicks } from './webClicks';
 
-/** the wait for a field when the step names none (utils.WaitedReads.DEFAULT_SECONDS) */
+/** the wait for a field when the step names none */
 const DEFAULT_SECONDS = 15;
 
 /**
  * Lists (native select) by text, value or place; browser messages (accept, dismiss, answer, read); uploads from Test
- * Data > Attachments; slow typing - the TS twin of utils.MethodHandlesWebForms. Failures in plain words.
+ * Data > Attachments; slow typing. Failures in plain words.
  */
 export class WebForms extends WebClicks {
   constructor(page: Page) {
@@ -26,7 +26,7 @@ export class WebForms extends WebClicks {
     await this.choose(selector, seconds, element, (o) => o.value === value, `no option with the value "${value}"`, { value });
   }
 
-  /** index from 0, as Java's selectByIndex */
+  /** index from 0 */
   protected async selectByIndex(selector: string, index: number, seconds: number, element = selector): Promise<void> {
     await this.choose(selector, seconds, element, (o) => o.index === index, `no option number ${index + 1}`, { index });
   }

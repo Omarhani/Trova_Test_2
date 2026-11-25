@@ -12,9 +12,8 @@ type Take = (page: Page) => Promise<Buffer>;
 const screenshot: Take = (page) => webShot(page);
 
 /**
- * One picture for every web step and check, as Java's recorder keeps one per step (
- * had 15 steps and 6 pictures). A picture is taken in the background, one after another per page, and its step's
- * marks come off once it is taken; the next step waits only for the picture before it (Java: beforeStep), so a mark
+ * One picture for every web step and check, never fewer pictures than steps. A picture is taken in the background, one after another per page, and its step's
+ * marks come off once it is taken; the next step waits only for the picture before it, so a mark
  * is never in another step's picture. A run without a picture folder draws nothing and takes nothing.
  */
 export class StepPictures {

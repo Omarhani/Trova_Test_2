@@ -33,7 +33,7 @@ function warmUp(plan: SuitePlan | undefined): Promise<void> {
 
 /**
  * Before the first block of a TS suite (Playwright's global set-up): the run's one browser when it has web blocks, the
- * phone server when it has phone blocks - each kept for the whole suite as the Java suites keep theirs - then the run's
+ * phone server when it has phone blocks - each kept for the whole suite - then the run's
  * one pre-run check, and what to close after the last block (runParts: never left running).
  */
 export default async function runSetup(): Promise<() => Promise<void>> {

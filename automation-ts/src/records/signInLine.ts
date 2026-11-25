@@ -16,7 +16,7 @@ export function signInLine(login: string, way: SignInWay, extra = ''): string {
   return `Sign in ${signInWhat(login, way, extra)}`;
 }
 
-/** session #355: the run's sign-in by what really ran - "Log in programmatically as Ali" / "Sign in on the screen as Ali" */
+/** the run's sign-in by what really ran - "Log in programmatically as Ali" / "Sign in on the screen as Ali" */
 export function signInDoneLine(login: string, onScreen: boolean): string {
   // one plain line for a sign-in in the background
   return onScreen ? `Sign in on the screen as ${login.trim()}` : `Signed in as ${login.trim()} in the background`;

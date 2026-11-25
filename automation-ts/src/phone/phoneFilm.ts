@@ -2,7 +2,7 @@
 export type KeepPicture = (jpeg: Buffer, step: number, every: boolean) => Promise<boolean>;
 
 /**
- * The phone's film for the run screen, as the Java phone suites make it (utils.MobileScreenRecorder): the pictures the
+ * The phone's film for the run screen: the pictures the
  * phone streams by itself, each new one kept with the step on screen (the run's pictures keep one every 600 ms at most),
  * the same picture as the last KEPT one left out - a new screen left out for being too soon is kept by its next picture.
  * After a step the next picture is always kept for it. It never asks the phone for anything - the test's own calls are never slowed down.

@@ -13,7 +13,7 @@ function memo(login: string): string {
 }
 
 /**
- * The sign-in page's settings for a login whose API recipe has none (Java PageSettingsCapture.orRead): read ONCE per run
+ * The sign-in page's settings for a login whose API recipe has none: read ONCE per run
  * and login, used at once as set-if-missing, and left for the runner to add to the recipe so the next runs need no
  * extra visit. A recipe that has them (or was read already) costs nothing.
  */
