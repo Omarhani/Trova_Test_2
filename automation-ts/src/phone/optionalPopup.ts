@@ -46,8 +46,8 @@ export function questionWords(s: ScreenSnapshot): string {
 }
 
 /**
- * The run's warning (never a failure): the pop-up appeared and Trova allowed it, or it did not appear and its step was
- * skipped. Trova's run page shows it with "Handle it every time" and "Report a bug".
+ * The run's warning (never a failure): the pop-up appeared and the platform allowed it, or it did not appear and its step was
+ * skipped. The platform's run page shows it with "Handle it every time" and "Report a bug".
  */
 export function popupNote(popup: string, appeared: boolean, element = '', answer: 'allowed' | 'denied' = 'allowed'): void {
   emit('popup', { popup, appeared, answer, n: currentStep(), e: element });

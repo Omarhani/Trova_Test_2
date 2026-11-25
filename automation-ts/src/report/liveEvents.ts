@@ -1,5 +1,5 @@
 /**
- * The live feed Trova reads from a run's console - one "@@live {json}" line per event (run, test, end, step,
+ * The live feed the platform reads from a run's console - one "@@live {json}" line per event (run, test, end, step,
  * check), so the Runs tab shows the run as it goes.
  */
 export type LiveEvent = Record<string, unknown> & { t: string };

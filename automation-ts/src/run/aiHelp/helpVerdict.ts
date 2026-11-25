@@ -10,7 +10,7 @@ const plainSame: Same = (why, cause) => new Error(why, { cause });
 export const TEST_UPDATE = 'The test needs an update - the app looks fine';
 
 /**
- * Self-healing batch 1, the same for web and phone: AI help did not get past the step - the cause
+ * Self-healing batch 1, the same for web and phone: step help did not get past the step - the cause
  * decides. The app wrong = a real bug (FAILED, Expected / Actual); the network, the browser or phone, or our own step
  * = not the app's answer (BLOCKED); no cause = the plain reason (or the step's own failure).
  */
@@ -24,7 +24,7 @@ export function notPast(a: HelpAnswer, failed: Error, same: Same = plainSame): E
   return same(`${a.why} - ${firstLine(failed)}`, failed);
 }
 
-/** AI help got past it but the step is still stuck: our own step (a renamed element) = BLOCKED, never the app's fault */
+/** step help got past it but the step is still stuck: our own step (a renamed element) = BLOCKED, never the app's fault */
 export function stillStuck(a: HelpAnswer, again: Error, same: Same = plainSame): Error {
   if (a.cause === 'OUR_CODE') return new SetUpProblem(`${TEST_UPDATE}: ${a.proof || a.did || firstLine(again)}`);
   return same(`Still stuck after AI help (${a.did}) - ${firstLine(again)}`, again);

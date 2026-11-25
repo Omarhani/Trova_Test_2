@@ -10,8 +10,8 @@ let asked = 0;
 
 /**
  * The ask itself, the same for a web and a phone step: the live line {"t":"ai-help", ...}
- * reaches Trova, whose AI works on the test's own browser or phone; its answer comes back as
- * <live folder>/ai-help-<n>.json. Only in a Trova run (its live folder).
+ * reaches the platform, whose assistant works on the test's own browser or phone; its answer comes back as
+ * <live folder>/ai-help-<n>.json. Only in a platform run (its live folder).
  */
 export class RunnerHelp {
   constructor(private readonly liveDir: string | undefined = process.env.TROVA_LIVE_DIR?.trim() || undefined,
@@ -19,12 +19,12 @@ export class RunnerHelp {
               private readonly pollMs = 500,
               private readonly say: Emit = emit) {}
 
-  /** this run can ask (a Trova run with its live folder) */
+  /** this run can ask (a platform run with its live folder) */
   on(): boolean {
     return !!this.liveDir;
   }
 
-  /** asks with these fields (the stuck step, its test and what the runner's AI needs) and waits; null = no AI help here */
+  /** asks with these fields (the stuck step, its test and what the runner's assistant needs) and waits; null = no step help here */
   async ask(where: StuckAt, failed: Error, fields: Record<string, unknown>): Promise<HelpAnswer | null> {
     if (!this.liveDir) return null;
     const n = ++asked;
@@ -39,7 +39,7 @@ export class RunnerHelp {
     return { helped: false, did: '', why: 'AI help did not answer within 2 minutes' };
   }
 
-  /** the run's step list says what the AI did and why it was stuck */
+  /** the run's step list says what the assistant did and why it was stuck */
   private said(a: HelpAnswer, step: string): void {
     const why = a.cause ? ` · cause: ${causeWords(a.cause)}${a.proof ? ` - ${a.proof}` : ''}` : '';
     this.say('step', { a: 'AI help', e: `AI helped: ${a.did || 'got past the stuck step'}${why}`, l: '', c: step });

@@ -6,10 +6,10 @@ import { emit } from '../../report/liveEvents';
  * would pass silently. A quick look at the page right after the sign-in, for any app: no style source at all (style
  * files, inline styles, adopted sheets, web components' own styles all count), a style file that did not load, the
  * app's colour settings not in effect. Plain words only; it never blocks a case, and its warning reaches the run screen.
- * The rule list and wording are the same in the suites and Trova's AI runs.
+ * The rule list and wording are the same in the suites and the platform's assisted runs.
  */
 
-/** the one wording of the warning, in the suites and Trova's AI alike */
+/** the one wording of the warning, in the suites and the platform's assistant alike */
 export const LOOK_WARNING = 'Warning: the page opened signed in but looks unstyled - ';
 const LOOK_WHY = '. A setting the app keeps in the browser (its theme or language) may be missing from the sign-in Trova put back, or a style file is not reachable.';
 

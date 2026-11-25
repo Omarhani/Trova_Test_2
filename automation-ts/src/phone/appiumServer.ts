@@ -54,7 +54,7 @@ export function appiumArgs(port: number): string[] {
 
 /**
  *  ("Unable to connect to 127.0.0.1:4723"): the phone server this run needs. One already listening is
- * used as it is (an AI phone session or another run may own it) and never stopped; else this run starts its own and
+ * used as it is (an assisted phone session or another run may own it) and never stopped; else this run starts its own and
  * gives back how to stop it. Plain words when Appium is missing or does not start.
  */
 export async function ensureAppium(port: number, deps: AppiumDeps): Promise<(() => void) | undefined> {

@@ -1,7 +1,7 @@
 /**
- * An app that keeps its sign-in in the browser's IndexedDB (Firebase and others) - Trova keeps every database of
+ * An app that keeps its sign-in in the browser's IndexedDB (Firebase and others) - the platform keeps every database of
  * the app's address, every store with its records, and puts them back before the app opens. One rule list for the
- * suites and Trova's AI runs and sessions.
+ * suites and the platform's assisted runs and sessions.
  * Values stay in the kept copy: the scripts never print or log one, and the TS starter hands them
  * in and out by its page channel (pageChannel.ts), never in a call a trace keeps.
  * A value the browser cannot hand out (a file or a locked key) is marked "left", its record is not put back and its

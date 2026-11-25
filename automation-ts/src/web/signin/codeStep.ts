@@ -19,12 +19,12 @@ const showTyping: Shown = async (page, field) => {
 };
 
 /**
- * The saved screen steps ended on the app's "enter the code" dialog (the AI had
+ * The saved screen steps ended on the app's "enter the code" dialog (the assistant had
  * typed the code with another tool, so its steps never named it) and the run waited 20 s, then failed. In a writer's
  * own run, when the app asks for its code and the steps have no code step, the login's fixed code from Test Data is
  * typed into the code box (one-digit boxes take it digit by digit) and the dialog's button pressed - once. Both are
  * added to the steps, so the next runs do them by themselves. A suite never does this: it stops and says
- * to sign in once in an AI session. The step's picture is taken before the code is typed. Never logs a value.
+ * to sign in once in an assisted session. The step's picture is taken before the code is typed. Never logs a value.
  */
 export class CodeStep {
   private tried = false;

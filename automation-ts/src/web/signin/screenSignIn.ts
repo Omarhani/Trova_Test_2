@@ -18,7 +18,7 @@ export interface ScreenSignInResult {
 }
 
 /**
- * One sign-in on the screen with the login's saved steps (learned by the AI agent: {url, steps: [{fill, field} |
+ * One sign-in on the screen with the login's saved steps (learned by the assistant: {url, steps: [{fill, field} |
  * {click} | {wait}], done}), the values from Test Data → Credentials. Each step
  * finds its element again right before it acts; a box or button that is gone is found again by its kind (the code box
  * in the open dialog, the dialog's confirm button). Throws in plain words with the app's own reason. Never logs a value.

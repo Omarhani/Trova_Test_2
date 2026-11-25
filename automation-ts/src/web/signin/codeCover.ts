@@ -15,7 +15,7 @@ export async function withCodesHidden<T>(page: Page, take: () => Promise<T>): Pr
 
 /**
  * the run's video is the live screen, drawn all the time - so a box a code goes into is covered BEFORE the
- * code is typed, and stays covered (the box Trova types into, and the one-digit boxes beside it).
+ * code is typed, and stays covered (the box the platform types into, and the one-digit boxes beside it).
  */
 export async function keepCodesHidden(page: Page, box: ElementHandle | null): Promise<void> {
   await box?.evaluate((e) => (e as Element).setAttribute('data-trova-code', '1')).catch(() => undefined);

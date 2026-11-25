@@ -2,7 +2,7 @@ import { accountClock } from '../../../data/appClock';
 import { Json, JsonObject } from './json';
 
 /**
- * The body Trova KNOWS for an app endpoint (the last passed AI walk's call, else the Endpoints catalog's) - handed to
+ * The body the platform KNOWS for an app endpoint (the last passed assisted walk's call, else the Endpoints catalog's) - handed to
  * the run in the run file's "knownCalls". Never a hand-made body.
  */
 export interface KnownCall {

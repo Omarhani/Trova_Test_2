@@ -10,8 +10,8 @@ import { pageSettingsFor } from './pageSettingsOnce';
 
 /**
  * Hybrid: the run's ONE API sign-in (made from scratch by the app's own calls, no screen - or the one an earlier block
- * of the run made, with no call) put into the browser and proved: its keys over the state Trova kept, then its keys
- * alone. A login with no API sign-in at all opens with the state Trova kept, never the
+ * of the run made, with no call) put into the browser and proved: its keys over the state the platform kept, then its keys
+ * alone. A login with no API sign-in at all opens with the state the platform kept, never the
  * screen. fresh = a new sign-in (the run's one ran out). null = proved, else why not.
  */
 export async function apiSignInto(page: Page, web: string, login: string, fresh: boolean): Promise<string | null> {
@@ -39,7 +39,7 @@ async function tryStates(page: Page, web: string, login: string, states: Browser
   return why;
 }
 
-/** the login has an API sign-in: its recipe, or the one Trova shares */
+/** the login has an API sign-in: its recipe, or the one the platform shares */
 function hasApiSignIn(login: string): boolean {
   try {
     recipeFor(login, 'web');

@@ -5,7 +5,7 @@ import { SavedSignIn } from './savedSignIn';
 /** apiRefused: the app refused the quick sign-in this run - kept when a screen sign-in is saved, so no worker runs it again */
 type Entry = { saved?: SavedSignIn; refused?: string; apiRefused?: string };
 
-/** the run's sign-in folder: <automation-ts>/target/run-sign-ins-<run> (git-ignored), 'local' outside a Trova run */
+/** the run's sign-in folder: <automation-ts>/target/run-sign-ins-<run> (git-ignored), 'local' outside a platform run */
 export function runSignInDir(env: NodeJS.ProcessEnv = process.env): string {
   const run = (env.TROVA_RUN_ID?.trim() || 'local').replace(/[^\w-]/g, '_');
   return path.resolve(__dirname, '..', '..', 'target', `run-sign-ins-${run}`);

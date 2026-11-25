@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
 /**
- * A kept sign-in's values go into and out of the page by Trova's own channel (a page binding) - never
+ * A kept sign-in's values go into and out of the page by the platform's own channel (a page binding) - never
  * as the text, argument or answer of a browser call, which a Playwright trace keeps. Only the channel's name and a
  * call number are in a call. One channel per page, opened once, so channels never pile up on a page.
  */

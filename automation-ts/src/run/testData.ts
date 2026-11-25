@@ -16,8 +16,8 @@ export interface EmailInbox {
 }
 
 /**
- * The run's environment data from Trova (Test Data -> Environments): addresses, API
- * headers, the phone app. Trova is the only source; no data file in the code.
+ * The run's environment data from the platform (Test Data -> Environments): addresses, API
+ * headers, the phone app. The platform is the only source; no data file in the code.
  */
 export class TestData {
   constructor(private readonly read: () => JsonObject = () => section('testData'),

@@ -1,5 +1,5 @@
 /**
- * Trova's suite file (the same TestNG XML Trova keeps for every suite) read for a TS run: each <test> block becomes
+ * The platform's suite file (the same TestNG XML the platform keeps for every suite) read for a TS run: each <test> block becomes
  * one Playwright project, in order, with its parameters, groups and the TS tests it names. A TS test is named in the
  * XML as <class name="ts:<spec file>"> with <include name="<test name>"/> - one class per spec file, one include per test.
  */

@@ -1,7 +1,7 @@
 import { emit } from './liveEvents';
 
 /**
- * a TS run tells Trova the phone and the browser it
+ * a TS run tells the platform the phone and the browser it
  * really used, so the Runs list and the run page show them ("realme 7", "Chrome") as they do for every run.
  */
 

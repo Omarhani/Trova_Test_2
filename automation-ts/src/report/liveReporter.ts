@@ -14,7 +14,7 @@ export interface LiveReporterOptions {
 }
 
 /**
- * Playwright reporter that speaks Trova's live feed: "run" when the suite starts, "test" / "end" per test with its
+ * Playwright reporter that speaks the platform's live feed: "run" when the suite starts, "test" / "end" per test with its
  * <test> block (the Playwright project). The tests' own lines (steps, checks,
  * one row per case - a set-up problem's second try is told on the same
  * row (CaseTries), a wrong result is FAILED at once and never tried again; BLOCKED says why the case could not run.

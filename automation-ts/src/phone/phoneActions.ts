@@ -17,13 +17,13 @@ import { answerOf, optionalPopupSeconds, popupKind, popupNote, questionWords, sy
 const LOOK_EVERY_MS = 200;
 
 /**
- * The screen actions every phone screen object stands on - look, act like a finger, say the step in Trova's live feed -
+ * The screen actions every phone screen object stands on - look, act like a finger, say the step in the platform's live feed -
  * every check is a look
  * at ONE page tree (ScreenSnapshot), taps go where a finger would (adb tap in the element's middle). A wait fails in plain
  * words (what did not show within N s).
  */
 export class PhoneActions {
-  /** aid: a step whose element does not show asks Trova's AI help */
+  /** aid: a step whose element does not show asks the platform's step help */
   constructor(protected readonly phone: Phone, private readonly aid: PhoneAid = phoneAid) {}
 
   protected async tap(selector: string, seconds: number, element = selector): Promise<void> {
@@ -36,7 +36,7 @@ export class PhoneActions {
   /**
    * a step on Android's own permission question - it may or may not
    * appear, and that never decides the case. There: answered as the step says, with a warning. Not there within its
-   * wait (3 s at most): the step is skipped with a warning - no AI help, no failure. The case's own checks decide.
+   * wait (3 s at most): the step is skipped with a warning - no step help, no failure. The case's own checks decide.
    */
   private async tapPopup(selector: string, seconds: number, element: string): Promise<void> {
     const s = await this.lookUntil((x) => x.has(selector), optionalPopupSeconds(seconds));
@@ -119,7 +119,7 @@ export class PhoneActions {
   /**
    * waits for the element, then says the step with the element's box (the run page marks it like a web
    * step - a box and a tap mark); the step is said even when the element never shows, then fails in plain words. Not
-   * shown within its wait = AI help first (lookWithHelp), as a stuck web step
+   * shown within its wait = step help first (lookWithHelp), as a stuck web step
    */
   private async sayAt(action: string, element: string, selector: string, seconds: number, value: ValueFields | Record<string, never> = {}): Promise<[number, number]> {
     const stack = new Error().stack; // the screen's step that called, before the first wait

@@ -4,7 +4,7 @@ const NO_TOKEN = /gave no token/i;
 const CHANGED = "The app's sign-in calls changed - learn again";
 
 /**
- * An API sign-in that failed because the app's sign-in calls are not what Trova learned any more (a call gone, an
+ * An API sign-in that failed because the app's sign-in calls are not what the platform learned any more (a call gone, an
  * answer that is not its JSON, no token in it): the plain reason, else undefined (a refusal in the app's own words).
  */
 export function callsChanged(message: string): string | undefined {

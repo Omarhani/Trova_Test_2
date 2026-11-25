@@ -1,9 +1,9 @@
 import { Page } from '@playwright/test';
 
 /**
- * The page code a sign-in reads with - the same page code Trova's AI uses,
+ * The page code a sign-in reads with - the same page code the platform's assistant uses,
  * so a run and
- * an AI session read a sign-in page alike. Each is a function body that takes its values as arguments[0..]. Never
+ * an assisted session read a sign-in page alike. Each is a function body that takes its values as arguments[0..]. Never
  * reads or returns a typed value.
  */
 

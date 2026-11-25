@@ -15,7 +15,7 @@ export const INBOX_LOGIN = 'E-mail inbox';
 const IMAPS_PORT = 993;
 
 /**
- * The mailbox settings: server, mailbox and sender from Trova (Test Data -> Environments -> E-mail inbox); MAIL_USER or
+ * The mailbox settings: server, mailbox and sender from the platform (Test Data -> Environments -> E-mail inbox); MAIL_USER or
  * the given mailbox overrides the mailbox. The app password comes from this computer (MAIL_APP_PASSWORD) or the login
  * "E-mail inbox" in Test Data -> Credentials - never from the code. Gmail needs an app password (2-step sign-in on).
  */

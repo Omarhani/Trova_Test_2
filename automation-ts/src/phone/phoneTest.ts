@@ -37,7 +37,7 @@ export const phoneTest = trovaTest.extend<{ phone: Phone }>({
     await phoneFreeOrBlocked(testInfo, deps.kept()?.sessionId); // held by something else: 2 min at most, then BLOCKED
     const { phone, filmPort } = await phoneForBlock(keep, deps);
     sayDevice(phoneSeen(phone.capabilities as Record<string, unknown>)); // the run shows the phone it used
-    announcePhone(phone); // Trova's AI help works on this same phone session when a step gets stuck
+    announcePhone(phone); // the platform's step help works on this same phone session when a step gets stuck
     const stopFilm = startFilm(filmPort);
     const stopPictures = afterEachCheck(() => PhoneActions.picture(phone)); // a picture after every check too
     const stopLog = watchPhoneLog(phone, testData.mobile().appPackage ?? ''); // Problems + Network live

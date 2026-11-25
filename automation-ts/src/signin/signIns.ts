@@ -37,7 +37,7 @@ const SCREENS_ONLY = "This suite runs in full screen mode: its sign-in and clean
   + ' (the suite parameter "mode" is "ui" - set it to "hybrid" for sign-in and clean-up by API)';
 
 /**
- * The run's ONE API sign-in per login and side: Trova's shared one first, else the login's recipe once. A refusal is
+ * The run's ONE API sign-in per login and side: the platform's shared one first, else the login's recipe once. A refusal is
  * never tried again in the run (repeated refusals can lock the account): the web side's refusal skips every later case
  * of the login (SkipLogin) - only the clean-up goes on, with the sign-in the run holds. Full screen mode never signs in by API. Never prints a value.
  */
@@ -105,7 +105,7 @@ export function recipeFor(login: string, side: Side): JsonObject {
 
 /**
  * The sign-in the tester saved in a real browser (web side; it ended = the plain reason, never a new one), the run's
- * sign-in an earlier block made (one sign-in per run), Trova's shared one, else the login's recipe - kept for
+ * sign-in an earlier block made (one sign-in per run), the platform's shared one, else the login's recipe - kept for
  * the run's later blocks. again: the sign-in ran out in the middle of the run - a new one by the recipe, never one
  * that ran out.
  */
@@ -134,7 +134,7 @@ function recipeOrNone(login: string): JsonObject | undefined {
   }
 }
 
-/** the run's sign-in an earlier block made, else Trova's shared one - no sign-in call; undefined = neither */
+/** the run's sign-in an earlier block made, else the platform's shared one - no sign-in call; undefined = neither */
 function heldSignIn(key: string, login: string, side: Side): SignInResult | undefined {
   const earlier = runSignIns.get(key);
   if (earlier) {

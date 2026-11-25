@@ -7,7 +7,7 @@ export interface Stops {
   phone?: string;
 }
 
-/** <automation-ts>/target/run-stops-<run>.json (git-ignored), 'local' outside a Trova run */
+/** <automation-ts>/target/run-stops-<run>.json (git-ignored), 'local' outside a platform run */
 export function runStopsFile(env: NodeJS.ProcessEnv = process.env): string {
   const run = (env.TROVA_RUN_ID?.trim() || 'local').replace(/[^\w-]/g, '_');
   return path.resolve(__dirname, '..', '..', 'target', `run-stops-${run}.json`);

@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { asObject, asText, Json, JsonObject } from './json';
 
 /**
- * How the phone app shapes every call (the phone recipe's "callShape", learned by Trova): its own headers and the
+ * How the phone app shapes every call (the phone recipe's "callShape", learned by the platform): its own headers and the
  * envelope a payload goes in ({UserID: "{{signIn:USER_ID}}", RequestId: "{{new:id}}", Data: "{{data}}"}).
  */
 export interface PhoneShape {

@@ -10,7 +10,7 @@ export function fileNamePart(title: string): string {
 
 /**
  * A file kept with the run: the runner uploads report/<testEnv|stageEnv>/run-<id>/ at the run's end (RunReport), so it
- * reaches Trova with the run. Nothing is written outside a Trova run (no TROVA_RUN_ID); false then.
+ * reaches the platform with the run. Nothing is written outside a platform run (no TROVA_RUN_ID); false then.
  */
 export function keepFileWithRun(name: string, body: Buffer | string): boolean {
   const runId = process.env.TROVA_RUN_ID?.trim();

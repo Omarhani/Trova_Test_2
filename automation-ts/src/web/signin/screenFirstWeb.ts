@@ -23,7 +23,7 @@ async function pictureNow(tab: import('@playwright/test').Page): Promise<void> {
 export const SCREEN_FIRST: ScreenFirstDeps = {
   apiProven: (login) => quickKnown(login), // sign-in calls first: any recipe before the screen
   screenKnown: (login) => screenKnown(login),
-  kept: (login) => { // the sign-in Trova kept (the writer's own) goes first
+  kept: (login) => { // the sign-in the platform kept (the writer's own) goes first
     try {
       return keptState(login) !== undefined;
     } catch {

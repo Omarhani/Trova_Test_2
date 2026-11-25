@@ -15,7 +15,7 @@ export interface BrowserState {
   indexedDB?: Json[];
 }
 
-/** a cookie as Trova keeps it: every part the app set, never only its name and value */
+/** a cookie as the platform keeps it: every part the app set, never only its name and value */
 export interface KeptCookie {
   name: string;
   value: string;
@@ -31,7 +31,7 @@ type Kept = { localStorage?: Json; sessionStorage?: Json; cookies?: Json; indexe
 
 /**
  * The browser state of a signed-in run, built from:
- * the kept full state Trova has for the login, the API sign-in's keys over it, the sign-in page's settings (language,
+ * the kept full state the platform has for the login, the API sign-in's keys over it, the sign-in page's settings (language,
  * theme ...) only where missing, then Test Data -> Browser storage on top. Values are never printed.
  */
 export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[], storage: Json[]): BrowserState {
@@ -60,7 +60,7 @@ export function composeState(api: SignInResult, kept: Kept, recipeBrowser: Json[
   return state;
 }
 
-/** the state for login from the run file: Trova's kept sign-in, the login's recipe settings, Test Data storage */
+/** the state for login from the run file: the platform's kept sign-in, the login's recipe settings, Test Data storage */
 /**
  * The two tries: the kept full state with the API keys over
  * it, then - when the app still does not open signed in - the API keys alone (a kept state can hold another tenant's

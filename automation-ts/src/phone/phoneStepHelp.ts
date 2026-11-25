@@ -24,7 +24,7 @@ export interface Looked {
 }
 
 /**
- * Self-healing on the phone: the element did not show within its wait - AI help is asked (when the run
+ * Self-healing on the phone: the element did not show within its wait - step help is asked (when the run
  * has it) and the screen looked at once more after it got past; the cause decides the failure the same way as a web
  * step (helpVerdict): the app wrong = FAILED, the network or the phone or our own step = BLOCKED.
  */

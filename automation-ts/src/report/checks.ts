@@ -6,7 +6,7 @@ import { nextStep } from './stepNumbers';
 const hide = (t: string): string => secretValues.hide(t);
 
 /**
- * The test's checks, each one shown in Trova's run as a check line ("Add employee · toast") - the TS twin of
+ * The test's checks, each one shown in the platform's run as a check line ("Add employee · toast") - the TS twin of
  * myAssertEquals / myAssertContains / myAssertTrue. A check passes only on the value really read. Its line says what,
  * expected, seen, then ✓ or ✗ (checkWords); a secret of the run shows ***.
  */

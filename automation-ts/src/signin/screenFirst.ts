@@ -8,7 +8,7 @@ import { screenSignInToken } from './screenSignInToken';
 export interface ScreenFirstDeps {
   apiProven: (login: string) => boolean;
   screenKnown: (login: string) => boolean;
-  /** Trova kept a sign-in of the login (the writer's own, an earlier run's) - it goes first */
+  /** The platform kept a sign-in of the login (the writer's own, an earlier run's) - it goes first */
   kept?: (login: string) => boolean;
   saved: (login: string) => SavedSignIn | undefined;
   openOnScreen: (login: string) => Promise<void>;
@@ -18,7 +18,7 @@ export interface ScreenFirstDeps {
 const NOT_PROVEN = 'No quick sign-in is proven on this app';
 
 /**
- * One sign-in per login and run: a sign-in Trova kept (the writer's own, an earlier run's) goes first -
+ * One sign-in per login and run: a sign-in the platform kept (the writer's own, an earlier run's) goes first -
  * the run's one browser opens with it, proved, and the app's calls use its token; no new sign-in.
  * The kept sign-in: with no proven quick sign-in and the screen's steps known, the run's one
  * sign-in is made ONCE on the sign-in screen (its whole browser state kept for every test) and the app's calls use its

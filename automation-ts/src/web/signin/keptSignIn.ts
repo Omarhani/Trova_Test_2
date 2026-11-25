@@ -7,9 +7,9 @@ import { PageSettings } from './pageSettingsCapture';
 import { ClockState } from './signInClock';
 
 /**
- * What Trova keeps about a login's sign-in (the run file's "signIn" and "signInRefresh") and what a run leaves for it:
+ * What the platform keeps about a login's sign-in (the run file's "signIn" and "signInRefresh") and what a run leaves for it:
  * a new state, healed screen steps or the sign-in page's settings go to
- * <project>/target/trova-sessions, which the runner sends to Trova while the run goes on. Never prints a value.
+ * <project>/target/trova-sessions, which the runner sends to the platform while the run goes on. Never prints a value.
  */
 
 /** the login's saved screen sign-in steps ({url, steps, done}), or undefined */
@@ -18,7 +18,7 @@ export function screenRecipe(login: string): JsonObject | undefined {
   return Array.isArray(r.steps) && r.steps.length ? r : undefined;
 }
 
-/** the sign-in state Trova kept for the login (as the browser gets it, and as the clock reads it), or undefined */
+/** the sign-in state the platform kept for the login (as the browser gets it, and as the clock reads it), or undefined */
 export function keptState(login: string): { state: BrowserState; clock: ClockState } | undefined {
   if (keptEndedHere(login)) return undefined; // rejected in this run - never tried again
   const s =asObject(asObject(byName(section('signIn'), login)).session);
@@ -32,7 +32,7 @@ export function keptState(login: string): { state: BrowserState; clock: ClockSta
   return { state, clock: { ...state, cookies, signIn } };
 }
 
-/** kept cookies with every part Trova kept (domain, path, end time, flags) */
+/** kept cookies with every part the platform kept (domain, path, end time, flags) */
 export function keptCookies(v: Json | undefined): KeptCookie[] {
   const same = (x: Json | undefined): KeptCookie['sameSite'] => {
     const t = asText(x).toLowerCase();
@@ -46,7 +46,7 @@ export function keptCookies(v: Json | undefined): KeptCookie[] {
     ...(same(c.sameSite) ? { sameSite: same(c.sameSite) } : {}) }));
 }
 
-/** the state the run's browser holds for a login, in the shape Trova keeps it - each cookie whole */
+/** the state the run's browser holds for a login, in the shape the platform keeps it - each cookie whole */
 export function keptShape(state: BrowserState, url: string): JsonObject {
   const origin = new URL(url).origin;
   const whole = new Map((state.cookieList ?? []).map((c) => [c.name, c]));
@@ -79,7 +79,7 @@ export function keepCodeWait(login: string, what: { askedAt?: number; learnedSec
   leave(login, 'codeWait', merged, '-code');
 }
 
-/** the app rejected the kept sign-in - Trova forgets the one kept before this moment (a newer one stays) */
+/** the app rejected the kept sign-in - the platform forgets the one kept before this moment (a newer one stays) */
 export function keptEnded(login: string, at: number = Date.now()): void {
   ended.add(login.trim().toLowerCase());
   leave(login, 'ended', { at }, '-ended');
@@ -92,7 +92,7 @@ export function keptEndedHere(login: string): boolean {
 
 const ended = new Set<string>();
 
-/** the login's quick sign-in opened the app signed in - Trova counts a prefilled recipe as proven (once a run) */
+/** the login's quick sign-in opened the app signed in - the platform counts a prefilled recipe as proven (once a run) */
 export function recipeProven(login: string, at: number = Date.now()): void {
   if (provenHere.has(login.trim().toLowerCase())) return;
   provenHere.add(login.trim().toLowerCase());

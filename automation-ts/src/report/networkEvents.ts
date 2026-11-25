@@ -104,6 +104,6 @@ export function wantedCall(resourceType: string, url: string, method: string): b
   if (!/^https?:/i.test(url) || method.toUpperCase() === 'OPTIONS') return false;
   if (!['xhr', 'fetch', 'document'].includes(resourceType)) return false;
   const u = url.toLowerCase();
-  if (onStandIn(url)) return false; // Trova's own sign-in stand-in: never shown to customers
+  if (onStandIn(url)) return false; // the platform's own sign-in stand-in: never shown to customers
   return !u.includes('/assets/') && !u.includes('/intake/v2/rum/') && !NOISE.test(u);
 }

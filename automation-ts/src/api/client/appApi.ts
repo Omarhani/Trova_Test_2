@@ -14,7 +14,7 @@ import { sendSignedIn } from './signedSend';
 const TRANSPORT = new Set(['content-length', 'content-type', 'host', 'connection', 'accept-encoding', 'transfer-encoding', 'accept']);
 
 /**
- * The app's API as one side of the app calls it, signed in as a Trova login - the TS twin of AppApi / AppMobileApi:
+ * The app's API as one side of the app calls it, signed in as a platform login - the TS twin of AppApi / AppMobileApi:
  * the web side sends the environment's API headers; the phone side its own headers and envelope.
  */
 export class AppApi {
@@ -52,7 +52,7 @@ export class AppApi {
     return this.send('POST', endpoint, JSON.stringify(this.side === 'phone' ? wrap(this.shape, body) : body));
   }
 
-  /** an endpoint Trova knows ("POST /x") with its known body, filled with this sign-in's ids and the given values */
+  /** an endpoint the platform knows ("POST /x") with its known body, filled with this sign-in's ids and the given values */
   async call(endpoint: string, values: Record<string, unknown>): Promise<HttpAnswer> {
     const [method, path] = splitEndpoint(endpoint);
     const known = findKnown(knownCalls(), this.side === 'phone' ? 'MOBILE' : 'WEB', method, path);

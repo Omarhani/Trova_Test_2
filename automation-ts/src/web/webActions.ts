@@ -20,7 +20,7 @@ import { fieldMessageShows } from './fieldMessages';
 export const ACTION_FLOOR_MS = 5_000;
 
 /**
- * The page actions every web page object stands on - wait for the element, act, say the step in Trova's live feed.
+ * The page actions every web page object stands on - wait for the element, act, say the step in the platform's live feed.
  * A wait fails in plain words (what did not happen within N s).
  */
 export class WebActions {
@@ -275,7 +275,7 @@ export class WebActions {
     });
   }
 
-  /** one wait or action through the run's step guard: a mid-test sign-out signs in again and runs it once more; stuck = AI help */
+  /** one wait or action through the run's step guard: a mid-test sign-out signs in again and runs it once more; stuck = step help */
   protected guarded<T>(step: () => Promise<T>): Promise<T> {
     return stepGuard.once(this.page, step);
   }

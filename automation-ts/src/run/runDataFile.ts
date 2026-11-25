@@ -6,7 +6,7 @@ export { asObject, asText };
 export type { Json, JsonObject };
 
 /**
- * The run's data file Trova writes just before a run and deletes right after it (git-ignored): the
+ * The run's data file the platform writes just before a run and deletes right after it (git-ignored): the
  * environment's logins, its test data, sign-in recipes, shared sign-ins and known calls - read from
  * TROVA_DATA_FILE (else data/credentials.json in the project). Never print a value read here.
  */

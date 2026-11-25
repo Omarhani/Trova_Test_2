@@ -21,7 +21,7 @@ async function play(port: number, film: PhoneFilm, stop: AbortController): Promi
 
 /**
  * The run's film of this phone test (the run screen's pictures): started only for a
- * run started by Trova; gives back how to stop it. Never fails the test - without the stream the steps take screenshots.
+ * run started by the platform; gives back how to stop it. Never fails the test - without the stream the steps take screenshots.
  */
 export function startFilm(port: number): () => void {
   if (!liveFrames.on()) return () => undefined;

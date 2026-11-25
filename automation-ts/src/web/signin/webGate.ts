@@ -34,13 +34,13 @@ export function webGate(page: Page, web: string, proved: (login: string) => void
     byScreen: (login) => codeWindow.run(login, () => screenSignInto(page, web, login), () => saysTooSoon(() => pageSays(page)),
       usesCode(screenRecipe(login))),
     apiProven: quickKnown, // sign-in calls first: any sign-in recipe before the screen; none = once on the screen
-    putKept: async (login) => { // one sign-in per login and run: the sign-in Trova kept goes first
+    putKept: async (login) => { // one sign-in per login and run: the sign-in the platform kept goes first
       const kept = keptState(login);
       if (kept) await putState(page, kept.state, new URL(web).origin);
       return !!kept;
     },
     dropKept: (login) => keptEnded(login), // a rejected kept sign-in is forgotten (2-7 s saved per later run)
-    quickProven: (login) => recipeProven(login), // the prefilled quick sign-in worked - Trova counts it learned
+    quickProven: (login) => recipeProven(login), // the prefilled quick sign-in worked - the platform counts it learned
     screenKnown,
     browser: (login) => browserSignIns.look(login),
     putBrowser: (saved) => putState(page, saved.browser, saved.origin || new URL(web).origin),

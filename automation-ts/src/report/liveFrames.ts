@@ -10,8 +10,8 @@ type Say = (type: string, fields: Record<string, unknown>) => void;
 
 /**
  * The run screen's live Browser (and its step pictures afterwards): each picture goes into the run's picture folder
- * (TROVA_LIVE_DIR, the runner sends every announced one to Trova) as frame-000001.jpg and is announced with the step it
- * shows - a "frame" event. A run not started by Trova has no folder and sends nothing.
+ * (TROVA_LIVE_DIR, the runner sends every announced one to the platform) as frame-000001.jpg and is announced with the step it
+ * shows - a "frame" event. A run not started by the platform has no folder and sends nothing.
  * The blocks run one after another in worker processes: a worker numbers on from the pictures already in the folder.
  */
 export class LiveFrames {

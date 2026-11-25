@@ -1,5 +1,5 @@
 /**
- * Locators written as By.xpath("...") - so Trova's App map reads, matches and
+ * Locators written as By.xpath("...") - so the platform's App map reads, matches and
  * updates TS page objects with the same rules (one field per element: `private readonly saveButton = By.xpath("...")`).
  * Each gives a Playwright selector for the web, or a WebdriverIO selector for the phone.
  */

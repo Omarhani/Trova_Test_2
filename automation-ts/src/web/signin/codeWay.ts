@@ -3,8 +3,8 @@ import { onPage, STATE } from './signInScripts';
 
 /**
  * after the password the app asks how to send its one-time code - e-mail or text message, then its send
- * button - before any code box shows. The same words and page code as Trova's AI runs,
- * so a run and an AI session treat that dialog alike. Any app, any language. Reads no value.
+ * button - before any code box shows. The same words and page code as the platform's assisted runs,
+ * so a run and an assisted session treat that dialog alike. Any app, any language. Reads no value.
  */
 
 /** words of a dialog button that is not the send button: cancel, close, back, resend, "try another way" */
@@ -55,7 +55,7 @@ export class CodeWay {
   /** codeSaved: the saved steps have a code step; want: the way Test Data names ("" = e-mail, else the first) */
   constructor(private readonly codeSaved: boolean, private readonly want: string) {}
 
-  /** true when the page asked how to send the code and Trova sent it now */
+  /** true when the page asked how to send the code and the platform sent it now */
   async send(page: Page): Promise<boolean> {
     if (this.sent || !(await this.mayAsk(page))) return false;
     this.sent = (await onPage<string | null>(page, CHOOSE, NO_WORDS, this.want)) === 'sent';

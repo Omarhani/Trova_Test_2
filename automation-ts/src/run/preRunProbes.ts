@@ -11,7 +11,7 @@ import { PreRunDeps } from './preRunCheck';
 import { SuitePlan } from './suitePlan';
 import { testData } from './testData';
 
-/** adb of the Android tools Trova gave the run (ANDROID_HOME / ANDROID_SDK_ROOT), else the one on the PATH; '' = none */
+/** adb of the Android tools the platform gave the run (ANDROID_HOME / ANDROID_SDK_ROOT), else the one on the PATH; '' = none */
 export function adbPath(env: NodeJS.ProcessEnv = process.env, exists: (f: string) => boolean = fs.existsSync): string {
   for (const sdk of [env.ANDROID_HOME, env.ANDROID_SDK_ROOT]) {
     if (!sdk?.trim()) continue;

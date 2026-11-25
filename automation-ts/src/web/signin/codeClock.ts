@@ -7,7 +7,7 @@ import { nextStep } from '../../report/stepNumbers';
 import { CodeWindow } from './codeWindow';
 import { keepCodeWait } from './keptSignIn';
 
-/** what Trova keeps for the login (Test Data → Credentials "Wait between sign-in codes", the last code request) */
+/** what the platform keeps for the login (Test Data → Credentials "Wait between sign-in codes", the last code request) */
 function kept(login: string): { waitSeconds?: unknown; lastAskedAt?: unknown } {
   try {
     return asObject(byName(section('signInCodeWait'), login));
@@ -16,7 +16,7 @@ function kept(login: string): { waitSeconds?: unknown; lastAskedAt?: unknown } {
   }
 }
 
-/** this computer's own record of the last code request (a run a moment ago, before Trova had it) - a time only */
+/** this computer's own record of the last code request (a run a moment ago, before the platform had it) - a time only */
 function fileOf(login: string): string {
   const name = `${testData.env()}-${login.trim().toLowerCase()}`.replace(/[^A-Za-z0-9._-]/g, '_');
   return path.join(projectRoot(), 'target', 'sign-in-codes', `${name}.json`);
@@ -31,7 +31,7 @@ function localAsked(login: string): number | undefined {
   }
 }
 
-/** the latest code request of the login: Trova's (any run, any computer) or this computer's */
+/** the latest code request of the login: the platform's (any run, any computer) or this computer's */
 function lastAsked(login: string): number | undefined {
   const all = [Number(kept(login).lastAskedAt), localAsked(login)].filter((t): t is number => Number.isFinite(t) && (t as number) > 0);
   return all.length ? Math.max(...all) : undefined;
@@ -43,7 +43,7 @@ function asked(login: string, at: number): void {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     fs.writeFileSync(file, JSON.stringify({ at }), 'utf8');
   } catch {
-    // not kept here: Trova still gets it
+    // not kept here: the platform still gets it
   }
   keepCodeWait(login, { askedAt: at });
 }
@@ -60,7 +60,7 @@ function say(line: string): void {
   emit('step', { n: nextStep(), a: 'Wait', e: line });
 }
 
-/** the run's one-time-code wait: the real clock, Trova's and this computer's record, the login's own setting */
+/** the run's one-time-code wait: the real clock, the platform's and this computer's record, the login's own setting */
 export const codeWindow = new CodeWindow({
   now: () => Date.now(),
   sleep: (ms) => new Promise((r) => setTimeout(r, ms)),

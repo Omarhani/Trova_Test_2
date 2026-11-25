@@ -9,7 +9,7 @@ export interface PlanBlock {
 }
 
 /**
- * the run's blocks when it starts, so Trova knows its real cases from the first moment and its total never moves
+ * the run's blocks when it starts, so the platform knows its real cases from the first moment and its total never moves
  * - which blocks are cases is decided there; this only says what will run.
  */
 export function planBlocks(tests: TestCase[]): PlanBlock[] {

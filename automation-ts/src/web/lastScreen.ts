@@ -11,7 +11,7 @@ type Attach = (name: string, attachment: { body: string | Buffer; contentType: s
  * report); for a failure the page's address and menu texts first. A browser that cannot give a picture leaves the facts.
  */
 export async function keepTestEnd(page: Page, attach: Attach, failed: boolean, limitMs = 10_000): Promise<void> {
-  const standIn = onStandIn(page.url()); // Trova's own sign-in stand-in: no address, no picture of it
+  const standIn = onStandIn(page.url()); // the platform's own sign-in stand-in: no address, no picture of it
   if (failed) {
     // an app whose own script hung never answered a read - each read of the page has a limit
     const menu = await within(menuTexts(page), limitMs);

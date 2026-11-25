@@ -14,7 +14,7 @@ export interface KeptPhone {
   appStarted?: boolean;
 }
 
-/** the run of this process ("local" outside Trova) */
+/** the run of this process ("local" outside the platform) */
 export function runIdNow(env: NodeJS.ProcessEnv = process.env): string {
   return env.TROVA_RUN_ID?.trim() || 'local';
 }

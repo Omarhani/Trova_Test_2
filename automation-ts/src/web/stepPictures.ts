@@ -37,7 +37,7 @@ export class StepPictures {
     if (!keep) return;
     const before = this.last.get(page) ?? Promise.resolve();
     const now = before.then(async () => {
-      if (onStandIn(page.url())) return; // Trova's own sign-in stand-in is never in a picture
+      if (onStandIn(page.url())) return; // the platform's own sign-in stand-in is never in a picture
       const shot = await this.take(page).catch(() => undefined);
       if (shot) await keep(shot, step).catch(() => undefined);
       await clearMarks(page, step);

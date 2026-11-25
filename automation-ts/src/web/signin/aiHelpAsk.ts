@@ -20,9 +20,9 @@ const CODE_BOX = `(() => { const DIALOG = '[role=dialog], [role=alertdialog], di
 const NOT_OURS = /[\\/](node_modules|src[\\/]web[\\/]signin|src[\\/]web[\\/]webActions\.ts|src[\\/]web[\\/]covers\.ts)[\\/:]|^\s*at (async )?(new )?Promise|node:internal/;
 
 /**
- * A stuck web step asks Trova for AI help: the AI
+ * A stuck web step asks the platform for step help: the assistant
  * works in this same browser (the run's DevTools address, its "cdp" line). The ask and its answer file: RunnerHelp
- * (the phone asks the same way, phone/phoneHelpAsk). Only in a Trova run with the run's one browser.
+ * (the phone asks the same way, phone/phoneHelpAsk). Only in a platform run with the run's one browser.
  */
 export class AiHelpAsk {
   private readonly help: RunnerHelp;
@@ -35,7 +35,7 @@ export class AiHelpAsk {
     this.help = new RunnerHelp(liveDir, waitMs, pollMs, say);
   }
 
-  /** asks the runner and waits for its answer; null = no AI help in this run */
+  /** asks the runner and waits for its answer; null = no step help in this run */
   async ask(page: Page, failed: Error, where: StuckAt): Promise<HelpAnswer | null> {
     if (!this.help.on() || !this.on()) return null;
     console.log('A step is stuck - the test waits while Trova\'s AI helps in this browser');

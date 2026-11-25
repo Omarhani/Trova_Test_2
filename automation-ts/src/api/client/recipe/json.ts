@@ -1,4 +1,4 @@
-/** JSON as Trova's rules read it - plain data, no file. */
+/** JSON as the platform's rules read it - plain data, no file. */
 export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 export type JsonObject = { [key: string]: Json };
 
