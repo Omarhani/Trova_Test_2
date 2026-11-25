@@ -51,10 +51,10 @@ export class PendingRequestsPage extends BasePage {
   }
 
   // --- Page actions ---
-  /** the page is open: its heading shows */
+  /** the page is open: its heading shows (it can take more than 20 s on Test after a slow sign-in) */
   async waitShown(): Promise<void> {
-    if (!(await this.isShownWithin(this.pageHeading, 20))) {
-      throw new Error('The Registration Requests page did not open within 20 s');
+    if (!(await this.isShownWithin(this.pageHeading, 45))) {
+      throw new Error('The Registration Requests page did not open within 45 s');
     }
   }
 
