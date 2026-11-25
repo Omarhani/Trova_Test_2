@@ -3,7 +3,7 @@ import { onPage, STATE } from './signInScripts';
 
 /**
  * after the password the app asks how to send its one-time code - e-mail or text message, then its send
- * button - before any code box shows. The same words and page code as Trova's AI tools,
+ * button - before any code box shows. The same words and page code as Trova's AI runs,
  * so a run and an AI session treat that dialog alike. Any app, any language. Reads no value.
  */
 

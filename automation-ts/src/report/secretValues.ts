@@ -15,7 +15,7 @@ export function secretField(element: string, selector = ''): boolean {
   return SECRET_FIELD.test(element) || PASSWORD_BOX.test(selector);
 }
 
-/** Trova's runner takes it (TROVA_SECRET_CHANNEL=1) and hands it to Trova sealed; else it is not sent at all */
+/** a Trova run takes it (TROVA_SECRET_CHANNEL=1) and hands it to Trova sealed; else it is not sent at all */
 const channel: Send = (ref, value) => {
   if (process.env.TROVA_SECRET_CHANNEL === '1') emit('secret', { ref, v: value });
 };

@@ -13,7 +13,7 @@ import { lookWithHelp, notShownWords } from './phoneStepHelp';
 import { lookPastQuestions } from './permissionQuestion';
 import { answerOf, optionalPopupSeconds, popupKind, popupNote, questionWords, systemPopup } from './optionalPopup';
 
-/** the time between two looks at the screen - never a fixed sleep (the AI-run tools read the screen in about 0.2 s) */
+/** the time between two looks at the screen - never a fixed sleep (one read of the screen takes about 0.2 s) */
 const LOOK_EVERY_MS = 200;
 
 /**
@@ -60,8 +60,8 @@ export class PhoneActions {
   }
 
   /**
-   * taps the field the way a finger does, empties it from both ends (Trova's AI-run way, core/fieldKeys), types the value
-   * the AI-run way (core/phoneTyping, Arabic through the Unicode keyboard) and reads the box back: it must hold exactly
+   * taps the field the way a finger does, empties it from both ends (core/fieldKeys), types the value
+   * with real key presses (core/phoneTyping, Arabic through the Unicode keyboard) and reads the box back: it must hold exactly
    * select all + delete took one letter off the account code and the step went on
    * green. A box left wrong is emptied and typed once more (a lost key), then the step fails as Expected / Actual.
    */

@@ -1,5 +1,5 @@
 /**
- * Ticking a box on a phone screen and SEEING it ticked - the rule Trova's AI-run phone tools learned,
+ * Ticking a box on a phone screen and SEEING it ticked - the rule learned on real phone screens,
  * as the first part of the one shared
  * TS module (core): a box that is a whole row ticks only at its tick, at the row's start - so its
  * start, then its end (right-to-left apps), then its middle; a small box in its middle. After each tap the state is read

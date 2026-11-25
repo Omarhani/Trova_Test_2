@@ -14,8 +14,8 @@ export interface PhoneStuck extends StuckAt {
 export type PhoneAid = (where: PhoneStuck, failed: Error) => Promise<HelpAnswer | null>;
 
 /**
- * Self-healing on the phone: a phone step whose element does not show asks Trova's runner for AI help
- * the same way a web step does (RunnerHelp: the "ai-help" line and the answer file), marked phone - the runner's AI
+ * Self-healing on the phone: a phone step whose element does not show asks Trova for AI help
+ * the same way a web step does (RunnerHelp: the "ai-help" line and the answer file), marked phone - the AI
  * works on the same phone through the session the block announced (phoneAnnounce).
  */
 export class PhoneHelpAsk {

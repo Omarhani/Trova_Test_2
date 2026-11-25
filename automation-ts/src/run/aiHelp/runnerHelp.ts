@@ -10,7 +10,7 @@ let asked = 0;
 
 /**
  * The ask itself, the same for a web and a phone step: the live line {"t":"ai-help", ...}
- * reaches Trova's runner, whose AI works on the test's own browser or phone; its answer comes back as
+ * reaches Trova, whose AI works on the test's own browser or phone; its answer comes back as
  * <live folder>/ai-help-<n>.json. Only in a Trova run (its live folder).
  */
 export class RunnerHelp {

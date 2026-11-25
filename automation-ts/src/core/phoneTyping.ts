@@ -1,5 +1,5 @@
 /**
- * Typing on a phone the way the AI-run tools do (a value set
+ * Typing on a phone with real key presses (a value set
  * on a Flutter field never reached the app): plain Latin text without % goes with `input text` as real key presses; any
  * other text through the Unicode keyboard of Appium Settings, switched on only for the typing, the own keyboard put back
  * right after. shell(...args) runs one `adb shell` command on the phone - the caller gives it. Part of the shared core.
