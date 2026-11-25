@@ -17,6 +17,7 @@ test('testAddANewEmployee', async ({ page }) => {
   };
   const seen = await addEmployee(requests, employee, ADDED_TOAST, ['testEditAnEmployeesData', 'testDeleteAnEmployee']);
   checkTrue('The Add employee drawer closes after Save', seen.drawerClosed);
+  checkEquals('Rows for the new user name in the Incomplete tab', seen.rowsFound, 1);
   checkEquals('The success message after Save', seen.toast, ADDED_TOAST);
 });
 
@@ -26,8 +27,10 @@ test('testEditAnEmployeesData', async ({ page }) => {
   const newFirstName = param('new_first_name', 'Trovaa');
   const newJobTitle = param('new_job_title', 'Senior QA');
   const seen = await editEmployee(requests, userName, newFirstName, newJobTitle, EDITED_TOAST);
-  checkEquals('The success message after Save', seen.toast, EDITED_TOAST);
   checkTrue('The Edit employee drawer closes after Save', seen.drawerClosed);
+  checkEquals('The saved First name, read again on the Edit form', seen.savedFirstName, newFirstName);
+  checkEquals('The saved Job title, read again on the Edit form', seen.savedJobTitle, newJobTitle);
+  checkEquals('The success message after Save', seen.toast, EDITED_TOAST);
 });
 
 test('testDeleteAnEmployee', async ({ page }) => {
