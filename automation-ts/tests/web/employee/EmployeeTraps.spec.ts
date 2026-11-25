@@ -36,7 +36,7 @@ test('testEditAnEmployeesDataTrap', async ({ page }) => {
 test('testDeleteAnEmployeeTrap', async ({ page }) => {
   const requests = await new SideMenu(page).openRegistrationRequests();
   const userName = caseRecords.mine(EMPLOYEE);
-  const seen = await deleteEmployee(requests, userName, 1);
+  const seen = await deleteEmployee(requests, userName, 0);
   checkContains('The delete confirm question', seen.confirmMessage, DELETE_QUESTION);
   checkEquals('Rows for the user name after the delete and a new search', seen.rowsAfter, 1);
 });
