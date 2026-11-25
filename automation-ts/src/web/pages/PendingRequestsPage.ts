@@ -33,6 +33,8 @@ export class PendingRequestsPage extends BasePage {
   private readonly toastMessage = By.cssSelector('#toast-container .toast-message, mat-snack-bar-container, [role="alert"]');
   private readonly confirmMessage = By.xpath("//*[@role='dialog']//h2[@id='swal2-title']");
   private readonly okButton = By.xpath(`//*[@role='dialog']//button[${textIs(PendingRequestsTexts.ok)}]`);
+  // the drawer's close mark (×) - it has no Cancel button
+  private readonly closeDrawerButton = By.xpath("//mat-dialog-container//button[i[contains(@class,'ri-close-line')]]");
 
   private departmentOption(name: string): string {
     return By.xpath(`//mat-option[@role='option'][normalize-space()=${xpathLiteral(name)}]`);
@@ -51,10 +53,11 @@ export class PendingRequestsPage extends BasePage {
   }
 
   // --- Page actions ---
-  /** the page is open: its heading shows */
+  /** the page is open: its heading shows (it can take more than 20 s on Test after a slow sign-in) */
   async waitShown(): Promise<void> {
-    if (!(await this.isShownWithin(this.pageHeading, 20))) {
-      throw new Error('The Registration Requests page did not open within 20 s');
+    await this.settled(20);
+    if (!(await this.isShownWithin(this.pageHeading, 45))) {
+      throw new Error('The Registration Requests page did not open within 45 s');
     }
   }
 
@@ -124,6 +127,24 @@ export class PendingRequestsPage extends BasePage {
   async openEditEmployee(userName: string): Promise<void> {
     await this.click(this.editButtonOf(userName), 10, 'Edit employee button');
     await this.shown(this.firstNameInput, 10, 'The Edit employee form');
+  }
+
+  /** the First name the open Edit employee form holds, once it reads expected (what it holds otherwise) */
+  async firstNameBecomes(expected: string): Promise<string> {
+    return this.valueBecomes(this.firstNameInput, expected, 10);
+  }
+
+  /** the Job title the open Edit employee form holds, once it reads expected (what it holds otherwise) */
+  async jobTitleBecomes(expected: string): Promise<string> {
+    return this.valueBecomes(this.jobTitleInput, expected, 10);
+  }
+
+  /** closes the drawer with its × without saving */
+  async closeDrawer(): Promise<void> {
+    await this.click(this.closeDrawerButton, 10, 'Close drawer button');
+    if (!(await this.isGoneWithin(this.drawer, 10))) {
+      throw new Error('The employee drawer did not close within 10 s');
+    }
   }
 
   async clickDelete(userName: string): Promise<void> {

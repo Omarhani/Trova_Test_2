@@ -22,14 +22,19 @@ test('testAddANewEmployeeTrap', async ({ page }) => {
   };
   const seen = await addEmployee(requests, employee, ADDED_TOAST, ['testEditAnEmployeesDataTrap', 'testDeleteAnEmployeeTrap']);
   checkTrue('The Add employee drawer closes after Save', seen.drawerClosed);
+  checkEquals('Rows for the new user name in the Incomplete tab', seen.rowsFound, 1);
   checkEquals('The success message after Save', seen.toast, ADDED_TOAST + WRONG);
 });
 
 test('testEditAnEmployeesDataTrap', async ({ page }) => {
   const requests = await new SideMenu(page).openRegistrationRequests();
   const userName = caseRecords.mine(EMPLOYEE);
-  const seen = await editEmployee(requests, userName, param('new_first_name', 'Trovaa'), param('new_job_title', 'Senior QA'), EDITED_TOAST);
+  const newFirstName = param('new_first_name', 'Trovaa');
+  const newJobTitle = param('new_job_title', 'Senior QA');
+  const seen = await editEmployee(requests, userName, newFirstName, newJobTitle, EDITED_TOAST);
   checkTrue('The Edit employee drawer closes after Save', seen.drawerClosed);
+  checkEquals('The saved First name, read again on the Edit form', seen.savedFirstName, newFirstName);
+  checkEquals('The saved Job title, read again on the Edit form', seen.savedJobTitle, newJobTitle);
   checkEquals('The success message after Save', seen.toast, EDITED_TOAST + WRONG);
 });
 
